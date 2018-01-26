@@ -12,16 +12,14 @@ module.exports = (app, config) => {
   const env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env == 'development';
-  
+
   app.set('views', config.root + '/app/views');
   app.set('view engine', 'ejs');
 
   // app.use(favicon(config.root + '/public/img/favicon.ico'));
   app.use(logger('dev'));
   app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({
-    extended: true
-  }));
+  app.use(bodyParser.urlencoded({extended: true}));
   app.use(cookieParser());
   app.use(compress());
   app.use(express.static(config.root + '/public'));

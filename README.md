@@ -1,5 +1,5 @@
 # datax-tech
-www.datax.tech网站的源码
+www.datax.tech 网站的源码
 
 
 
@@ -10,7 +10,8 @@ www.datax.tech网站的源码
 启动数据库服务器
 
 ```
-docker run --name mysql-instance -e MYSQL_ROOT_PASSWORD=mysql -d mysql 
+docker run -p 3306:3306 --name mysql-instance -e MYSQL_ROOT_PASSWORD=mysql -d mysql
+docker run -p 6379:6379 --name redis-instance -d redis
 ```
 创建数据库
 

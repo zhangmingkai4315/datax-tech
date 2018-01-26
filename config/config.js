@@ -8,8 +8,10 @@ const config = {
     app: {
       name: 'datax-tech'
     },
+    secrect: 'DEVELOPSECRECT',
     port: process.env.PORT || 3000,
-    db: 'mysql://root:mysql@172.17.0.2/datax-tech-development'
+    db: 'mysql://root:mysql@127.0.0.1/datax-tech-development',
+    redis: 'redis://127.0.0.1:6379'
   },
 
   test: {
@@ -17,8 +19,10 @@ const config = {
     app: {
       name: 'datax-tech'
     },
+    secrect: 'DEVELOPSECRECT',
     port: process.env.PORT || 3000,
-    db: 'mysql://root:mysql@172.17.0.2/datax-tech-test'
+    db: 'mysql://root:mysql@127.0.0.1/datax-tech-test',
+    redis: 'redis://127.0.0.1:6379'
   },
 
   production: {
@@ -26,8 +30,10 @@ const config = {
     app: {
       name: 'datax-tech'
     },
+    secrect: 'DEVELOPSECRECT',
     port: process.env.PORT || 3000,
-    db: 'mysql://root:mysql@172.17.0.2/datax-tech-test'
+    db: 'mysql://root:mysql@127.0.0.1/datax-tech-test',
+    redis: 'redis://127.0.0.1:6379'
   }
 };
 

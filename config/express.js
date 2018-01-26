@@ -7,7 +7,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const compress = require('compression');
 const methodOverride = require('method-override');
-
+const passport = require('passport');
+const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
 module.exports = (app, config) => {
   const env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;
@@ -24,8 +26,19 @@ module.exports = (app, config) => {
   app.use(compress());
   app.use(express.static(config.root + '/public'));
   app.use(methodOverride());
+  require('../app/authenticate').init(app);
 
-  var controllers = glob.sync(config.root + '/app/controllers/*.js');
+  app.use(session({
+    store: new RedisStore({url: config.redis}),
+    secret: config.secrect,
+    resave: false,
+    saveUninitialized: false
+  }));
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  const controllers = glob.sync(config.root + '/app/controllers/*.js');
   controllers.forEach((controller) => {
     require(controller)(app);
   });

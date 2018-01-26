@@ -1,0 +1,110 @@
+body {
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+$NAV_FONT_COLOR: #242424;
+$NAV_HOVER_COLOR: #b9b9b9;
+nav {
+    .navbar-brand {
+        padding: 7px!important;
+    }
+    &.navbar-findcond {
+        background: #fff;
+        border-color: #ccc;
+        box-shadow: 0 0 2px 0 #ccc;
+        a {
+            color: $NAV_FONT_COLOR;
+        }
+        ul.navbar-nav a {
+            color: $NAV_FONT_COLOR;
+            border-style: solid;
+            border-width: 0 0 2px 0;
+            border-color: #fff;
+            &:hover,
+            &:visited,
+            &:focus,
+            &:active {
+                background: #fff;
+            }
+            &:hover {
+                border-color: $NAV_HOVER_COLOR;
+            }
+        }
+        li.divider {
+            background: #ccc;
+        }
+        button.navbar-toggle {
+            background: $NAV_FONT_COLOR;
+            border-radius: 2px;
+            &:hover {
+                background: #999;
+            }
+            span.icon-bar {
+                background: #fff;
+            }
+        }
+        ul.dropdown-menu {
+            border: 0;
+            background: #fff;
+            border-radius: 4px;
+            margin: 4px 0;
+            box-shadow: 0 0 4px 0 #ccc;
+            li>a {
+                color: #444;
+                &:hover {
+                    background: $NAV_FONT_COLOR;
+                    color: #fff;
+                }
+            }
+        }
+        span.badge {
+            background: $NAV_FONT_COLOR;
+            font-weight: normal;
+            font-size: 11px;
+            margin: 0 4px;
+            &.new {
+                background: $NAV_FONT_COLOR;
+                color: #fff;
+            }
+        }
+    }
+    img {
+        width: 120px!important;
+    }
+}
+
+header {
+    text-align: center;
+    color: #fff;
+    background: darkcyan;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    height: 60%;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    .container {
+        padding-top: 150px;
+        padding-bottom: 50px;
+    }
+    img {
+        max-width: 120px!important;
+        display: block;
+        margin: 0 auto 20px;
+    }
+    .intro-text {
+        .name {
+            display: block;
+            font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 2em;
+            font-weight: 700;
+        }
+        .skills {
+            font-size: 1.25em;
+            font-weight: 300;
+            font-family: monospace;
+        }
+    }
+}

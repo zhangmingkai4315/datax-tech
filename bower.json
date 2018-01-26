@@ -1,0 +1,13 @@
+{
+    "name": "datax-tech",
+    "version": "0.0.1",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "components"
+    ],
+    "dependencies": {
+        "bootstrap": "^3.3.0",
+        "jquery": "^3.3.1"
+    }
+}

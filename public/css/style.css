@@ -1,0 +1,79 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+
+nav .navbar-brand {
+  padding: 7px !important; }
+nav.navbar-findcond {
+  background: #fff;
+  border-color: #ccc;
+  box-shadow: 0 0 2px 0 #ccc; }
+  nav.navbar-findcond a {
+    color: #242424; }
+  nav.navbar-findcond ul.navbar-nav a {
+    color: #242424;
+    border-style: solid;
+    border-width: 0 0 2px 0;
+    border-color: #fff; }
+    nav.navbar-findcond ul.navbar-nav a:hover, nav.navbar-findcond ul.navbar-nav a:visited, nav.navbar-findcond ul.navbar-nav a:focus, nav.navbar-findcond ul.navbar-nav a:active {
+      background: #fff; }
+    nav.navbar-findcond ul.navbar-nav a:hover {
+      border-color: #b9b9b9; }
+  nav.navbar-findcond li.divider {
+    background: #ccc; }
+  nav.navbar-findcond button.navbar-toggle {
+    background: #242424;
+    border-radius: 2px; }
+    nav.navbar-findcond button.navbar-toggle:hover {
+      background: #999; }
+    nav.navbar-findcond button.navbar-toggle span.icon-bar {
+      background: #fff; }
+  nav.navbar-findcond ul.dropdown-menu {
+    border: 0;
+    background: #fff;
+    border-radius: 4px;
+    margin: 4px 0;
+    box-shadow: 0 0 4px 0 #ccc; }
+    nav.navbar-findcond ul.dropdown-menu li > a {
+      color: #444; }
+      nav.navbar-findcond ul.dropdown-menu li > a:hover {
+        background: #242424;
+        color: #fff; }
+  nav.navbar-findcond span.badge {
+    background: #242424;
+    font-weight: normal;
+    font-size: 11px;
+    margin: 0 4px; }
+    nav.navbar-findcond span.badge.new {
+      background: #242424;
+      color: #fff; }
+nav img {
+  width: 120px !important; }
+
+header {
+  text-align: center;
+  color: #fff;
+  background: darkcyan;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  height: 60%;
+  overflow: hidden;
+  top: 0;
+  left: 0; }
+  header .container {
+    padding-top: 150px;
+    padding-bottom: 50px; }
+  header img {
+    max-width: 120px !important;
+    display: block;
+    margin: 0 auto 20px; }
+  header .intro-text .name {
+    display: block;
+    font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 2em;
+    font-weight: 700; }
+  header .intro-text .skills {
+    font-size: 1.25em;
+    font-weight: 300;
+    font-family: monospace; }

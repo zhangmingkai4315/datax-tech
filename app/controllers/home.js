@@ -13,5 +13,8 @@ router.get('/', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  res.render('auth/login', {title: 'login'})
+  res.render('auth/login', {title: '用户登入'})
+})
+router.get('/signup', (req, res) => {
+  res.render('auth/signup', {title: '注册用户'})
 })

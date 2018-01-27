@@ -1,17 +1,56 @@
 const gulp = require('gulp');
 const nodemon = require('gulp-nodemon');
-const plumber = require('gulp-plumber');
 const livereload = require('gulp-livereload');
 const sass = require('gulp-ruby-sass');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
+const minifyCss = require('gulp-minify-css');
+const rev = require('gulp-rev');
+const clean = require('gulp-clean');
+const revCollector = require('gulp-rev-collector');
+const babel = require('gulp-babel');
+const revDel = require('rev-del');
+const del = require('del');
 
 gulp.task('sass', () => {
   return sass('./public/css/**/*.scss')
-    .pipe(gulp.dest('./public/css'))
-    .pipe(livereload());
+    .pipe(concat('main.min.css'))
+    .pipe(minifyCss())
+    .pipe(rev())
+    .pipe(gulp.dest('./public/dist'))
+    .pipe(rev.manifest({base: './public/dist/', merge: true}))
+    .pipe(gulp.dest('./public/dist'));
+});
+
+gulp.task('clean:css', function () {
+  return del(['./public/dist/*.css']);
+});
+gulp.task('clean:js', function () {
+  return del(['./public/dist/*.js']);
+});
+
+gulp.task('jsuglify', () => {
+  return gulp
+    .src('./public/js/**/*.js')
+    .pipe(concat('main.min.js'))
+    .pipe(babel({presets: ['../../node_modules/babel-preset-es2015']}))
+    .pipe(uglify())
+    .pipe(rev())
+    .pipe(gulp.dest('./public/dist'))
+    .pipe(rev.manifest({base: './public/dist/', merge: true}))
+    .pipe(gulp.dest('./public/dist'));
+});
+
+gulp.task('rev', function () {
+  return gulp
+    .src(['./rev-manifest.json', './template/*.ejs'])
+    .pipe(revCollector())
+    .pipe(gulp.dest('./app/views/partial/'))
 });
 
 gulp.task('watch', () => {
-  gulp.watch('./public/css/*.scss', ['sass']);
+  gulp.watch('./public/css/*.scss', gulp.series('clean:css', 'sass', 'rev'));
+  gulp.watch('./public/js/*.js', gulp.series('clean:js', 'jsuglify', 'rev'));
 });
 
 gulp.task('develop', () => {
@@ -33,4 +72,4 @@ gulp.task('develop', () => {
   });
 });
 
-gulp.task('default', ['sass', 'develop', 'watch']);
+gulp.task('default', gulp.series('sass', 'jsuglify', 'rev', gulp.parallel('develop', 'watch')));

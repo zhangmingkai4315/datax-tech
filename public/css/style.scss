@@ -1,110 +1,217 @@
 body {
-    padding: 50px;
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 50px; // background-color: #242424;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 $NAV_FONT_COLOR: #242424;
 $NAV_HOVER_COLOR: #b9b9b9;
+$BACK_GROUND_COLOR: #fff;
+$BUTTON_COLOR: #e73e28;
+$BUTTON_HOVER_COLOR: firebrick;
+$BUTTON_BORDER_COLOR: #fff;
 nav {
-    .navbar-brand {
-        padding: 7px!important;
+  .navbar-brand {
+    padding: 7px !important;
+  }
+  &.navbar-findcond {
+    background: $BACK_GROUND_COLOR;
+    border-color: #ccc;
+    box-shadow: 0 0 2px 0 #ccc;
+    a {
+      color: $NAV_FONT_COLOR;
     }
-    &.navbar-findcond {
+    ul.navbar-nav a {
+      color: $NAV_FONT_COLOR;
+      border-style: solid;
+      border-width: 0 0 1px 0;
+      border-color: #fff;
+      &:hover,
+      &:visited,
+      &:focus,
+      &:active {
         background: #fff;
-        border-color: #ccc;
-        box-shadow: 0 0 2px 0 #ccc;
-        a {
-            color: $NAV_FONT_COLOR;
-        }
-        ul.navbar-nav a {
-            color: $NAV_FONT_COLOR;
-            border-style: solid;
-            border-width: 0 0 2px 0;
-            border-color: #fff;
-            &:hover,
-            &:visited,
-            &:focus,
-            &:active {
-                background: #fff;
-            }
-            &:hover {
-                border-color: $NAV_HOVER_COLOR;
-            }
-        }
-        li.divider {
-            background: #ccc;
-        }
-        button.navbar-toggle {
-            background: $NAV_FONT_COLOR;
-            border-radius: 2px;
-            &:hover {
-                background: #999;
-            }
-            span.icon-bar {
-                background: #fff;
-            }
-        }
-        ul.dropdown-menu {
-            border: 0;
-            background: #fff;
-            border-radius: 4px;
-            margin: 4px 0;
-            box-shadow: 0 0 4px 0 #ccc;
-            li>a {
-                color: #444;
-                &:hover {
-                    background: $NAV_FONT_COLOR;
-                    color: #fff;
-                }
-            }
-        }
-        span.badge {
-            background: $NAV_FONT_COLOR;
-            font-weight: normal;
-            font-size: 11px;
-            margin: 0 4px;
-            &.new {
-                background: $NAV_FONT_COLOR;
-                color: #fff;
-            }
-        }
+      }
+      &:hover {
+        border-color: $NAV_HOVER_COLOR;
+      }
     }
-    img {
-        width: 120px!important;
+    li.divider {
+      background: #ccc;
     }
+    button.navbar-toggle {
+      background: $NAV_FONT_COLOR;
+      border-radius: 2px;
+      &:hover {
+        background: #999;
+      }
+      span.icon-bar {
+        background: #fff;
+      }
+    }
+    ul.dropdown-menu {
+      border: 0;
+      background: #fff;
+      border-radius: 4px;
+      margin: 4px 0;
+      box-shadow: 0 0 4px 0 #ccc;
+      li>a {
+        color: #444;
+        &:hover {
+          background: $NAV_FONT_COLOR;
+          color: #fff;
+        }
+      }
+    }
+    span.badge {
+      background: $NAV_FONT_COLOR;
+      font-weight: normal;
+      font-size: 11px;
+      margin: 0 4px;
+      &.new {
+        background: $NAV_FONT_COLOR;
+        color: #fff;
+      }
+    }
+  }
+  img {
+    width: 120px !important;
+  }
 }
 
 header {
-    text-align: center;
-    color: #fff;
-    background: darkcyan;
-    position: fixed;
+  text-align: center;
+  color: $BACK_GROUND_COLOR;
+  background: firebrick;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  height: 85%;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  .container {
+    padding-top: 120px;
+    padding-bottom: 50px;
+  }
+  img {
+    max-width: 120px !important;
+    display: block;
+    margin: 0 auto 20px;
+  }
+  .intro-text {
+    .name {
+      display: block;
+      font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 2em;
+      font-weight: 700;
+    }
+    .skills {
+      font-size: 1.25em;
+      font-weight: 300;
+      font-family: monospace;
+    }
+  }
+}
+
+.container-login {
+  min-height: 0;
+  width: 90%;
+  color: #333333;
+  padding: 0;
+  section {
+    margin-left: 0;
+    margin-right: 0;
+    padding-bottom: 10px;
+  }
+  .nav-tabs.nav-justified {
+    border-bottom: 0 none;
     width: 100%;
-    z-index: 1;
-    height: 60%;
-    overflow: hidden;
-    top: 0;
-    left: 0;
-    .container {
-        padding-top: 150px;
-        padding-bottom: 50px;
-    }
-    img {
-        max-width: 120px!important;
-        display: block;
-        margin: 0 auto 20px;
-    }
-    .intro-text {
-        .name {
-            display: block;
-            font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
-            font-size: 2em;
-            font-weight: 700;
+    li {
+      display: table-cell;
+      width: 1%;
+      float: none;
+      a {
+        background: $BUTTON_COLOR;
+        color: #ffffff;
+        margin-bottom: 0;
+        margin-right: 0;
+        border-radius: 0;
+        &:hover,
+        &:focus {
+          background: $BUTTON_HOVER_COLOR;
+          border-color: $BUTTON_BORDER_COLOR;
         }
-        .skills {
-            font-size: 1.25em;
-            font-weight: 300;
-            font-family: monospace;
-        }
+      }
     }
+    .active>a,
+    .active>a:hover,
+    .active>a:focus {
+      background: #ffffff;
+      color: #333333;
+    }
+  }
+  h2 {
+    color: #ea533f;
+    font-size: 1.5em;
+    padding: 0em 0em 0.5em 0em;
+  }
+  .checkbox {
+    margin-top: -15px;
+  }
+  button {
+    background-color: $BUTTON_COLOR;
+    border-color: $BUTTON_COLOR;
+    color: #ffffff;
+    border-radius: 0;
+    font-size: 18px;
+    line-height: 1.33;
+    padding: 10px 16px;
+    width: 100%;
+    &:hover,
+    &:focus {
+      background: $BUTTON_HOVER_COLOR !important;
+      border-color: $BUTTON_BORDER_COLOR !important;
+    }
+  }
+  .form-control {
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #999999;
+    border-radius: 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #333333;
+    display: block;
+    font-size: 14px;
+    height: 34px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+  }
+  form {
+    .form-group {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+    .checkbox {
+      text-align: left;
+    }
+  }
+  .center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #top-bar {
+    display: inherit;
+  }
+  #login-access h2 {
+    text-align: left;
+  }
+  .tabs-login {
+    background: #ffffff;
+    border: medium none;
+    margin-top: -1px;
+    padding: 10px 30px;
+  }
 }

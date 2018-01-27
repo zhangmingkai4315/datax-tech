@@ -1,20 +1,43 @@
-const express = require('express');
-const router = express.Router();
-const db = require('../models');
-const passport = require('passport');
+const middleware = require('../authenticate/middleware');
 
-module.exports = (app) => {
-  app.use('/', router);
-  // app.use('/protect',pas)
+module.exports = (app, passport) => {
+  app.get('/', (req, res) => {
+    res.render('index', {title: 'DataX'});
+  });
+
+  app.get('/login', (req, res) => {
+    res.render('auth/login', {
+      title: '用户登入',
+      message: req.flash('loginMessage')
+    });
+  });
+  app.post('/login', passport.authenticate('local-login', {
+    successRedirect: '/profile', // redirect to the secure profile section
+    failureRedirect: '/login', // redirect back to the signup page if there is an error
+    failureFlash: true // allow flash messages
+  }));
+
+  app.get('/signup', (req, res) => {
+    res.render('auth/signup', {
+      title: '注册用户',
+      message: req.flash('signupMessage')
+    });
+  });
+  app.post('/signup', passport.authenticate('local-signup', {
+    successRedirect: '/profile', // redirect to the secure profile section
+    failureRedirect: '/signup', // redirect back to the signup page if there is an error
+    failureFlash: true // allow flash messages
+  }));
+
+  app.get('/profile', middleware.authenticationMiddle, (req, res) => {
+    console.log(req.user)
+    res.render('user/profile.ejs', {
+      user: req.user,
+      title: '个人主页'
+    });
+  });
+  app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
+  });
 };
-
-router.get('/', (req, res) => {
-  res.render('index', {title: 'DataX'});
-});
-
-router.get('/login', (req, res) => {
-  res.render('auth/login', {title: '用户登入'})
-})
-router.get('/signup', (req, res) => {
-  res.render('auth/signup', {title: '注册用户'})
-})

@@ -22,11 +22,17 @@
                     </ul>
                     <div class="tab-content tabs-login col-lg-12 col-md-12 col-sm-12 cols-xs-12">
                       <div id="login-access" class="tab-pane fade active in">
-                        <h2><i class="glyphicon glyphicon-log-in"></i> 用户注册</h2>						
-                        <form method="post" accept-charset="utf-8" autocomplete="off" role="form" class="form-horizontal">
+                        <h2>
+                          <i class="glyphicon glyphicon-log-in"></i> 用户注册
+                          <span id="error_msg"></span>
+                             <% if (message.length > 0) { %>
+                                  <span class="flash_msg"><%= message %></span>
+                              <% } %>
+                        </h2>						
+                        <form method="post" accept-charset="utf-8" autocomplete="off" role="form" onsubmit = "return signupValidation();" class="form-horizontal">
                           <div class="form-group ">
                             <label for="login" class="sr-only">邮箱账号</label>
-                              <input type="text" class="form-control" name="email" id="login_value" 
+                              <input type="email" class="form-control" name="email" id="email" 
                                 placeholder="注册邮箱" tabindex="1" value="" />
                           </div>
                           <div class="form-group ">

@@ -1,8 +1,8 @@
 // Example model
+const bcrypt = require('bcrypt');
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
-
   const User = sequelize.define('User', {
     username: {
       type: Sequelize.STRING,
@@ -21,9 +21,12 @@ module.exports = (sequelize) => {
       defaultValue: false
     }
   }, {
-    classMethods: {
-      associate: (models) => {
-        // example on how to add relations Article.hasMany(models.Comments);
+    instanceMethods: {
+      generateHash(password) {
+        return bcrypt.hash(password, bcrypt.genSaltSync(8));
+      },
+      validPassword(password) {
+        return bcrypt.compare(password, this.password);
       }
     }
   });

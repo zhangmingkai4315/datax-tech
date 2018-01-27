@@ -7,24 +7,30 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const compress = require('compression');
 const methodOverride = require('method-override');
+const flash = require('connect-flash');
 const passport = require('passport');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
+
 module.exports = (app, config) => {
   const env = process.env.NODE_ENV || 'development';
+  const viewPath = `${config.root}/app/views`;
+  const publicPath = `${config.root}/public`;
+  const faviconPath = `${config.root}/public/img/icon/favicon.ico`;
+
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env == 'development';
 
-  app.set('views', config.root + '/app/views');
+  app.set('views', viewPath);
   app.set('view engine', 'ejs');
 
-  // app.use(favicon(config.root + '/public/img/favicon.ico'));
+  app.use(favicon(faviconPath));
   app.use(logger('dev'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(cookieParser());
   app.use(compress());
-  app.use(express.static(config.root + '/public'));
+  app.use(express.static(publicPath));
   app.use(methodOverride());
   require('../app/authenticate').init(app);
 
@@ -37,20 +43,21 @@ module.exports = (app, config) => {
 
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(flash());
 
-  const controllers = glob.sync(config.root + '/app/controllers/*.js');
+  const controllers = glob.sync(`${config.root}/app/controllers/*.js`);
   controllers.forEach((controller) => {
-    require(controller)(app);
+    require(controller)(app, passport);
   });
 
   app.use((req, res, next) => {
-    var err = new Error('Not Found');
+    const err = new Error('Not Found');
     err.status = 404;
     next(err);
   });
 
   if (app.get('env') === 'development') {
-    app.use((err, req, res, next) => {
+    app.use((err, req, res) => {
       res.status(err.status || 500);
       res.render('error', {
         message: err.message,
@@ -60,7 +67,7 @@ module.exports = (app, config) => {
     });
   }
 
-  app.use((err, req, res, next) => {
+  app.use((err, req, res) => {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,

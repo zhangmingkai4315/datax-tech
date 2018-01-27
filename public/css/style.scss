@@ -12,6 +12,16 @@ $BUTTON_BORDER_COLOR: #fff;
 nav {
   .navbar-brand {
     padding: 7px !important;
+    span {
+      font-size: 1.8em;
+      font-weight: 500;
+      font-family: monospace;
+      margin-top: .3em;
+      display: inline-block;
+      &.datax-x {
+        color: firebrick;
+      }
+    }
   }
   &.navbar-findcond {
     background: $BACK_GROUND_COLOR;
@@ -154,6 +164,11 @@ header {
     color: #ea533f;
     font-size: 1.5em;
     padding: 0em 0em 0.5em 0em;
+    span {
+      float: right;
+      font-size: .7em;
+      margin-top: .5em;
+    }
   }
   .checkbox {
     margin-top: -15px;

@@ -2,7 +2,6 @@
 
 $(function () {
     'use strict';
-    // Change this to the location of your server-side upload handler:
     var url = '/upload',
         uploadButton = $('<button/>')
             .addClass('btn btn-datax')
@@ -82,6 +81,7 @@ $(function () {
                             .attr('target', '_blank')
                             .prop('href', file.url);
                         $(data.context.children()[index]).wrap(link);
+
                     } else if (file.error) {
                         var error = $('<span class="text-danger"/>').text(file.error);
                         $(data.context.children()[index])

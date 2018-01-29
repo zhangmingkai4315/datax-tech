@@ -2,55 +2,13 @@
 <% include ../partial/nav %>
 
   <div class="profile-info col-md-12">
-    <div class="info-bar">
-      <span class ="info-name">发表文章</span>
-      <span class = "info-detail">10</span>
-    </div>
-    <div class="info-bar">
-      <span class ="info-name">访问量</span>
-      <span class = "info-detail">202</span>
-    </div>
-    <div class="info-bar">
-      <span class ="info-name">获得喜欢数量</span>
-      <span class = "info-detail">10</span>
-    </div>
-    <div class="info-bar">
-      <span class ="info-name">文章收藏数</span>
-      <span class = "info-detail">5</span>
-    </div>
+      <% include ./user_static_header.ejs %>
   </div>
   <div class="profile-main col-md-12">
-    <div class = "profile-user-card col-md-3 col-sm-12">
-        <div class="user-image">
-          <img class="img-responsive" src="/img/logo.png"/>
-        </div>
-        <div class="user-name">
-          MikeZhang
-        </div>
-        <div class="user-group">
-          DataX
-        </div>
-        <div class="user-job">
-          数据工程师
-        </div>
-        <div class="divider"></div>
-        <div class="user-skill">
-          <h3>技能列表</h3>
-          <span class="skill">NodeJS</span>
-          <span class="skill">Python</span>
-          <span class="skill">Javascript</span>
-          <span class="skill">Go</span>
-        </div>
-        <div class="divider"></div>
-        <div class="user-social-info">
-          <h3>其他链接</h3>
-          <span class="socail-link"><a href=" http://www.jsmean.com"><i class="fa fa-globe" aria-hidden="true"></i></a></span>
-          <span class="socail-link"><a href=" http://github.com/zhangmingkai4315"><i class="fa fa-github" aria-hidden="true"></i></a></span>
-        </div>        
+      <% include ./user_card.ejs %>
     </div>
-    <div class="profile-user-projects col-md-9 col-sm-12">
+    <div class="user-projects col-md-9 col-sm-12">
 
     </div>
   </div>
 <% include ../partial/footer %>
-</div>

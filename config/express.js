@@ -11,12 +11,26 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
+const Uploader = require('jquery-file-upload-middleware');
 
 module.exports = (app, config) => {
   const env = process.env.NODE_ENV || 'development';
   const viewPath = `${config.root}/app/views`;
   const publicPath = `${config.root}/public`;
   const faviconPath = `${config.root}/public/img/icon/favicon.ico`;
+  const controllerV1 = `${config.root}/app/controllers/v1/*.js`;
+  const uploadPath = `${config.root}/public/uploads/`;
+  app.set('uploadPath', uploadPath);
+  Uploader.configure({
+    uploadDir: uploadPath,
+    uploadUrl: '/uploads',
+    imageVersions: {
+      thumbnail: {
+        width: 80,
+        height: 80
+      }
+    }
+  })
 
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env == 'development';
@@ -26,6 +40,7 @@ module.exports = (app, config) => {
 
   app.use(favicon(faviconPath));
   app.use(logger('dev'));
+
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(cookieParser());
@@ -45,7 +60,7 @@ module.exports = (app, config) => {
   app.use(passport.session());
   app.use(flash());
 
-  const controllers = glob.sync(`${config.root}/app/controllers/*.js`);
+  const controllers = glob.sync(controllerV1);
   controllers.forEach((controller) => {
     require(controller)(app, passport);
   });

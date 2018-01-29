@@ -1,0 +1,62 @@
+<% include ../partial/header %>
+<% include ../partial/nav %>
+
+  <div class="profile-info col-md-12">
+      <% include ./user_static_header.ejs %>
+  </div>
+  <div class="profile-main col-md-12">
+      <% include ./user_card.ejs %>
+    </div>
+    <div class="user-edit-form card col-md-9 col-sm-12">
+        <div class="basic-info col-md-8">
+            <h2>基本信息</h2>
+            <div class="divider red"></div>
+            <form action="/api/user/basic">
+                <div class="form-group">
+                    <label for="username">用户名称</label>
+                    <input type="text" class="form-control" id="username" value="<%= user.username%>" readonly>
+                </div>
+            <div class="form-group">
+                    <label for="groupname">组名称</label>
+                    <input type="text" class="form-control" id="groupname">
+            </div>
+            <div class="form-group">
+                    <label for="jobname">职位名称</label>
+                    <input type="text" class="form-control" id="jobname">
+            </div>
+            <button type="submit" class="btn btn-datax"><i class="fa fa-floppy-o" aria-hidden="true"></i> 保存</button>
+            </form>
+        </div>
+        <div class="basic-info col-md-4">
+            <h2>上传头像</h2>
+            <div class="divider red"></div>
+            <label>点击下面图片修改照片</label>
+
+            <div class="user-image fileinput-button">
+                    <img class="img-responsive" id="user-header-photo" src="/img/default-user.png"/>
+                    <input id="user-header-photo-upload" type="file" name="files[]" multiple>
+            </div>
+                <br>
+                <br>
+                <!-- The global progress bar -->
+                <div id="progress" class="progress">
+                    <div class="progress-bar progress-bar-success"></div>
+                </div>
+                <!-- The container for the uploaded files -->
+                <div id="files" class="files"></div>
+
+
+             
+        </div>
+        <div class="basic-info col-md-12">
+            <h2>技能列表</h2>
+            <div class="divider red"></div>
+        </div>
+        <div class="basic-info col-md-12">
+            <h2>添加链接</h2>
+            <div class="divider red"></div>
+        </div>
+        </div>
+    </div>
+  </div>
+<% include ../partial/footer %>

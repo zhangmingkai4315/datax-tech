@@ -8,13 +8,17 @@ const signupValidation = () => {
   const emailVal = $.trim($('#email').val())
   const password = $.trim($('#password').val())
   const password2 = $.trim($('#password2').val())
-
+  const username = $.trim($('#username').val())
   if (emailVal === '' || password === '' || password2 === '') {
     $('#error_msg').text('输入信息不能为空');
     return false;
   }
   if (!validEmail(emailVal)) {
     $('#error_msg').text('邮箱格式输入无法验证');
+    return false;
+  }
+  if (username === '') {
+    $('#error_msg').text('用户名不能为空');
     return false;
   }
   if (password !== password2) {

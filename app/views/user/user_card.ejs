@@ -1,0 +1,32 @@
+<div class = "profile-user-card col-md-3 col-sm-12">
+        <% if(typeof editable !== 'undefined' && editable === true) { %>
+        <a href="/user/<%= user.username %>/edit" class="btn btn-datax">
+            <i class="fa fa-cogs" aria-hidden="true"></i> 编辑</i>
+        </a>
+        <% } %>
+        <div class="user-image">
+          <img class="img-responsive" src="/img/default-user.png"/>
+        </div>
+        <div class="user-name">
+          <%= user.username%>
+        </div>
+        <div class="user-group">
+          DataX
+        </div>
+        <div class="user-job">
+          数据工程师
+        </div>
+        <div class="divider"></div>
+        <div class="user-skill">
+          <h3>技能列表</h3>
+          <span class="skill">NodeJS</span>
+          <span class="skill">Python</span>
+          <span class="skill">Javascript</span>
+          <span class="skill">Go</span>
+        </div>
+        <div class="divider"></div>
+        <div class="user-social-info">
+          <h3>其他链接</h3>
+          <span class="socail-link"><a href=" http://www.jsmean.com"><i class="fa fa-globe" aria-hidden="true"></i></a></span>
+          <span class="socail-link"><a href=" http://github.com/zhangmingkai4315"><i class="fa fa-github" aria-hidden="true"></i></a></span>
+        </div>        

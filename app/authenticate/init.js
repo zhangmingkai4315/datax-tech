@@ -2,6 +2,30 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const db = require('../models');
 const authenticationMiddleware = require('./middleware');
+const {body, validationResult} = require('express-validator/check');
+const {sanitizeBody} = require('express-validator/filter');
+
+function signUpValidation() {
+  // Validate fields.
+  body('username')
+    .isLength({min: 5})
+    .withMessage('长度不能为空，且不能小于5位')
+  body('email')
+    .isEmail()
+    .withMessage('输入Email格式错误');
+  body('passwprd')
+    .isLength({min: 6})
+    .withMessage('密码长度不能为空，且不小于6位')
+  sanitizeBody('username')
+    .trim()
+    .escape();
+  sanitizeBody('email')
+    .trim()
+    .escape();
+  sanitizeBody('password')
+    .trim()
+    .escape();
+}
 
 function findUser(email, callback) {
   db
@@ -31,6 +55,10 @@ function initPassport() {
     passwordField: 'password',
     passReqToCallback: true
   }, (req, email, password, done) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return done(null, false, req.flash('signupMessage', errors.array()[0]));
+    }
     findUser(email, (err, user) => {
       if (err) {
         return done(err);
@@ -40,7 +68,7 @@ function initPassport() {
       }
       const newUser = db
         .User
-        .build({email, password});
+        .build({email, username: req.body.username, password});
       return newUser
         .generateHash(password)
         .then((p) => {
@@ -48,7 +76,10 @@ function initPassport() {
           return newUser.save();
         })
         .then(u => done(null, u))
-        .catch(() => done(null, false, req.flash('signupMessage', '服务暂时不可用，请稍后')));
+        .catch((err) => {
+          console.log(err)
+          return done(null, false, req.flash('signupMessage', '服务暂时不可用，请稍后'))
+        });
     });
   }));
 

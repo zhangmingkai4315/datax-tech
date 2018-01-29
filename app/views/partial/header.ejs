@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/icon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/img/icon/favicon-16x16.png">
@@ -13,12 +13,18 @@
     <title>
           <%= title %>
     </title>
+
+    <link rel="stylesheet" href="/assets/blueimp-file-upload/css/jquery.fileupload-ui.css">
+     <link rel="stylesheet" href="/assets/blueimp-file-upload/css/jquery.fileupload.css">
     <link rel="stylesheet" href="/assets/components-font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/dist/main-e8f0e5f3aa.min.css">
+    <link rel="stylesheet" href="/dist/main-773bf1a5db.min.css">
     <% if (ENV_DEVELOPMENT) { %>
         <script src="http://localhost:35729/livereload.js"></script>
     <% } %>
 </head>
 
 <body>
+<div class="wrap">
+    <div class="main">
+    

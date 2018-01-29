@@ -1,10 +1,9 @@
-const middleware = require('../authenticate/middleware');
-
+const middleware = require('../../authenticate/middleware');
+const Uploader = require('jquery-file-upload-middleware');
 module.exports = (app, passport) => {
   app.get('/', (req, res) => {
     res.render('index', {title: 'DataX'});
   });
-
   app.get('/login', (req, res) => {
     res.render('auth/login', {
       title: '用户登入',
@@ -31,13 +30,24 @@ module.exports = (app, passport) => {
 
   app.get('/profile', middleware.authenticationMiddle, (req, res) => {
     console.log(req.user)
-    res.render('user/profile.ejs', {
-      user: req.user,
-      title: '个人主页'
-    });
+    res.redirect(`/user/${req.user.username}`)
   });
   app.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/');
+  });
+
+  app.use('/upload', middleware.authenticationMiddle, function (req, res, next) {
+    // imageVersions are taken from upload.configure()
+    Uploader.fileHandler({
+      uploadDir: function () {
+        return req
+          .app
+          .get('uploadPath') + req.user.username
+      },
+      uploadUrl: function () {
+        return '/uploads/' + req.user.username
+      }
+    })(req, res, next);
   });
 };

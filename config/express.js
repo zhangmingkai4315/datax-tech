@@ -59,7 +59,6 @@ module.exports = (app, config) => {
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(flash());
-
   const controllers = glob.sync(controllerV1);
   controllers.forEach((controller) => {
     require(controller)(app, passport);

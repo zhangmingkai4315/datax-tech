@@ -1,5 +1,5 @@
 const middleware = require('../../authenticate/middleware');
-const Uploader = require('jquery-file-upload-middleware');
+
 module.exports = (app, passport) => {
   app.get('/', (req, res) => {
     res.render('index', {title: 'DataX'});
@@ -29,7 +29,6 @@ module.exports = (app, passport) => {
   }));
 
   app.get('/profile', middleware.authenticationMiddle, (req, res) => {
-    console.log(req.user)
     res.redirect(`/user/${req.user.username}`)
   });
   app.get('/logout', (req, res) => {
@@ -37,17 +36,4 @@ module.exports = (app, passport) => {
     res.redirect('/');
   });
 
-  app.use('/upload', middleware.authenticationMiddle, function (req, res, next) {
-    // imageVersions are taken from upload.configure()
-    Uploader.fileHandler({
-      uploadDir: function () {
-        return req
-          .app
-          .get('uploadPath') + req.user.username
-      },
-      uploadUrl: function () {
-        return '/uploads/' + req.user.username
-      }
-    })(req, res, next);
-  });
 };

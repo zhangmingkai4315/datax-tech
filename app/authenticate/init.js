@@ -77,7 +77,6 @@ function initPassport() {
         })
         .then(u => done(null, u))
         .catch((err) => {
-          console.log(err)
           return done(null, false, req.flash('signupMessage', '服务暂时不可用，请稍后'))
         });
     });

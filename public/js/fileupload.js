@@ -24,7 +24,7 @@ $(function () {
                     });
             });
     $('#user-header-photo-upload').fileupload({
-        url: url,
+        url: '/upload/userimg',
         dataType: 'json',
         autoUpload: false,
         acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
@@ -81,7 +81,8 @@ $(function () {
                             .attr('target', '_blank')
                             .prop('href', file.url);
                         $(data.context.children()[index]).wrap(link);
-
+                        $('.profile-user-card img').attr("src", file.url);
+                        $('.user-thumbnail-img').attr("src", file.url);
                     } else if (file.error) {
                         var error = $('<span class="text-danger"/>').text(file.error);
                         $(data.context.children()[index])
@@ -89,6 +90,9 @@ $(function () {
                             .append(error);
                     }
                 });
+
+            toastr.success('上传头像文件成功')
+
         })
         .on('fileuploadfail', function (e, data) {
             $
@@ -98,6 +102,7 @@ $(function () {
                         .append('<br>')
                         .append(error);
                 });
+            toastr.error('上传头像文件失败')
         })
         .prop('disabled', !$.support.fileInput)
         .parent()

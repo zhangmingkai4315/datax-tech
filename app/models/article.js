@@ -8,13 +8,18 @@ module.exports = (sequelize, DataTypes) => {
       type: Sequelize.STRING,
       allowNull: false
     },
+    user_id: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
     content: Sequelize.TEXT,
-    head_img: DataTypes.STRING
+    head_img: Sequelize.STRING
   }, {
+    underscored: true,
     classMethods: {
       associate: (models) => {
         // example on how to add relations Article.hasMany(models.Comments);
-        Article.belongsTo(models.User, {foreignKey: 'fk_user'}) // add fk_user to article
+        Article.belongsTo(models.User) // add fk_user to article
       }
     }
   });

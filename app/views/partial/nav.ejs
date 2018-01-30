@@ -33,7 +33,7 @@
 						<li><a href="/order">邮件订阅</a></li>
             <%} else{ %>
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-						<img class="img-responsive" src="/img/default-user.png"/>
+						<img class="img-responsive user-thumbnail-img" src="<%= user.thunbnail_url ? user.thunbnail_url:'/img/default-user.png' %>"/>
 							<%= user.username%> 
 						<span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">

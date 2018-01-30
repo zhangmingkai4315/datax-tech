@@ -5,16 +5,16 @@
         </a>
         <% } %>
         <div class="user-image">
-          <img class="img-responsive" src="/img/default-user.png"/>
+          <img class="img-responsive" src="<%= user.image_url ? user.image_url:'/img/default-user.png' %>"/>
         </div>
         <div class="user-name">
           <%= user.username%>
         </div>
         <div class="user-group">
-          DataX
+          <%= user.group_name ? user.group_name:'暂无' %>
         </div>
         <div class="user-job">
-          数据工程师
+          <%= user.job_name ? user.job_name:'工程师' %>
         </div>
         <div class="divider"></div>
         <div class="user-skill">
@@ -29,4 +29,8 @@
           <h3>其他链接</h3>
           <span class="socail-link"><a href=" http://www.jsmean.com"><i class="fa fa-globe" aria-hidden="true"></i></a></span>
           <span class="socail-link"><a href=" http://github.com/zhangmingkai4315"><i class="fa fa-github" aria-hidden="true"></i></a></span>
-        </div>        
+        </div>
+       <div class="user-social-info">
+          <h3>个人介绍</h3>
+         <%= user.introduce ? user.introduce:'暂无' %>
+        </div>       

@@ -18,13 +18,13 @@
                 </div>
             <div class="form-group">
                     <label for="groupname">组名称</label>
-                    <input type="text" class="form-control" id="groupname">
+                    <input type="text" class="form-control" id="groupname" value="<%= user.group_name ? user.group_name:'' %>">
             </div>
             <div class="form-group">
                     <label for="jobname">职位名称</label>
-                    <input type="text" class="form-control" id="jobname">
+                    <input type="text" class="form-control" id="jobname"  value="<%= user.job_name ? user.job_name:'' %>">
             </div>
-            <button type="submit" class="btn btn-datax"><i class="fa fa-floppy-o" aria-hidden="true"></i> 保存</button>
+            <button type="submit" id="user-basic-info-submit" class="btn btn-datax"><i class="fa fa-floppy-o" aria-hidden="true"></i> 保存</button>
             </form>
         </div>
         <div class="basic-info col-md-4">
@@ -36,24 +36,36 @@
                     <img class="img-responsive" id="user-header-photo" src="/img/default-user.png"/>
                     <input id="user-header-photo-upload" type="file" name="files[]" multiple>
             </div>
-                <br>
-                <br>
-                <!-- The global progress bar -->
-                <div id="progress" class="progress">
-                    <div class="progress-bar progress-bar-success"></div>
-                </div>
-                <!-- The container for the uploaded files -->
                 <div id="files" class="files"></div>
+            <!-- The global progress bar -->
+            <div id="progress" class="progress">
+                <div class="progress-bar progress-bar-striped"></div>
+            </div>
+            <!-- The container for the uploaded files -->
+               
 
 
              
         </div>
-        <div class="basic-info col-md-12">
+        <div class="basic-info user-skill-select col-md-12">
             <h2>技能列表</h2>
-            <div class="divider red"></div>
+                <div class="divider red"></div>
+                <form action="/api/user/skill">
+                    <div class="form-group">
+                        <label for="username">技能选择</label>
+                        <select multiple="multiple" class="form-control" id='user-skill-select-input' >
+                        </select>
+                    </div>
+                    <button type="submit" id="user-basic-skill-submit" class="btn btn-datax"><i class="fa fa-floppy-o" aria-hidden="true"></i> 保存</button>
+                </form>
+            
         </div>
         <div class="basic-info col-md-12">
             <h2>添加链接</h2>
+            <div class="divider red"></div>
+        </div>
+        <div class="basic-info col-md-12">
+            <h2>个人简介</h2>
             <div class="divider red"></div>
         </div>
         </div>

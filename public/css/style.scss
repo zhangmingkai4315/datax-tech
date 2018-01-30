@@ -298,6 +298,24 @@ header {
         font-weight: normal!important;
         color: #949494!important;
     }
+    .fileinput-button {
+        display: block!important;
+    }
+    .user-skill-select {
+        .select2-container {
+            width: 40%!important;
+        }
+        // ul {
+        //     border-radius: 2px!important;
+        //     padding: 5px 0!important;
+        //     li {
+        //         border-radius: 0px!important;
+        //     }
+        //     .select2-search-field input {
+        //         height: 1.5em;
+        //     }
+        // }
+    }
     .user-image img,
     canvas {
         display: block;

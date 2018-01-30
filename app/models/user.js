@@ -24,17 +24,30 @@ module.exports = (sequelize) => {
       type: Sequelize.STRING,
       allowNull: false
     },
+    role: {
+      type: Sequelize.ENUM,
+      values: [
+        'user', 'admin', 'disabled'
+      ],
+      defaultValue: 'user'
+    },
     image_url: Sequelize.STRING,
+    thunbnail_url: Sequelize.STRING,
+    group_name: {
+      type: Sequelize.STRING,
+      defaultValue: ''
+    },
+    job_name: {
+      type: Sequelize.STRING,
+      defaultValue: ''
+    },
+    introduce: Sequelize.STRING,
     last_login: {
       type: Sequelize.DATE,
       defaultValue: Sequelize.NOW
-    },
-    is_admin: {
-      type: Sequelize.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
     }
   }, {
+    underscored: true,
     instanceMethods: {
       generateHash(password) {
         return bcrypt.hash(password, bcrypt.genSaltSync(8));
@@ -46,6 +59,14 @@ module.exports = (sequelize) => {
     classMethods: {
       associate: (models) => {
         User.hasMany(models.Article);
+        User.belongsToMany(models.Skill, {
+          through: {
+            model: models.SkillUser,
+            unique: false
+          },
+          foreignKey: 'user_id',
+          constraints: false
+        });
       }
     }
   });

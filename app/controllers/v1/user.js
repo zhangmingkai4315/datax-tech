@@ -20,7 +20,8 @@ module.exports = (app, passport) => {
           through: {
             attributes: ["id", "name"]
           }
-        }
+        },
+        db.Article
       ]
     })
       .then(user => {

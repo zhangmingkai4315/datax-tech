@@ -55,6 +55,7 @@ module.exports = sequelize => {
     },
     {
       underscored: true,
+      // 当用户被删除的时候，创建一个delete_at时间，软删除
       paranoid: true,
       tableName: "users",
       instanceMethods: {
@@ -68,6 +69,7 @@ module.exports = sequelize => {
       classMethods: {
         associate: models => {
           User.hasMany(models.Article);
+          User.hasMany(models.Comment);
           User.belongsToMany(models.Skill, {
             through: {
               model: models.SkillUser,

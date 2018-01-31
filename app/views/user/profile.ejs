@@ -8,6 +8,24 @@
       <% include ./user_card.ejs %>
     </div>
     <div class="user-projects col-md-9 col-sm-12">
+          <div class="blog-post">
+              <ul class="posts">
+                <% for(var i=0; i<user.Articles.length; i++) {%>
+                <li class="post">
+                  <img src="<%= user.Articles[i].head_img? user.Articles[i].head_img :'/img/default-article-cover.jpg'%>" />
+                  <div class="post-info">
+                    <h3><%= user.Articles[i].title %></h3>
+                    <p><%= user.Articles[i].content %></p>
+                    <a class="button" href="/articles/<%= user.Articles[i].id %>">Read More</a>
+                  </div>
+                </li>       
+                <% } %>
+                
+              </ul>
+              <div class="new-post">
+                  <a class="btn btn-datax" href="/article/add">新增文章</a>
+              </div>
+          </div>
 
     </div>
   </div>

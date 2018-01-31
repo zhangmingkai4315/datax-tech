@@ -1,11 +1,4 @@
-$NAV_FONT_COLOR: #242424;
-$NAV_HOVER_COLOR: #b9b9b9;
-$BACK_GROUND_COLOR: #fff;
-$BUTTON_COLOR: #e73e28;
-$MAIN_COLOR_01:firebrick;
-$MAIN_COLOR_01_FONT:white;
-$BUTTON_HOVER_COLOR: firebrick;
-$BUTTON_BORDER_COLOR: #fff;
+@import "theme.scss";
 * {
     margin: 0;
     padding: 0;
@@ -28,7 +21,7 @@ body {
 
 nav {
     &.navbar {
-        margin-bottom: 0px!important;
+        margin-bottom: 0px !important;
     }
     .navbar-brand {
         padding: 7px !important;
@@ -36,25 +29,23 @@ nav {
             font-size: 1.8em;
             font-weight: 500;
             font-family: monospace;
-            margin-top: .3em;
+            margin-top: 0.3em;
             display: inline-block;
             &.datax-x {
-                color: firebrick;
+                color: $MAIN_COLOR;
             }
         }
     }
     &.navbar-findcond {
         background: $BACK_GROUND_COLOR;
-        border-color: #ccc;
-        box-shadow: 0 0 2px 0 #ccc;
         a {
             color: $NAV_FONT_COLOR;
         }
         ul.navbar-nav a {
             color: $NAV_FONT_COLOR;
             border-style: solid;
-            border-width: 0 0 1px 0;
-            border-color: #fff;
+            border-width: 0 0 2px 0;
+            border-color: white;
             &:hover,
             &:visited,
             &:focus,
@@ -62,7 +53,7 @@ nav {
                 background: #fff;
             }
             &:hover {
-                border-color: $NAV_HOVER_COLOR;
+                border-color: $MAIN_COLOR;
             }
             img {
                 max-width: 20px;
@@ -115,7 +106,7 @@ nav {
 header {
     text-align: center;
     color: $BACK_GROUND_COLOR;
-    background: $MAIN_COLOR_01;
+    background: $MAIN_COLOR;
     width: 100%;
     z-index: 1;
     min-height: 85%;
@@ -184,13 +175,13 @@ header {
         }
     }
     h2 {
-        color: #ea533f;
+        color: $MAIN_COLOR;
         font-size: 1.5em;
         padding: 0em 0em 0.5em 0em;
         span {
             float: right;
-            font-size: .7em;
-            margin-top: .5em;
+            font-size: 0.7em;
+            margin-top: 0.5em;
         }
     }
     .checkbox {
@@ -257,16 +248,23 @@ header {
 .profile-info {
     text-align: center;
     height: 50px;
-    background: $MAIN_COLOR_01;
-    color: $MAIN_COLOR_01_FONT;
+    background: $MAIN_COLOR;
+    color: $MAIN_COLOR_FONT;
     .info-bar {
         display: inline-block;
         padding: 1em 1em;
+        cursor: pointer;
+        height: 50px;
+        transition: all 0.1s ease;
+        &:hover {
+            background: $MAIN_COLOR_FONT;
+            color: $MAIN_COLOR;
+        }
         .info-name {
             font-weight: bold;
         }
         .info-detail {
-            color: rgb(241, 241, 241);
+            font-weight: bold;
         }
     }
 }
@@ -276,29 +274,33 @@ header {
     width: 100%;
 }
 
+.user-projects,
 .user-edit-form {
     h2 {
         font-size: 1.2em;
-        color: $MAIN_COLOR_01;
+        color: $MAIN_COLOR;
         font-weight: bold;
         margin: 20px 0 5px;
     }
     .basic-info {
         margin-bottom: 2em;
     }
+}
+
+.user-edit-form {
     label {
         display: block;
         max-width: 100%;
         margin-bottom: 5px;
-        font-weight: normal!important;
-        color: #949494!important;
+        font-weight: normal !important;
+        color: #949494 !important;
     }
     .fileinput-button {
-        display: block!important;
+        display: block !important;
     }
     .user-skill-select {
         .select2-container {
-            width: 100%!important;
+            width: 100% !important;
         }
     }
     #user-header-photo,
@@ -307,9 +309,12 @@ header {
         width: 150px;
         height: 150px;
         border-radius: 5px;
+        &:hover {
+            border-color: $MAIN_COLOR;
+        }
     }
     li.select2-selection__choice {
-        padding: 5px!important;
+        padding: 5px !important;
         height: 2em;
     }
 }
@@ -320,15 +325,15 @@ header {
     margin: 30px 0px 30px 0px;
     background-color: white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     .user-edit-btn {
-        color: $MAIN_COLOR_01;
+        color: $MAIN_COLOR;
         text-decoration: none;
     }
     .user-image img {
         display: block;
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
         margin: 20px auto;
         border-radius: 50%;
         border: 1px solid #ccc;
@@ -338,7 +343,7 @@ header {
         margin: 0 0 10px 0;
         text-align: center;
         font-family: sans-serif;
-        font-size: 2em;
+        font-size: 1.5em;
     }
     .user-group,
     .user-job {
@@ -358,16 +363,16 @@ header {
             margin: 10 0 10px 0;
             font-size: 13px;
             font-weight: 500;
-            letter-spacing: .02em;
+            letter-spacing: 0.02em;
             text-transform: uppercase;
             color: #999;
         }
         p {
             font-size: 13px;
             font-weight: 500;
-            letter-spacing: .02em;
+            letter-spacing: 0.02em;
             color: #3e3e3e;
-            padding: .2em 0;
+            padding: 0.2em 0;
         }
         .skill {
             box-sizing: content-box;
@@ -382,10 +387,10 @@ header {
             cursor: pointer;
         }
         .socail-link {
-            font-size: 2em;
-            margin-right: .5em;
+            font-size: 1.5em;
+            margin-right: 0.5em;
             a {
-                color: $MAIN_COLOR_01;
+                color: $MAIN_COLOR;
             }
         }
     }
@@ -400,8 +405,8 @@ header {
     height: 55px;
     clear: both;
     text-align: center;
-    background: $MAIN_COLOR_01;
-    color: $MAIN_COLOR_01_FONT;
+    background: $MAIN_COLOR;
+    color: $MAIN_COLOR_FONT;
     p {
         padding: 10px;
         font-weight: bold;
@@ -431,7 +436,7 @@ header {
 }
 
 #block_error div h2 {
-    color: $MAIN_COLOR_01;
+    color: $MAIN_COLOR;
     font-size: 24px;
     display: block;
     padding: 0 0 14px 0;
@@ -442,14 +447,13 @@ header {
 
 .btn-datax {
     border: 1px solid #ddd;
-    color: $MAIN_COLOR_01;
+    color: $MAIN_COLOR;
     margin: 5px 0;
-    color: #fff;
-    background-color: firebrick;
-    background-image: linear-gradient(-180deg, #d82121 0%, firebrick 90%);
+    color: $MAIN_COLOR_FONT;
+    background-color: $MAIN_COLOR;
     &:hover {
-        color: #fff;
-        background-image: linear-gradient(-180deg, firebrick 0%, #d82121 90%);
+        background-color: $BUTTON_HOVER_COLOR;
+        color: $MAIN_COLOR_FONT;
     }
 }
 

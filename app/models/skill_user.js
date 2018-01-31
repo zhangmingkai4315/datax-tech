@@ -1,7 +1,6 @@
 // Example model
 
 const Sequelize = require("sequelize");
-const User = require("./user");
 module.exports = (sequelize, DataTypes) => {
   const SkillUser = sequelize.define(
     "SkillUser",

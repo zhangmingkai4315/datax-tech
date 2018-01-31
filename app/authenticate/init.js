@@ -38,15 +38,25 @@ function findUser(email, callback) {
         return callback(null, user);
       }
       return callback(null);
-    });
+    })
+    .catch(err => callback(null, err));
 }
 
-passport.serializeUser((user, cb) => {
-  cb(null, user.email);
+passport.serializeUser((user, done) => {
+  done(null, user.id);
 });
 
-passport.deserializeUser((email, cb) => {
-  findUser(email, cb);
+passport.deserializeUser((id, done) => {
+  db
+    .User
+    .findById(id)
+    .then((user) => {
+      if (user) {
+        return done(null, user);
+      }
+      return done(null, null);
+    })
+    .catch(err => done(null, false));
 });
 
 function initPassport() {

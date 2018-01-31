@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     head_img: Sequelize.STRING
   }, {
     underscored: true,
+    tableName: 'articles',
     classMethods: {
       associate: (models) => {
         // example on how to add relations Article.hasMany(models.Comments);

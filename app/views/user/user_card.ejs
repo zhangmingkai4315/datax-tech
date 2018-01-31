@@ -1,6 +1,7 @@
-<div class = "profile-user-card col-md-3 col-sm-12">
+<div class="col-sm-12 col-md-3 reduce-padding">
+<div class = "profile-user-card col-sm-12">
         <% if(typeof editable !== 'undefined' && editable === true) { %>
-        <a href="/user/<%= user.username %>/edit" class="btn btn-datax">
+        <a href="/user/<%= user.username %>/edit" class="user-edit-btn">
             <i class="fa fa-cogs" aria-hidden="true"></i> 编辑</i>
         </a>
         <% } %>
@@ -19,18 +20,32 @@
         <div class="divider"></div>
         <div class="user-skill">
           <h3>技能列表</h3>
-          <span class="skill">NodeJS</span>
-          <span class="skill">Python</span>
-          <span class="skill">Javascript</span>
-          <span class="skill">Go</span>
+          <% for(var i=0; i<user.Skills.length; i++) {%>
+            <span class="skill"><%= user.Skills[i].name %></span>
+          <% } %>
         </div>
         <div class="divider"></div>
         <div class="user-social-info">
           <h3>其他链接</h3>
-          <span class="socail-link"><a href=" http://www.jsmean.com"><i class="fa fa-globe" aria-hidden="true"></i></a></span>
-          <span class="socail-link"><a href=" http://github.com/zhangmingkai4315"><i class="fa fa-github" aria-hidden="true"></i></a></span>
+          <% if(user.globe_url) { %>
+            <span class="socail-link"><a href="<%= user.globe_url %>"><i class="fa fa-globe" aria-hidden="true"></i></a></span>
+          <% }%>
+          <% if(user.github_url) { %>
+            <span class="socail-link"><a href="<%= user.github_url %>"><i class="fa fa-github" aria-hidden="true"></i></a></span>
+          <% }%>  
+          <% if(user.facebook_url) { %>
+            <span class="socail-link"><a href="<%= user.facebook_url %>"><i class="fa fa-facebook" aria-hidden="true"></i></a></span>
+          <% }%>  
+          <% if(user.twitter_url) { %>
+            <span class="socail-link"><a href="<%= user.twitter_url %>"><i class="fa fa-twitter" aria-hidden="true"></i></a></span>
+          <% }%>  
+          <% if(user.weibo_url) { %>
+            <span class="socail-link"><a href="<%= user.weibo_url %>"><i class="fa fa-weibo" aria-hidden="true"></i></a></span>
+          <% }%>   
         </div>
+        <div class="divider"></div>
        <div class="user-social-info">
           <h3>个人介绍</h3>
-         <%= user.introduce ? user.introduce:'暂无' %>
-        </div>       
+         <p><%= user.introduce ? user.introduce:'暂无' %></p>
+        </div>
+</div>       

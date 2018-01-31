@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
         user_id: {
             type: DataTypes.INTEGER
         }
-    }, {underscored: true});
+    }, {
+        timestamps: false,
+        freezeTableName: true,
+        tableName: 'skill_users',
+        underscored: true
+    });
     return SkillUser;
 };

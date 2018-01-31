@@ -33,6 +33,12 @@ module.exports = (sequelize) => {
     },
     image_url: Sequelize.STRING,
     thunbnail_url: Sequelize.STRING,
+    globe_url: Sequelize.STRING,
+    github_url: Sequelize.STRING,
+    weibo_url: Sequelize.STRING,
+    facebook_url: Sequelize.STRING,
+    twitter_url: Sequelize.STRING,
+
     group_name: {
       type: Sequelize.STRING,
       defaultValue: ''
@@ -48,6 +54,8 @@ module.exports = (sequelize) => {
     }
   }, {
     underscored: true,
+    paranoid: true,
+    tableName: 'users',
     instanceMethods: {
       generateHash(password) {
         return bcrypt.hash(password, bcrypt.genSaltSync(8));

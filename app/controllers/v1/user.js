@@ -8,13 +8,25 @@ module.exports = (app, passport) => {
         const username = req.params.username
         if (!username) {
             res.render('common/500.ejs');
+            return
         }
         db
             .User
-            .findOne({where: {
+            .findOne({
+                where: {
                     username
-                }})
+                },
+                include: [
+                    {
+                        model: db.Skill,
+                        through: {
+                            attributes: ['id', 'name']
+                        }
+                    }
+                ]
+            })
             .then((user) => {
+                console.log(user)
                 if (user) {
                     res.render('user/profile.ejs', {
                         user: user,
@@ -37,9 +49,19 @@ module.exports = (app, passport) => {
         }
         db
             .User
-            .findOne({where: {
+            .findOne({
+                where: {
                     username
-                }})
+                },
+                include: [
+                    {
+                        model: db.Skill,
+                        through: {
+                            attributes: ['id', 'name']
+                        }
+                    }
+                ]
+            })
             .then((user) => {
                 if (user) {
                     res.render('user/edit.ejs', {
@@ -60,7 +82,8 @@ module.exports = (app, passport) => {
             .User
             .update({
                 group_name: req.body.groupName || '',
-                job_name: req.body.jobName || ''
+                job_name: req.body.jobName || '',
+                introduce: req.body.introduce || ''
             }, {
                 where: {
                     id: req.user.id
@@ -90,26 +113,50 @@ module.exports = (app, passport) => {
                     .json({error: err})
             })
     })
-
+    app.post('/api/user/links', middleware.authenticationMiddle, (req, res) => {
+        db
+            .User
+            .update({
+                globe_url: req.body.globe_url || '',
+                weibo_url: req.body.weibo_url || '',
+                facebook_url: req.body.facebook_url || '',
+                twitter_url: req.body.twitter_url || '',
+                github_url: req.body.github_url || ''
+            }, {
+                where: {
+                    id: req.user.id
+                }
+            })
+            .then((result) => {
+                res.json({data: result})
+            })
+            .catch((err) => {
+                res
+                    .status(500)
+                    .json({error: err})
+            })
+    })
     app.post('/api/user/skill', middleware.authenticationMiddle, (req, res) => {
         const skills = req.body.skills;
-        const newSkills = skills.filter(s => typeof s === 'string')
-        const oldSkills = skills.filter(s => typeof s === 'number')
-        console.log(utils.getMethods(req.user))
-
+        const newSkills = skills.filter(s => isNaN(parseInt(s)))
+        const oldSkills = skills.filter(s => typeof parseInt(s) === 'number' && !isNaN(parseInt(s)))
+        console.log(oldSkills)
         req
             .user
             .setSkills([])
             .then(() => {
                 if (skills.length === 0) {
                     res.json({data: "remove all skills"})
+                    return
                 }
-                const newSkillObject = newSkills.map(n => db.Skill.create({name: n}))
+                console.log(newSkills)
+                const newSkillObject = newSkills.map(n => ({name: n}))
                 return db
                     .Skill
-                    .bulkCreate(newSkillObject)
+                    .bulkCreate(newSkillObject, {individualHooks: true})
             })
             .then(skills => {
+                console.log(skills)
                 return req
                     .user
                     .setSkills(skills)
@@ -128,7 +175,7 @@ module.exports = (app, passport) => {
             .then((oldSkills) => {
                 return req
                     .user
-                    .setSkills(oldSkills)
+                    .addSkills(oldSkills)
             })
             .then(() => {
                 return res.json({data: 'success'})

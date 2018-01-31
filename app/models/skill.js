@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {
         underscored: true,
+        timestamps: false,
+        freezeTableName: true,
+        tableName: 'skills',
         classMethods: {
             associate: (models) => {
                 // example on how to add relations Article.hasMany(models.Comments);

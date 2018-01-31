@@ -38,7 +38,7 @@ $(function () {
             $('#user-header-photo').hide()
             data.context = $('<div/>').appendTo('#files');
             $.each(data.files, function (index, file) {
-                var node = $('<p/>').append($('<span/>').text(file.name));
+                var node = $('<p/>').append($('<span/>').text(''));
                 if (!index) {
                     node
                         .append('<br>')
@@ -65,8 +65,9 @@ $(function () {
                 data
                     .context
                     .find('button')
-                    .text('Upload')
+                    .text('上传头像')
                     .prop('disabled', !!data.files.error);
+                $('#progress').removeClass('hide')
             }
         })
         .on('fileuploadprogressall', function (e, data) {
@@ -81,8 +82,8 @@ $(function () {
                             .attr('target', '_blank')
                             .prop('href', file.url);
                         $(data.context.children()[index]).wrap(link);
-                        $('.profile-user-card img').attr("src", file.url);
-                        $('.user-thumbnail-img').attr("src", file.url);
+                        // $('.profile-user-card img').attr("src", file.url);
+                        // $('.user-thumbnail-img').attr("src", file.url);
                     } else if (file.error) {
                         var error = $('<span class="text-danger"/>').text(file.error);
                         $(data.context.children()[index])
@@ -90,7 +91,11 @@ $(function () {
                             .append(error);
                     }
                 });
-
+            setTimeout(function () {
+                window
+                    .location
+                    .reload()
+            }, 2000)
             toastr.success('上传头像文件成功')
 
         })

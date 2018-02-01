@@ -1,0 +1,104 @@
+@import "theme.scss";
+.profile-main {
+    margin-top: 30px;
+}
+
+.profile-user-card {
+    border: 1px solid #dedede;
+    padding: 1em;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    .user-edit-btn {
+        color: $MAIN_COLOR;
+        text-decoration: none;
+    }
+    .user-image img {
+        display: block;
+        width: 100px;
+        height: 100px;
+        margin: 20px auto;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+    }
+    .user-name {
+        font-weight: bold;
+        margin: 0 0 10px 0;
+        text-align: center;
+        font-family: sans-serif;
+        font-size: 1.5em;
+    }
+    .user-group,
+    .user-job {
+        display: block;
+        margin: 0 0 10px 0;
+        text-align: center;
+        color: #999;
+        font-weight: normal;
+    }
+    .user-job {
+        font-weight: 1.2em;
+    }
+    .user-skill,
+    .user-social-info {
+        margin-bottom: 1em;
+        h3 {
+            margin: 10 0 10px 0;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: #999;
+        }
+        p {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            color: #3e3e3e;
+            padding: 0.2em 0;
+        }
+        .skill {
+            box-sizing: content-box;
+            color: #999;
+            font-size: 13px;
+            display: inline-block;
+            padding: 5px 5px 5px 5px;
+            margin-right: 1em;
+            border: 1px solid #ddd;
+            color: #444;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .socail-link {
+            font-size: 1.5em;
+            margin-right: 0.5em;
+            a {
+                color: $MAIN_COLOR;
+            }
+        }
+    }
+}
+
+.profile-info {
+    text-align: center;
+    height: 50px;
+    background: $MAIN_COLOR;
+    color: $MAIN_COLOR_FONT;
+    .info-bar {
+        display: inline-block;
+        padding: 1em 1em;
+        cursor: pointer;
+        height: 50px;
+        transition: all 0.1s ease;
+        &:hover {
+            background: $MAIN_COLOR_FONT;
+            color: $MAIN_COLOR;
+        }
+        .info-name {
+            font-weight: bold;
+        }
+        .info-detail {
+            font-weight: bold;
+        }
+    }
+}

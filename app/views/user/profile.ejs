@@ -4,29 +4,31 @@
   <div class="profile-info col-md-12">
       <% include ./user_static_header.ejs %>
   </div>
-  <div class="profile-main col-md-12">
-      <% include ./user_card.ejs %>
+  <div class="col-md-12">
+    <div class="profile-main">
+    <div class="reduce-padding col-md-3 col-sm-12 ">
+        <% include ./user_card.ejs %>
     </div>
-    <div class="user-projects col-md-9 col-sm-12">
-          <div class="blog-post">
+    <div class="user-projects col-md-6 col-sm-12">
+          <div class="article-post">
               <ul class="posts">
                 <% for(var i=0; i<user.Articles.length; i++) {%>
                 <li class="post">
-                  <img src="<%= user.Articles[i].head_img? user.Articles[i].head_img :'/img/default-article-cover.jpg'%>" />
+                  <a href="/user/<%= user.username %>/articles/<%= user.Articles[i].id %>"><img class="img-responsive" src="<%= user.Articles[i].head_img? user.Articles[i].head_img :'/img/default-cover-image.png'%>" /></a>
                   <div class="post-info">
-                    <h3><%= user.Articles[i].title %></h3>
+                     <a href="/user/<%= user.username %>/articles/<%= user.Articles[i].id %>"><h3><%= user.Articles[i].title %></h3></a>
                     <p><%= user.Articles[i].content %></p>
-                    <a class="button" href="/articles/<%= user.Articles[i].id %>">Read More</a>
+                    <a class="button" href="/user/<%= user.username %>/articles/<%= user.Articles[i].id %>">Read More</a>
                   </div>
                 </li>       
                 <% } %>
-                
               </ul>
-              <div class="new-post">
-                  <a class="btn btn-datax" href="/article/add">新增文章</a>
-              </div>
-          </div>
 
+          </div>
+    </div>
+    <div class="col-md-3 col-sm-12">
+      <a class="btn btn-datax full-width" href="/user/<%= user.username %>/write"><i class="fa fa-keyboard"></i> 创建文章</a>
+    </div>
     </div>
   </div>
 <% include ../partial/footer %>

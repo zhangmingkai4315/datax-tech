@@ -1,0 +1,41 @@
+<% include ../partial/header %>
+<% include ../partial/nav %>
+
+<div class="profile-info col-md-12">
+    <% include ./user_static_header.ejs %>
+</div>
+  <div class="col-md-12">
+    <div class="profile-main">
+    <div class="reduce-padding col-md-3 col-sm-12 ">
+        <% include ./user_card.ejs %>
+    </div>
+    <div class="user-write-form card col-md-9 col-sm-12">
+        <div class="article-cover-img">
+            <div class="article-cover-btn fileinput-button">
+                <button class="btn btn-datax" id="article-cover-upload-btn">上传封面</button>
+                <input class="hide" id="article-cover-upload" type="file" name="cover-img">
+            </div>
+        </div>
+        <div class="article-main">
+            <form>
+                <div class="form-group article-title">
+                    <label for="article-title">文章标题</label>
+                    <input type="text" class="form-control" id="article-title" placeholder="" required>
+                </div>
+                <div class="form-group article-content">
+                    <label for="article-content">文章正文</label>
+                    <textarea rows="20" cols="" class="form-control" id="article-content" required></textarea>
+                </div>
+
+                <div class="form-group article-tags">
+                    <label for="article-title">添加标签</label>
+                    <input type="text" class="form-control" id="article-title" placeholder="" required>
+                </div>
+                <button type="submit" id="article-new-submit" class="btn btn-datax">提交信息</button>
+            </form>
+        </div>
+    </div>
+
+    </div>
+</div>
+<% include ../partial/footer %>

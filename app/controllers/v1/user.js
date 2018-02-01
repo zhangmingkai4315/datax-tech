@@ -4,7 +4,6 @@ const db = require("../../models");
 const utils = require("../utils");
 module.exports = (app, passport) => {
   app.get("/user/:username", middleware.authenticationMiddle, (req, res) => {
-    // console.log(req.user) console.log(req.params)
     const username = req.params.username;
     if (!username) {
       res.render("common/500.ejs");
@@ -25,7 +24,6 @@ module.exports = (app, passport) => {
       ]
     })
       .then(user => {
-        console.log(user);
         if (user) {
           res.render("user/profile.ejs", {
             user: user,
@@ -44,7 +42,6 @@ module.exports = (app, passport) => {
     "/user/:username/edit",
     middleware.authenticationMiddle,
     (req, res) => {
-      // console.log(req.user) console.log(req.params)
       const username = req.params.username;
       if (!username) {
         res.render("common/500.ejs");
@@ -66,7 +63,45 @@ module.exports = (app, passport) => {
           if (user) {
             res.render("user/edit.ejs", {
               user: user,
-              title: `用户:${user.username}`,
+              title: "Profile",
+              editable: req.user.username === username
+            });
+          } else {
+            res.render("common/404.ejs", { title: "Error 404" });
+          }
+        })
+        .catch(() => {
+          res.render("common/500.ejs", { title: "Error 500" });
+        });
+    }
+  );
+
+  app.get(
+    "/user/:username/write",
+    middleware.authenticationMiddle,
+    (req, res) => {
+      const username = req.params.username;
+      if (!username) {
+        res.render("common/500.ejs");
+      }
+      db.User.findOne({
+        where: {
+          username
+        },
+        include: [
+          {
+            model: db.Skill,
+            through: {
+              attributes: ["id", "name"]
+            }
+          }
+        ]
+      })
+        .then(user => {
+          if (user) {
+            res.render("user/write.ejs", {
+              user: user,
+              title: "WritePage",
               editable: req.user.username === username
             });
           } else {
@@ -103,7 +138,6 @@ module.exports = (app, passport) => {
     req.user
       .getSkill()
       .then(skill => {
-        console.log(skill);
         return res.json({ data: skill });
       })
       .catch(err => {
@@ -138,7 +172,6 @@ module.exports = (app, passport) => {
     const oldSkills = skills.filter(
       s => typeof parseInt(s) === "number" && !isNaN(parseInt(s))
     );
-    console.log(oldSkills);
     req.user
       .setSkills([])
       .then(() => {
@@ -146,12 +179,10 @@ module.exports = (app, passport) => {
           res.json({ data: "remove all skills" });
           return;
         }
-        console.log(newSkills);
         const newSkillObject = newSkills.map(n => ({ name: n }));
         return db.Skill.bulkCreate(newSkillObject, { individualHooks: true });
       })
       .then(skills => {
-        console.log(skills);
         return req.user.setSkills(skills);
       })
       .then(() => {
@@ -180,7 +211,6 @@ module.exports = (app, passport) => {
     next
   ) {
     Uploader.on("end", function(fileinfo, req, res) {
-      console.log(fileinfo);
       db.User.update(
         {
           image_url: fileinfo.url || "",

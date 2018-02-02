@@ -1,45 +1,45 @@
-const express = require('express');
-const glob = require('glob');
+const express = require("express");
+const glob = require("glob");
 
-const favicon = require('serve-favicon');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const compress = require('compression');
-const methodOverride = require('method-override');
-const flash = require('connect-flash');
-const passport = require('passport');
-const session = require('express-session');
-const RedisStore = require('connect-redis')(session);
-const Uploader = require('jquery-file-upload-middleware');
+const favicon = require("serve-favicon");
+const logger = require("morgan");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+const compress = require("compression");
+const methodOverride = require("method-override");
+const flash = require("connect-flash");
+const passport = require("passport");
+const session = require("express-session");
+const RedisStore = require("connect-redis")(session);
+const Uploader = require("jquery-file-upload-middleware");
 
 module.exports = (app, config) => {
-  const env = process.env.NODE_ENV || 'development';
+  const env = process.env.NODE_ENV || "development";
   const viewPath = `${config.root}/app/views`;
   const publicPath = `${config.root}/public`;
   const faviconPath = `${config.root}/public/img/icon/favicon.ico`;
   const controllerV1 = `${config.root}/app/controllers/v1/*.js`;
   const uploadPath = `${config.root}/public/uploads/`;
-  app.set('uploadPath', uploadPath);
+  app.set("uploadPath", uploadPath);
   Uploader.configure({
     uploadDir: uploadPath,
-    uploadUrl: '/uploads',
+    uploadUrl: "/uploads",
     imageVersions: {
       thumbnail: {
         width: 80,
         height: 80
       }
     }
-  })
+  });
 
   app.locals.ENV = env;
-  app.locals.ENV_DEVELOPMENT = env == 'development';
+  app.locals.ENV_DEVELOPMENT = env === "development";
 
-  app.set('views', viewPath);
-  app.set('view engine', 'ejs');
+  app.set("views", viewPath);
+  app.set("view engine", "ejs");
 
   app.use(favicon(faviconPath));
-  app.use(logger('dev'));
+  app.use(logger("dev"));
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
@@ -47,7 +47,7 @@ module.exports = (app, config) => {
   app.use(compress());
   app.use(express.static(publicPath));
   app.use(methodOverride());
-  require('../app/authenticate').init(app);
+  require("../app/authenticate").init(app);
 
   app.use(session({
     store: new RedisStore({url: config.redis}),
@@ -65,28 +65,28 @@ module.exports = (app, config) => {
   });
 
   app.use((req, res, next) => {
-    const err = new Error('Not Found');
+    const err = new Error("Not Found");
     err.status = 404;
     next(err);
   });
 
-  if (app.get('env') === 'development') {
+  if (app.get("env") === "development") {
     app.use((err, req, res) => {
       res.status(err.status || 500);
-      res.render('error', {
+      res.render("error", {
         message: err.message,
         error: err,
-        title: 'error'
+        title: "error"
       });
     });
   }
 
   app.use((err, req, res) => {
     res.status(err.status || 500);
-    res.render('error', {
+    res.render("error", {
       message: err.message,
       error: {},
-      title: 'error'
+      title: "error"
     });
   });
 

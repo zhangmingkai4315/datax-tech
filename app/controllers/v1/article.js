@@ -1,72 +1,74 @@
 const Uploader = require("jquery-file-upload-middleware");
 const moment = require("moment");
-var markdown = require("markdown").markdown;
+const {markdown} = require("markdown");
 const db = require("../../models");
-const utils = require("../utils");
 const middleware = require("../../authenticate/middleware");
 
-module.exports = (app, passport) => {
+module.exports = (app) => {
   // 定义用户上传article封面的逻辑接口
-  app.post(
-    "/upload/articlecover",
-    middleware.authenticationMiddle,
-    (req, res, next) => {
-      Uploader.on("begin", function(fileInfo) {
-        fileInfo.name = new Date().getTime() + fileInfo.originalName;
-      });
-      Uploader.fileHandler({
-        uploadDir: function() {
-          return req.app.get("uploadPath") + req.user.username + "/articles";
-        },
-        uploadUrl: function() {
-          return "/uploads/" + req.user.username + "/articles";
-        },
-        imageVersions: { thumbnail: { width: 200, height: 130 } }
-      })(req, res, next);
-    }
-  );
-  app.get("/user/:username/articles/:id", (req, res, next) => {
-    const id = req.params.id;
-    const username = req.params.username;
+  app.post("/upload/articlecover", middleware.authenticationMiddle, (req, res, next) => {
+    Uploader.on("begin", (fileInfo) => {
+      fileInfo.name = new Date().getTime() + fileInfo.originalName;
+    });
+    Uploader.fileHandler({
+      uploadDir: () => `${req
+        .app
+        .get("uploadPath")}${req
+        .user
+        .username}/articles`,
+      uploadUrl: () => `/uploads/${req.user.username}/articles`,
+      imageVersions: {
+        thumbnail: {
+          width: 200,
+          height: 130
+        }
+      }
+    })(req, res, next);
+  });
+  app.get("/user/:username/articles/:id", (req, res) => {
+    const {username, id} = req.params;
     if (!id || !username) {
       res.render("common/500.ejs");
       return;
     }
 
-    db.User.find({
-      where: {
-        username: username
-      },
-      include: [
-        {
-          model: db.Skill,
-          through: {
-            attributes: ["id", "name"]
-          }
+    db
+      .User
+      .find({
+        where: {
+          username
         },
-        {
-          model: db.Article,
-          where: {
-            id: id
-          },
-          include: [
-            {
-              model: db.Comment,
-              order: [db.Comment, "updated_at", "ASC"],
-              include: [
-                {
-                  model: db.User
-                }
-              ]
+        include: [
+          {
+            model: db.Skill,
+            through: {
+              attributes: ["id", "name"]
             }
-          ]
-        }
-      ]
-    })
-      .then(user => {
+          }, {
+            model: db.Article,
+            where: {
+              id
+            },
+            include: [
+              {
+                model: db.Comment,
+                order: [
+                  db.Comment, "updated_at", "ASC"
+                ],
+                include: [
+                  {
+                    model: db.User
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      })
+      .then((user) => {
         const articleList = user.Articles;
         if (articleList.length === 0) {
-          res.render("common/404.ejs", { title: "Error 404" });
+          res.render("common/404.ejs", {title: "Error 404"});
           return;
         }
         const article = articleList[0];
@@ -83,29 +85,21 @@ module.exports = (app, passport) => {
           title: article.name
         });
       })
-      .catch(err => {
-        console.log(err);
-        res.render("common/500.ejs", { title: "Error 500" });
+      .catch((err) => {
+        res.render("common/500.ejs", {title: "Error 500"});
       });
   });
-  app.post(
-    "/api/articles",
-    middleware.authenticationMiddle,
-    (req, res, next) => {
-      const article = db.Article.create({
-        title: req.body.title,
-        content: req.body.content,
-        head_img: req.body.head_img,
-        user_id: req.user.id
+  app.post("/api/articles", middleware.authenticationMiddle, (req, res) => {
+    db
+      .Article
+      .create({title: req.body.title, content: req.body.content, head_img: req.body.head_img, user_id: req.user.id})
+      .then((article) => {
+        res.json({data: article.id});
       })
-        .then(article => {
-          console.log(article);
-          res.json({ data: article.id });
-        })
-        .catch(err => {
-          console.log(err);
-          res.status(500).json({ error: err });
-        });
-    }
-  );
+      .catch((err) => {
+        res
+          .status(500)
+          .json({error: err});
+      });
+  });
 };

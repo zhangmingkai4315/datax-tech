@@ -114,8 +114,8 @@ header {
     top: 0;
     left: 0;
     .container {
-        padding-top: 120px;
-        padding-bottom: 50px;
+        padding-top: 60px;
+        padding-bottom: 100px;
     }
     img {
         max-width: 120px !important;
@@ -133,6 +133,8 @@ header {
             font-size: 1.25em;
             font-weight: 300;
             font-family: monospace;
+            margin-bottom: .5rem;
+
         }
     }
 }

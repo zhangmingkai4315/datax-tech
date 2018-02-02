@@ -1,12 +1,7 @@
 function getMethods(obj) {
-  var ret = [];
-  for (var prop in obj) {
-    if (
-      obj[prop] &&
-      obj[prop].constructor &&
-      obj[prop].call &&
-      obj[prop].apply
-    ) {
+  const ret = [];
+  for (let prop in obj) {
+    if (obj[prop] && obj[prop].constructor && obj[prop].call && obj[prop].apply) {
       ret.push(prop);
     }
   }
@@ -14,5 +9,5 @@ function getMethods(obj) {
 }
 
 module.exports = {
-  getMethods: getMethods
+  getMethods
 };

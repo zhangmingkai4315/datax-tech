@@ -1,5 +1,5 @@
-$(function() {
-  $("#user-basic-info-submit").click(function(event) {
+$(() => {
+  $("#user-basic-info-submit").click((event) => {
     event.preventDefault();
     const groupName = $.trim($("#groupname").val());
     const jobName = $.trim($("#jobname").val());
@@ -7,40 +7,44 @@ $(function() {
     $.ajax({
       type: "POST",
       url: "/profile/baisc",
-      data: JSON.stringify({ groupName, jobName, introduce }),
+      data: JSON.stringify({groupName, jobName, introduce}),
       contentType: "application/json; charset=utf-8",
-      success: function() {
+      success: () => {
         toastr.success("保存信息成功");
-        setTimeout(function() {
-          window.location.reload();
+        setTimeout(() => {
+          window
+            .location
+            .reload();
         }, 1000);
       },
-      failure: function() {
+      failure: () => {
         toastr.error("保存信息失败");
       }
     });
   });
-  $("#user-basic-skill-submit").click(function(event) {
+  $("#user-basic-skill-submit").click((event) => {
     event.preventDefault();
     const skills = $("#user-skill-select-input").val();
     $.ajax({
       type: "POST",
       url: "/api/user/skill",
-      data: JSON.stringify({ skills }),
+      data: JSON.stringify({skills}),
       contentType: "application/json; charset=utf-8",
-      success: function() {
+      success: () => {
         toastr.success("保存信息成功");
-        setTimeout(function() {
-          window.location.reload();
+        setTimeout(() => {
+          window
+            .location
+            .reload();
         }, 1000);
       },
-      failure: function() {
+      failure: () => {
         toastr.error("保存信息失败");
       }
     });
   });
 
-  $("#user-profile-link-submit").click(function(event) {
+  $("#user-profile-link-submit").click((event) => {
     event.preventDefault();
     const globe_url = $.trim($("#globe_url").val());
     const github_url = $.trim($("#github_url").val());
@@ -50,21 +54,17 @@ $(function() {
     $.ajax({
       type: "POST",
       url: "/api/user/links",
-      data: JSON.stringify({
-        globe_url,
-        github_url,
-        facebook_url,
-        weibo_url,
-        twitter_url
-      }),
+      data: JSON.stringify({globe_url, github_url, facebook_url, weibo_url, twitter_url}),
       contentType: "application/json; charset=utf-8",
-      success: function() {
+      success: () => {
         toastr.success("保存信息成功");
-        setTimeout(function() {
-          window.location.reload();
+        setTimeout(() => {
+          window
+            .location
+            .reload();
         }, 1000);
       },
-      failure: function() {
+      failure: () => {
         toastr.error("保存信息失败");
       }
     });
@@ -77,15 +77,15 @@ $(function() {
       url: "/api/skills",
       delay: 250,
       dataType: "json",
-      processResults: function(data) {
+      processResults: (data) => {
         console.log(data);
-        return { results: data.data };
+        return {results: data.data};
       },
       cache: true
     },
-    createTag: function(params) {
+    createTag: (params) => {
       console.log(params);
-      var term = $.trim(params.term);
+      const term = $.trim(params.term);
       if (term === "") {
         return null;
       }

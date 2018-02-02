@@ -1,28 +1,21 @@
-// Example model
-
-const Sequelize = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  const SkillUser = sequelize.define(
-    "SkillUser",
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      skill_id: {
-        type: DataTypes.INTEGER
-      },
-      user_id: {
-        type: DataTypes.INTEGER
-      }
+  const SkillUser = sequelize.define("SkillUser", {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
     },
-    {
-      timestamps: false,
-      freezeTableName: true,
-      tableName: "skill_users",
-      underscored: true
+    skill_id: {
+      type: DataTypes.INTEGER
+    },
+    user_id: {
+      type: DataTypes.INTEGER
     }
-  );
+  }, {
+    timestamps: false,
+    freezeTableName: true,
+    tableName: "skill_users",
+    underscored: true
+  });
   return SkillUser;
 };

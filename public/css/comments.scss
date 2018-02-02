@@ -1,0 +1,99 @@
+@import "theme.scss";
+.comment-container {
+    input,
+    textarea {
+        border: 1px solid rgba(128, 128, 128, 0.39);
+        border-radius: 3px;
+        padding: 0.3rem;
+        display: block;
+        color: #555f77;
+    }
+    input::-webkit-input-placeholder,
+    textarea::-webkit-input-placeholder {
+        color: #ced2db;
+    }
+    input::-moz-placeholder,
+    textarea::-moz-placeholder {
+        color: #ced2db;
+    }
+    input:-moz-placeholder,
+    textarea:-moz-placeholder {
+        color: #ced2db;
+    }
+    input:-ms-input-placeholder,
+    textarea:-ms-input-placeholder {
+        color: #ced2db;
+    }
+    p {
+        line-height: 1.6rem;
+    }
+    .comments {
+        margin: 1em 0 2em 0;
+        max-width: 80%;
+    }
+    .comment-wrap {
+        margin-bottom: 1.25rem;
+        display: table;
+        width: 100%;
+        min-height: 5.3125rem;
+    }
+    .photo {
+        padding-top: 0.625rem;
+        display: table-cell;
+        width: 3.5rem;
+        .avatar {
+            height: 4rem;
+            width: 4rem;
+            border-radius: 50%;
+            background-size: contain;
+        }
+    }
+    .comment-block {
+        padding: 1rem;
+        background-color: #fff;
+        display: table-cell;
+        vertical-align: top;
+        border-radius: 0.1875rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+        textarea {
+            width: 100%;
+            resize: none;
+        }
+    }
+    .comment-text {
+        margin-bottom: 1.25rem;
+    }
+    .bottom-comment {
+        color: $MAIN_COLOR;
+        font-size: 0.875rem;
+    }
+    .comment-date {
+        float: left;
+    }
+    .comment-actions {
+        float: right;
+    }
+    .comment-actions li {
+        margin-top: 0.2rem;
+        display: inline-block;
+        box-sizing: content-box;
+        cursor: pointer;
+        padding: 0.5rem 0.2rem;
+        border: 1px solid white;
+        border-radius: 2px;
+    }
+    .comment-actions li.complain {
+        border-right: 1px solid #e1e5eb;
+    }
+    .comment-actions li.reply {
+        padding-right: 0.125rem;
+    }
+    .comment-actions li:hover {
+        border: 1px solid #8f8f8f;
+    }
+    .comment-actions li.comment-login {
+        a {
+            text-decoration: none;
+        }
+    }
+}

@@ -6,9 +6,6 @@ const utils = require("../utils");
 const middleware = require("../../authenticate/middleware");
 
 module.exports = (app, passport) => {
-  // app.get('/articles',(req,res)=>{ return res.render('auth/signup', {   title:
-  // '注册用户',   message: req.flash('signupMessage') }
-
   // 定义用户上传article封面的逻辑接口
   app.post(
     "/upload/articlecover",
@@ -35,6 +32,7 @@ module.exports = (app, passport) => {
       res.render("common/500.ejs");
       return;
     }
+
     db.User.find({
       where: {
         username: username
@@ -50,25 +48,39 @@ module.exports = (app, passport) => {
           model: db.Article,
           where: {
             id: id
-          }
+          },
+          include: [
+            {
+              model: db.Comment,
+              order: [db.Comment, "updated_at", "ASC"],
+              include: [
+                {
+                  model: db.User
+                }
+              ]
+            }
+          ]
         }
       ]
     })
       .then(user => {
-        console.log(user);
-        const article = user.Articles;
-        if (article.length === 0) {
+        const articleList = user.Articles;
+        if (articleList.length === 0) {
           res.render("common/404.ejs", { title: "Error 404" });
           return;
         }
-        const contentHTML = markdown.toHTML(article[0].content);
+        const article = articleList[0];
+        const comments = article.Comments;
+        const contentHTML = markdown.toHTML(article.content);
         res.render("articles/page.ejs", {
-          moment: moment,
-          user: user,
-          contentHTML: contentHTML,
-          article: article[0],
-          title: article[0].name,
-          editable: req.user.id === user.id
+          moment,
+          user,
+          current_user: req.user,
+          editable: req.user && req.user.username === username,
+          contentHTML,
+          article,
+          comments,
+          title: article.name
         });
       })
       .catch(err => {

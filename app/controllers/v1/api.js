@@ -64,6 +64,35 @@ module.exports = (app, passport) => {
       });
   });
 
+  app.post("/api/comments", middleware.authenticationMiddle, (req, res) => {
+    const article_id = req.body.article_id;
+    const content = req.body.comment;
+
+    if (!article_id || !content) {
+      res.status(400).json({ error: "comment data error" });
+      return;
+    }
+    db.Article.findById(article_id)
+      .then(article => {
+        if (!article) {
+          res.status(404).json({ error: "404 error" });
+          return;
+        }
+        return db.Comment.create({
+          user_id: req.user.id,
+          article_id,
+          content
+        });
+      })
+      .then(data => {
+        res.json({ data });
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({ error: err });
+      });
+  });
+
   app.get("/api/skills", (req, res) => {
     if (req.query && req.query.q) {
       const queryTerm = `%${req.query.q}%`;

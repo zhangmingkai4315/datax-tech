@@ -3,7 +3,7 @@ const middleware = require("../../authenticate/middleware");
 const db = require("../../models");
 const utils = require("../utils");
 module.exports = (app, passport) => {
-  app.get("/user/:username", middleware.authenticationMiddle, (req, res) => {
+  app.get("/user/:username", (req, res) => {
     const username = req.params.username;
     if (!username) {
       res.render("common/500.ejs");
@@ -27,8 +27,9 @@ module.exports = (app, passport) => {
         if (user) {
           res.render("user/profile.ejs", {
             user: user,
-            title: `用户:${user.username}`,
-            editable: req.user.username === username
+            current_user: req.user,
+            editable: req.user && req.user.username === username,
+            title: `profile-${user.username}`
           });
         } else {
           res.render("common/404.ejs", { title: "Error 404" });
@@ -45,6 +46,10 @@ module.exports = (app, passport) => {
       const username = req.params.username;
       if (!username) {
         res.render("common/500.ejs");
+      }
+      if (req.user.username !== username) {
+        res.render("common/403.ejs", { title: "Error 403" });
+        return;
       }
       db.User.findOne({
         where: {
@@ -63,8 +68,9 @@ module.exports = (app, passport) => {
           if (user) {
             res.render("user/edit.ejs", {
               user: user,
-              title: "Profile",
-              editable: req.user.username === username
+              current_user: req.user,
+              editable: req.user && req.user.username === username,
+              title: `profile-${user.username}`
             });
           } else {
             res.render("common/404.ejs", { title: "Error 404" });
@@ -84,6 +90,10 @@ module.exports = (app, passport) => {
       if (!username) {
         res.render("common/500.ejs");
       }
+      if (req.user.username !== username) {
+        res.render("common/403.ejs", { title: "Error 403" });
+        return;
+      }
       db.User.findOne({
         where: {
           username
@@ -101,8 +111,9 @@ module.exports = (app, passport) => {
           if (user) {
             res.render("user/write.ejs", {
               user: user,
-              title: "WritePage",
-              editable: req.user.username === username
+              current_user: req.user,
+              editable: req.user && req.user.username === username,
+              title: `write-${user.username}`
             });
           } else {
             res.render("common/404.ejs", { title: "Error 404" });
@@ -133,7 +144,7 @@ module.exports = (app, passport) => {
         res.status(500).json({ error: err });
       });
   });
-
+  // 更新基本信息,仅限于当前登入用户
   app.get("/api/user/skill", middleware.authenticationMiddle, (req, res) => {
     req.user
       .getSkill()

@@ -6,7 +6,7 @@ $(() => {
     const introduce = $.trim($("#introduce").val());
     $.ajax({
       type: "POST",
-      url: "/profile/baisc",
+      url: "/user/profile/basic",
       data: JSON.stringify({groupName, jobName, introduce}),
       contentType: "application/json; charset=utf-8",
       success: () => {
@@ -27,7 +27,7 @@ $(() => {
     const skills = $("#user-skill-select-input").val();
     $.ajax({
       type: "POST",
-      url: "/api/user/skill",
+      url: "/user/skill",
       data: JSON.stringify({skills}),
       contentType: "application/json; charset=utf-8",
       success: () => {
@@ -53,7 +53,7 @@ $(() => {
     const twitter_url = $.trim($("#twitter_url").val());
     $.ajax({
       type: "POST",
-      url: "/api/user/links",
+      url: "/user/links",
       data: JSON.stringify({globe_url, github_url, facebook_url, weibo_url, twitter_url}),
       contentType: "application/json; charset=utf-8",
       success: () => {
@@ -74,17 +74,15 @@ $(() => {
     tags: true,
     tokenSeparators: [","],
     ajax: {
-      url: "/api/skills",
+      url: "/skills",
       delay: 250,
       dataType: "json",
       processResults: (data) => {
-        console.log(data);
         return {results: data.data};
       },
       cache: true
     },
     createTag: (params) => {
-      console.log(params);
       const term = $.trim(params.term);
       if (term === "") {
         return null;

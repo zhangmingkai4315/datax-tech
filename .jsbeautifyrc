@@ -15,7 +15,7 @@
         "indent_handlebars": true,
         "indent_inner_html": false,
         "indent_scripts": "keep",
-        "indent_size": 4,
+        "indent_size": 2,
         "max_preserve_newlines": 10,
         "preserve_newlines": true,
         "unformatted": [

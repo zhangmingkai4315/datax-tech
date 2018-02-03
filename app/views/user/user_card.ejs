@@ -1,7 +1,7 @@
 
 <div class = "profile-user-card col-sm-12">
   <% if(typeof editable !== 'undefined' && editable === true) { %>
-  <a href="/user/<%= user.username %>/edit" class="user-edit-btn">
+  <a href="/users/<%= user.username %>/edit" class="user-edit-btn">
       <i class="fa fa-cogs" aria-hidden="true"></i> 编辑</i>
   </a>
   <% } %>
@@ -10,7 +10,7 @@
   </div>
 
   <div class="user-name">
-    <a href="/user/<%= user.username%>"><%= user.username%></a>
+    <a href="/users/<%= user.username%>"><%= user.username%></a>
   </div>
 
   <div class="user-group">

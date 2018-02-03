@@ -14,11 +14,11 @@
               <ul class="posts">
                 <% for(var i=0; i<user.Articles.length; i++) {%>
                 <li class="post">
-                  <a href="/user/<%= user.username %>/articles/<%= user.Articles[i].id %>"><img class="img-responsive" src="<%= user.Articles[i].head_img? user.Articles[i].head_img :'/img/default-cover-image.png'%>" /></a>
+                  <a href="/articles/<%= user.Articles[i].id %>"><img class="img-responsive" src="<%= user.Articles[i].head_img? user.Articles[i].head_img :'/img/default-cover-image.png'%>" /></a>
                   <div class="post-info">
-                     <a href="/user/<%= user.username %>/articles/<%= user.Articles[i].id %>"><h3><%= user.Articles[i].title %></h3></a>
+                     <a href="/articles/<%= user.Articles[i].id %>"><h3><%= user.Articles[i].title %></h3></a>
                     <p><%= user.Articles[i].content %></p>
-                    <a class="button" href="/user/<%= user.username %>/articles/<%= user.Articles[i].id %>">Read More</a>
+                    <a class="button" href="/articles/<%= user.Articles[i].id %>">Read More</a>
                   </div>
                 </li>       
                 <% } %>

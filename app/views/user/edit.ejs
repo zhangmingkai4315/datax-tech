@@ -14,7 +14,7 @@
                 <div class="info-block">
                     <h2>基本信息</h2>
                     <div class="divider red"></div>
-                    <form action="/api/user/basic">
+                    <form>
                         <div class="form-group">
                             <label for="username">用户名称</label>
                             <input type="text" class="form-control" id="username" value="<%= user.username%>" readonly>
@@ -39,7 +39,7 @@
                 <div class="info-block">
                     <h2>技能列表</h2>
                     <div class="divider red"></div>
-                    <form action="/api/user/skill">
+                    <form>
                         <div class="form-group">
                             <label for="username">技能选择</label>
                             <select multiple="multiple" class="form-control" id='user-skill-select-input'>
@@ -56,7 +56,7 @@
                 <div class="info-block">
                     <h2>社交网站链接</h2>
                     <div class="divider red"></div>
-                    <form action="/api/user/basic">
+                    <form>
                         <div class="form-group">
                             <label for="globe_url">个人网站</label>
                             <input type="text" class="form-control" id="globe_url" value="<%= user.globe_url ? user.globe_url:'' %>">
@@ -87,17 +87,14 @@
                 <h2>上传头像</h2>
                 <div class="divider red"></div>
                 <label>点击下面图片修改照片</label>
-
                 <div class="user-image fileinput-button">
                     <img class="img-responsive" id="user-header-photo" src="<%= user.image_url ? user.image_url:'/img/default-user.png' %>" />
                     <input id="user-header-photo-upload" type="file" name="files[]" multiple>
                 </div>
                 <div id="files" class="files"></div>
-                <!-- The global progress bar -->
                 <div id="progress" class="progress hide">
                     <div class="progress-bar progress-bar-striped"></div>
                 </div>
-                <!-- The container for the uploaded files -->
 
             </div>
         </div>

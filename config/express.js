@@ -1,5 +1,5 @@
 const express = require("express");
-const glob = require("glob");
+// const glob = require("glob");
 
 const favicon = require("serve-favicon");
 const logger = require("morgan");
@@ -12,13 +12,16 @@ const passport = require("passport");
 const session = require("express-session");
 const RedisStore = require("connect-redis")(session);
 const Uploader = require("jquery-file-upload-middleware");
+const authenticate = require("../app/authenticate");
+
+const mainHandler = require("../app/controllers/main");
+const authHandler = require("../app/controllers/auth");
 
 module.exports = (app, config) => {
   const env = process.env.NODE_ENV || "development";
   const viewPath = `${config.root}/app/views`;
   const publicPath = `${config.root}/public`;
   const faviconPath = `${config.root}/public/img/icon/favicon.ico`;
-  const controllerV1 = `${config.root}/app/controllers/v1/*.js`;
   const uploadPath = `${config.root}/public/uploads/`;
   app.set("uploadPath", uploadPath);
   Uploader.configure({
@@ -47,7 +50,7 @@ module.exports = (app, config) => {
   app.use(compress());
   app.use(express.static(publicPath));
   app.use(methodOverride());
-  require("../app/authenticate").init(app);
+  authenticate.init(app);
 
   app.use(session({
     store: new RedisStore({url: config.redis}),
@@ -59,10 +62,9 @@ module.exports = (app, config) => {
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(flash());
-  const controllers = glob.sync(controllerV1);
-  controllers.forEach((controller) => {
-    require(controller)(app, passport);
-  });
+
+  app.use("/auth", authHandler);
+  app.use("/", mainHandler);
 
   app.use((req, res, next) => {
     const err = new Error("Not Found");

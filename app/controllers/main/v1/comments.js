@@ -14,7 +14,7 @@ const createComment = (req, res) => {
     .Article
     .findById(articleId)
     .then(article => ((article)
-      ? (db.Comment.create({user_id: req.user.id, articleId, content}))
+      ? (db.Comment.create({user_id: req.user.id, article_id: articleId, content}))
       : (res.status(404).json({error: "404 error"}))))
     .then(data => res.json({data}))
     .catch(err => res.status(500).json({error: err}));

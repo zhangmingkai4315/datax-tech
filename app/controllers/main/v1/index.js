@@ -8,7 +8,10 @@ const comments = require("./comments");
 const middleware = require("../../../authenticate/middleware");
 
 v1.get("/", (req, res) => {
-  res.render("index", {title: "DataX"});
+  res.render("index", {
+    title: "DataX",
+    current_user: req.user
+  });
 });
 
 v1.get("/profile", middleware.authenticationMiddle, (req, res) => {

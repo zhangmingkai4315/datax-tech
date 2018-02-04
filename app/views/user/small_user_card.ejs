@@ -1,0 +1,17 @@
+
+<div class = "profile-user-card col-sm-12">
+  <div class="user-image">
+    <img class="img-responsive" src="<%= user.image_url ? user.image_url:'/img/default-user.png' %>"/>
+  </div>
+  <div class="user-name">
+    <a href="/users/<%= user.username%>"><%= user.username%></a>
+  </div>
+  <div class="user-group">
+    <%= user.group_name ? user.group_name:'暂无' %>
+  </div>
+  <div class="user-job">
+    <%= user.job_name ? user.job_name:'工程师' %>
+  </div>
+</div>
+
+     

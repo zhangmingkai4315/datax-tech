@@ -4,31 +4,32 @@
 <div class="profile-info col-md-12">
     <% include ../user/user_static_header.ejs %>
 </div>
+<div id="user-profile-abs-hover" class="hidden">
+    <% include ../user/small_user_card.ejs %>
+</div>
 <div class="col-md-12">
     <div class="profile-main">
-        <div class="reduce-padding col-md-3 col-sm-12 ">
-            <% include ../user/user_card.ejs %>
-        </div>
-        <div class="user-projects col-md-9 col-sm-12">
-            <div class="article-page" >
-                <% if (article.head_img) {%>
-                <div class="article-cover-img" style="background-image:url(<%= article.head_img%>)!important;">
-                </div>
-                <% }%>
-                <div class="article-header">
-                        <h3 class="article-title"><%= article.title%></h3>
-                        <h5 class="article-meta">
-                            <span class="article-author-thunbnail"><img src="<%= user.thunbnail_url%>"/></span><div class="split-line"></div>
-                            <span class="article-author"><%= user.username %></span><div class="split-line"></div>
-                            <span class="article-author"><%= moment(article.created_at).format('MMMM, YYYY'); %></span>
-                        </h5>
-                </div>
-                <div class="article-content">
-                    <%- contentHTML %>
-                </div>
-            </div>
-            <% include ./comments %>
-        </div>
+
+      <div class="user-projects col-md-12 col-sm-12">
+          <div class="article-page" >
+              <% if (article.head_img) {%>
+              <div class="article-cover-img" style="background-image:url(<%= article.head_img%>)!important;">
+              </div>
+              <% }%>
+              <div class="article-header">
+                      <h3 class="article-title"><%= article.title%></h3>
+                      <h5 class="article-meta">
+                          <span class="article-author-thunbnail" id="hover-for-user-info"><img src="<%= user.thunbnail_url%>"/></span><div class="split-line"></div>
+                          <span class="article-author"><a href="/users/<%= user.username %>"><%= user.username %></span><div class="split-line"></a></div>
+                          <span class="article-author"><%= moment(article.created_at).format('MMMM, YYYY'); %></span>
+                      </h5>
+              </div>
+              <div class="article-content">
+                  <%- contentHTML %>
+              </div>
+          </div>
+          <% include ./comments %>
+      </div>
     </div>
 </div>
 

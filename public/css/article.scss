@@ -1,4 +1,11 @@
 @import "theme.scss";
+#user-profile-abs-hover {
+    position: absolute;
+    z-index: 100;
+    width: 20rem;
+    height: auto;
+}
+
 .user-write-form {
     .article-cover-img {
         height: 300px;

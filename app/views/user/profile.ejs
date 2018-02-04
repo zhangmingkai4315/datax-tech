@@ -9,7 +9,7 @@
     <div class="reduce-padding col-md-3 col-sm-12 ">
         <% include ./user_card.ejs %>
     </div>
-    <div class="user-projects col-md-6 col-sm-12">
+    <div class="user-projects col-md-7 col-sm-12">
           <div class="article-post">
               <ul class="posts">
                 <% for(var i=0; i<user.Articles.length; i++) {%>
@@ -26,8 +26,8 @@
 
           </div>
     </div>
-    <div class="col-md-3 col-sm-12">
-      <a class="btn btn-datax full-width" href="/user/<%= user.username %>/write"><i class="fa fa-keyboard"></i> 创建文章</a>
+    <div class="col-md-2 col-sm-12">
+      <a class="btn btn-datax full-width" href="/articles/new"><i class="fa fa-keyboard"></i> 创建文章</a>
     </div>
     </div>
   </div>

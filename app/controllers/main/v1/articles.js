@@ -9,11 +9,21 @@ const createArticleView = (req, res) => {
   if (!user) {
     res.render("common/404", {title: "Error 500"});
   }
-  res.render("user/write.ejs", {
-    current_user: req.user,
-    editable: true,
-    title: `write-${user.username}`
-  });
+  user
+    .getSkills()
+    .then((skills) => {
+      user.Skills = skills;
+      res.render("user/write.ejs", {
+        current_user: user,
+        user,
+        editable: true,
+        title: `create-article-${user.username}`
+      });
+    })
+    .catch(() => {
+      res.render("common/500.ejs")
+    })
+
 };
 
 const uploadCoverImg = (req, res, next) => {
@@ -76,7 +86,6 @@ const getArticle = (req, res) => {
       return Promise.all([commentPromise, article]);
     })
     .then(([comments, article]) => {
-      console.log(comments, article);
       const contentHTML = markdown.toHTML(article.content);
       res.render("articles/page.ejs", {
         moment,

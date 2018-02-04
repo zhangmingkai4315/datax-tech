@@ -2,8 +2,8 @@
 .comment-container {
     input,
     textarea {
-        border: 1px solid rgba(128, 128, 128, 0.39);
-        border-radius: 3px;
+        border: 1px solid $BORDER_COLOR;
+        border-radius: 2px;
         padding: 0.3rem;
         display: block;
         color: #555f77;
@@ -54,7 +54,7 @@
         display: table-cell;
         vertical-align: top;
         border-radius: 0.1875rem;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+        border: 1px solid #f7f7f7;
         textarea {
             width: 100%;
             resize: none;
@@ -88,8 +88,10 @@
     .comment-actions li.reply {
         padding-right: 0.125rem;
     }
-    .comment-actions li:hover {
-        border: 1px solid #8f8f8f;
+    .comment-actions li {
+        width: 5rem;
+        text-align: center;
+        border: 1px solid $BORDER_COLOR;
     }
     .comment-actions li.comment-login {
         a {

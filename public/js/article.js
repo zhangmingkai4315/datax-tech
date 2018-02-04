@@ -1,4 +1,14 @@
 $(() => {
+  $("#hover-for-user-info").hover(_.debounce(function (event) {
+    const left = event.pageX;
+    const top = event.pageY;
+    $("#user-profile-abs-hover")
+      .css({top: top, left: left})
+      .removeClass("hidden");
+  }, 200), () => {
+    $("#user-profile-abs-hover").addClass("hidden");
+  });
+
   $("#comment-submit-btn").click(() => {
     const comment = $.trim($("#comment-content").val());
     const articleId = parseInt($("#comment-submit-btn").data("id"), 10);
@@ -12,7 +22,7 @@ $(() => {
     }
     $.ajax({
       type: "POST",
-      url: "/api/comments",
+      url: "/comments",
       data: JSON.stringify({articleId, comment}),
       contentType: "application/json; charset=utf-8",
       success: () => {

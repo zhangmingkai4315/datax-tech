@@ -1,6 +1,6 @@
 $(() => {
   $("#article-cover-upload").fileupload({
-    url: "/upload/articlecover",
+    url: "/article/uploadcoverimg",
     dataType: "json",
     autoUpload: true,
     acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
@@ -9,7 +9,7 @@ $(() => {
     previewMaxWidth: 400,
     previewMaxHeight: 300,
     previewCrop: true
-  }).on("fileuploadadd", (e) => {
+  }).on("fileuploadadd", () => {
     $("#article-cover-upload-btn")
       .prop("disabled", true)
       .text("上传中,请稍候...");
@@ -42,7 +42,7 @@ $(() => {
       : "";
     $.ajax({
       type: "POST",
-      url: "/api/articles",
+      url: "/articles",
       data: JSON.stringify({title, content, head_img}),
       contentType: "application/json; charset=utf-8",
       success: () => {

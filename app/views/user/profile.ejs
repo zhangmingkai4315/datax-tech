@@ -14,7 +14,7 @@
               <ul class="posts">
                 <% for(var i=0; i<user.Articles.length; i++) {%>
                 <li class="post">
-                  <a href="/articles/<%= user.Articles[i].id %>"><img class="img-responsive" src="<%= user.Articles[i].head_img? user.Articles[i].head_img :'/img/default-cover-image.png'%>" /></a>
+                  <a href="/articles/<%= user.Articles[i].id %>"><img class="img-responsive" src="<%= user.Articles[i].cover_img? user.Articles[i].cover_img_thumbnail :'/img/default-cover-image.png'%>" /></a>
                   <div class="post-info">
                      <a href="/articles/<%= user.Articles[i].id %>"><h3><%= user.Articles[i].title %></h3></a>
                     <p><%= user.Articles[i].content %></p>

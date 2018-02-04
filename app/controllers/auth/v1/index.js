@@ -2,7 +2,6 @@ const express = require("express");
 const passport = require("passport");
 
 const auth = new express.Router();
-const {middleware} = require("../../../authenticate");
 
 auth.get("/login", (req, res) => {
   res.render("auth/login", {

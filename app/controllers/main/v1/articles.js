@@ -106,7 +106,7 @@ const getArticle = (req, res) => {
 const createArticle = (req, res) => {
   db
     .Article
-    .create({title: req.body.title, content: req.body.content, head_img: req.body.head_img, user_id: req.user.id})
+    .create({title: req.body.title, content: req.body.content, cover_img: req.body.cover_img, cover_img_thumbnail: req.body.cover_img_thumbnail, user_id: req.user.id})
     .then((article) => {
       res.json({data: article.id});
     })

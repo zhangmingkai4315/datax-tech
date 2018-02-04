@@ -11,7 +11,8 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     content: Sequelize.TEXT,
-    head_img: Sequelize.STRING
+    cover_img: Sequelize.STRING,
+    cover_img_thumbnail: Sequelize.STRING
   }, {
     underscored: true,
     tableName: "articles",

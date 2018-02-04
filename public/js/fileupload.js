@@ -5,7 +5,7 @@ $(() => {
     .addClass("btn btn-datax")
     .prop("disabled", true)
     .text("处理中,请稍候...")
-    .on("click", () => {
+    .on("click", function () {
       const self = $(this);
       const data = self.data();
       self

@@ -20,6 +20,7 @@ $(() => {
     if (data.result && data.result.files && data.result.files.length > 0) {
       const fileInfo = data.result.files[0];
       $(".article-cover-img").css("background-image", "url(" + fileInfo.url + ")");
+      $(".article-cover-img").attr("data-thumbnail-img", fileInfo.thumbnailUrl);
     } else {
       toastr.success("上传封面失败，请重新上传");
     }
@@ -37,16 +38,27 @@ $(() => {
     const content = $.trim($("#article-content").val());
     const bg_url = $(".article-cover-img").css("background-image");
     const cover_url_list = /^url\((['"]?)(.*)\1\)$/.exec(bg_url);
-    const head_img = cover_url_list
+    const cover_img = cover_url_list
       ? cover_url_list[2]
       : "";
+    const cover_img_thumbnail = $(".article-cover-img").data("thumbnail-img") || "";
     $.ajax({
       type: "POST",
       url: "/articles",
-      data: JSON.stringify({title, content, head_img}),
+      data: JSON.stringify({title, content, cover_img, cover_img_thumbnail}),
       contentType: "application/json; charset=utf-8",
-      success: () => {
-        toastr.success("保存信息成功");
+      success: (data) => {
+        const id = data.data;
+        if (typeof id !== "number") {
+          toastr.error("保存信息失败");
+        } else {
+          toastr.success("保存信息成功");
+          setTimeout(() => {
+            window
+              .location
+              .replace(`/articles/${id}`);
+          }, 1000);
+        }
       },
       failure: () => {
         toastr.error("保存信息失败");

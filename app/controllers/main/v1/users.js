@@ -35,7 +35,8 @@ const getUserProfile = (req, res) => {
         res.render("common/404.ejs", {title: "Error 404"});
       }
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
       res.render("common/500.ejs", {title: "Error 500"});
     });
 };

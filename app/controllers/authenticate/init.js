@@ -1,5 +1,6 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const GitHubStrategy = require("passport-github").Strategy;
 const db = require("../../models");
 const authenticationMiddleware = require("../middleware");
 const {body, validationResult} = require("express-validator/check");

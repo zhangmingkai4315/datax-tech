@@ -1,4 +1,19 @@
 $(() => {
+  const modal = $("#cover-modal");
+  const modalImg = $("#cover-modal-img");
+  $(".article-cover-img").click(function () {
+    let bg = $(this).css('background-image');
+    bg = bg
+      .replace('url(', '')
+      .replace(')', '')
+      .replace(/\"/gi, "");
+    modal.removeClass("hidden");
+    console.log(bg)
+    modalImg.attr("src", bg);
+  });
+  $("#cover-modal-close").click(function () {
+    modal.addClass("hidden");
+  })
   $("#hover-for-user-info").hover(_.debounce(function (event) {
     const left = event.pageX;
     const top = event.pageY;

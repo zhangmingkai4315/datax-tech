@@ -89,6 +89,15 @@
     height: 50px;
     background: $MAIN_COLOR;
     color: $MAIN_COLOR_FONT;
+    a {
+        color: $MAIN_COLOR_FONT;
+        text-decoration: none;
+        &:hover,
+        &:active,
+        &:focus {
+            color: $MAIN_COLOR
+        }
+    }
     .info-bar {
         display: inline-block;
         padding: 1em 1em;

@@ -12,7 +12,7 @@ const passport = require("passport");
 const session = require("express-session");
 const RedisStore = require("connect-redis")(session);
 const Uploader = require("jquery-file-upload-middleware");
-const authenticate = require("../app/authenticate");
+const authenticate = require("../app/controllers/authenticate");
 
 const mainHandler = require("../app/controllers/main");
 const authHandler = require("../app/controllers/auth");

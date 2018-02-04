@@ -44,14 +44,32 @@
         color: #4e5665;
         font: 300 16px/1.6em Helvetica, Arial, sans-serif;
     }
+    @keyframes coverimgtrans {
+        0% {
+            background-position: 0 0;
+        }
+        50% {
+            background-position: 0px -300px;
+        }
+        100% {
+            background-position: 0px 0px;
+        }
+    }
+
     .article-cover-img {
         height: 300px;
         background-color: $MAIN_COLOR;
         background-size: cover;
         background-repeat: no-repeat;
-        background-position: center center;
+        background-position: 0 0;
         position: relative;
         margin-bottom: 16px;
+        animation-fill-mode: forwards;
+
+        &:hover {
+            animation: coverimgtrans 5s;
+            -webkit-animation: coverimgtrans 5s;
+        }
     }
     .article-header {
         color: $MAIN_COLOR;

@@ -5,7 +5,9 @@ const users = require("./users");
 const articles = require("./articles");
 const skills = require("./skills");
 const comments = require("./comments");
-const middleware = require("../../../authenticate/middleware");
+const middleware = require("../../middleware");
+
+v1.use(middleware.customRenderMiddleware);
 
 v1.get("/", (req, res) => {
   res.render("index", {

@@ -133,7 +133,6 @@ header {
             font-size: 1.25em;
             font-weight: 300;
             font-family: monospace;
-
         }
     }
 }
@@ -369,4 +368,12 @@ header {
 
 .full-width {
     width: 100% !important;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
 }

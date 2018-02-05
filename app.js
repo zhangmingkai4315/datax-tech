@@ -1,4 +1,9 @@
 const express = require("express");
+
+// 载入.env配置文件
+const dotenv = require("dotenv");
+dotenv.config();
+
 const config = require("./config/config");
 const db = require("./app/models");
 
@@ -6,8 +11,7 @@ const app = express();
 
 module.exports = require("./config/express")(app, config);
 
-db
-  .sequelize
+db.sequelize
   .sync()
   .then(() => {
     if (!module.parent) {
@@ -16,6 +20,6 @@ db
       });
     }
   })
-  .catch((e) => {
+  .catch(e => {
     throw new Error(e);
   });

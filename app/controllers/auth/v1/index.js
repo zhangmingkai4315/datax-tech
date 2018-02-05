@@ -9,11 +9,14 @@ auth.get("/login", (req, res) => {
     message: req.flash("loginMessage")
   });
 });
-auth.post("/login", passport.authenticate("local-login", {
-  successRedirect: "/profile", // redirect to the secure profile section
-  failureRedirect: "/auth/login", // redirect back to the signup page if there is an error
-  failureFlash: true // allow flash messages
-}));
+auth.post(
+  "/login",
+  passport.authenticate("local-login", {
+    successRedirect: "/profile", // redirect to the secure profile section
+    failureRedirect: "/auth/login", // redirect back to the signup page if there is an error
+    failureFlash: true // allow flash messages
+  })
+);
 
 auth.get("/signup", (req, res) => {
   res.render("auth/signup", {
@@ -21,15 +24,28 @@ auth.get("/signup", (req, res) => {
     message: req.flash("signupMessage")
   });
 });
-auth.post("/signup", passport.authenticate("local-signup", {
-  successRedirect: "/profile", // redirect to the secure profile section
-  failureRedirect: "/auth/signup", // redirect back to the signup page if there is an error
-  failureFlash: true // allow flash messages
-}));
+auth.post(
+  "/signup",
+  passport.authenticate("local-signup", {
+    successRedirect: "/profile", // redirect to the secure profile section
+    failureRedirect: "/auth/signup", // redirect back to the signup page if there is an error
+    failureFlash: true // allow flash messages
+  })
+);
 
 auth.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
 });
+
+// 定义github的路由处理
+auth.get("/github", passport.authenticate("github"));
+auth.get(
+  "/github/callback",
+  passport.authenticate("github", {
+    failureRedirect: "/login",
+    successRedirect: "/profile"
+  })
+);
 
 module.exports = auth;

@@ -23,10 +23,10 @@
                             <div class="tab-content tabs-login col-lg-12 col-md-12 col-sm-12 cols-xs-12">
                                 <div id="login-access" class="tab-pane fade active in">
                                     <h2>
-                                        <i class="glyphicon glyphicon-log-in"></i> 用户登入
+                                        <i class="glyphicon glyphicon-log-in"></i> 用户登入     
                                         <span id="error_msg"></span>
-                                        <% if (message.length > 0) { %>
-                                            <span class="flash_msg"><%= message %></span>
+                                            <% if (message.length > 0) { %>
+                                                <span class="flash_msg"><%= message %></span>
                                             <% } %>
                                     </h2>
                                     <form method="post" accept-charset="utf-8" autocomplete="off" role="form" onsubmit="return loginValidation();" class="form-horizontal">
@@ -46,7 +46,9 @@
                                         <div class="form-group ">
                                             <button type="submit" name="log-me-in" id="submit" tabindex="5" class="btn btn-lg btn-primary">登入</button>
                                         </div>
+                                        
                                     </form>
+                                    <a href="/auth/github" class="btn btn-datax left"><i class="fa fa-github" aria-hidden="true"></i> Github登入</a>
                                 </div>
                             </div>
                         </section>

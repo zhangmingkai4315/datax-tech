@@ -1,0 +1,16 @@
+<ul class="articles">
+    <% for(var i=0; i<articles.length; i++) {%>
+    <li class="article row">
+    <div class="col-md-3 col-sm-12">
+        <a href="/articles/<%= articles[i].id %>"  class="thumbnail"><img class="img-responsive" src="<%= articles[i].cover_img_thumbnail? articles[i].cover_img_thumbnail :'/img/default-cover-image.png'%>" /></a>
+    </div>
+    <div class="col-md-8 col-sm-12">
+        <a href="/articles/<%= articles[i].id %>"><p class="article-title"><%= articles[i].title %></h3></a>
+        <p></p>
+        <p class="article-meta"><i class="glyphicon glyphicon-user"></i> <%= author ||articles[i].User.username %> | 
+           <i class="glyphicon glyphicon-calendar"></i><%= moment(articles[i].created_at).fromNow() %> </p> 
+        <div class="read"><a class="button" href="/articles/<%= articles[i].id %>">点击阅读</a></div>
+        </div>
+    </li>       
+    <% } %>
+</ul>

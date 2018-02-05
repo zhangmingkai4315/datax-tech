@@ -10,21 +10,8 @@
         <% include ./user_card.ejs %>
     </div>
     <div class="user-projects col-md-7 col-sm-12">
-          <div class="article-post">
-              <ul class="posts">
-                <% for(var i=0; i<user.Articles.length; i++) {%>
-                <li class="post">
-                  <a href="/articles/<%= user.Articles[i].id %>"><img class="img-responsive" src="<%= user.Articles[i].cover_img? user.Articles[i].cover_img_thumbnail :'/img/default-cover-image.png'%>" /></a>
-                  <div class="post-info">
-                     <a href="/articles/<%= user.Articles[i].id %>"><h3><%= user.Articles[i].title %></h3></a>
-                    <p><%= user.Articles[i].content %></p>
-                    <a class="button" href="/articles/<%= user.Articles[i].id %>">Read More</a>
-                  </div>
-                </li>       
-                <% } %>
-              </ul>
-
-          </div>
+          <% include ../partial/articlelist %>
+          <% include ../partial/pagination %>
     </div>
     <div class="col-md-2 col-sm-12">
       <a class="btn btn-datax full-width" href="/articles/new"><i class="fa fa-keyboard"></i> 创建文章</a>

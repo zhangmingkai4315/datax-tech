@@ -11,7 +11,12 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const session = require("express-session");
 const RedisStore = require("connect-redis")(session);
+const paginate = require("express-paginate");
 const Uploader = require("jquery-file-upload-middleware");
+
+const moment = require("moment");
+moment.locale("zh-cn");
+
 const authenticate = require("../app/controllers/authenticate");
 
 const mainHandler = require("../app/controllers/main");
@@ -45,24 +50,27 @@ module.exports = (app, config) => {
   app.use(logger("dev"));
 
   app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({extended: true}));
+  app.use(bodyParser.urlencoded({ extended: true }));
   app.use(cookieParser());
   app.use(compress());
   app.use(express.static(publicPath));
   app.use(methodOverride());
   authenticate.init(app);
 
-  app.use(session({
-    store: new RedisStore({url: config.redis}),
-    secret: config.secrect,
-    resave: false,
-    saveUninitialized: false
-  }));
+  app.use(
+    session({
+      store: new RedisStore({ url: config.redis }),
+      secret: config.secrect,
+      resave: false,
+      saveUninitialized: false
+    })
+  );
 
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(flash());
 
+  app.use(paginate.middleware(10, 50));
   app.use("/auth", authHandler);
   app.use("/", mainHandler);
 

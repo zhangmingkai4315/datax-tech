@@ -9,7 +9,8 @@ const getUserProfile = async (req, res) => {
     res.render("common/500.ejs");
     return;
   }
-  const skip = ((req.query.page || 1) - 1) * req.query.limit;
+  const currentPage = req.query.page || 1;
+  const skip = (currentPage - 1) * req.query.limit;
   try {
     const user = await db.User.findOne({
       where: {
@@ -46,6 +47,7 @@ const getUserProfile = async (req, res) => {
       articles,
       author: user.username,
       pageCount,
+      currentPage,
       pages: paginate.getArrayPages(req)(3, pageCount, req.query.page),
       itemCount,
       moment,

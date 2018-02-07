@@ -141,7 +141,7 @@ function initPassport() {
         passReqToCallback: true
       },
       (req, email, password, done) => {
-        findUser(email, (err, user) => {
+        findUserByEmail(email, (err, user) => {
           if (err) {
             return done(err);
           }

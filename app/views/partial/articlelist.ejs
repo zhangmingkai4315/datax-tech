@@ -8,7 +8,7 @@
         <a href="/articles/<%= articles[i].id %>"><p class="article-title"><%= articles[i].title %></h3></a>
         <p></p>
         <p class="article-meta"><i class="glyphicon glyphicon-user"></i> <%= author ||articles[i].User.username %> | 
-           <i class="glyphicon glyphicon-calendar"></i><%= moment(articles[i].created_at).fromNow() %> </p> 
+           <i class="glyphicon glyphicon-calendar"></i> <%= moment(articles[i].created_at).fromNow().split(" ").join("") %> </p> 
         <div class="read"><a class="button" href="/articles/<%= articles[i].id %>">点击阅读</a></div>
         </div>
     </li>       

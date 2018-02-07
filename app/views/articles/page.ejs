@@ -17,14 +17,9 @@
 </div>
 <div class="col-md-12">
     <div class="profile-main">
-
-      <div class="user-projects col-md-12 col-sm-12">
+      <div class="user-projects col-md-10 col-md-offset-1 col-sm-12">
           <div class="article-page" >
-              <% if (article.cover_img) {%>
-              <div class="article-cover-img" style="background-image:url(<%= article.cover_img%>)!important;">
-              </div>
-              <% }%>
-              <div class="article-header">
+           <div class="article-header">
                       <h3 class="article-title"><%= article.title%></h3>
                       <h5 class="article-meta">
                           <span class="article-author-thunbnail" id="hover-for-user-info"><img src="<%= user.thunbnail_url%>"/></span><div class="split-line"></div>
@@ -32,6 +27,11 @@
                           <span class="article-author"><%= moment(article.created_at).format('MMMM, YYYY'); %></span>
                       </h5>
               </div>
+              <% if (article.cover_img) {%>
+              <div class="article-cover-img" style="background-image:url(<%= article.cover_img%>)!important;">
+              </div>
+              <% }%>
+             
               <div class="article-content">
                   <%- contentHTML %>
               </div>

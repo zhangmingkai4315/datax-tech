@@ -14,7 +14,8 @@
         background-repeat: no-repeat;
         background-position: center center;
         position: relative;
-        margin-bottom: 16px;
+        margin-bottom: 20px;
+        margin-top: 20px;
         .fileinput-button {
             position: initial !important;
         }
@@ -55,21 +56,16 @@
             background-position: 0px 0px;
         }
     }
-
     .article-cover-img {
-        height: 300px;
+        height: 400px;
         background-color: $MAIN_COLOR;
         background-size: cover;
         background-repeat: no-repeat;
         background-position: 0 0;
         position: relative;
-        margin-bottom: 16px;
+        margin-bottom: 50px;
+        margin-top: 50px;
         animation-fill-mode: forwards;
-
-        &:hover {
-            animation: coverimgtrans 5s;
-            -webkit-animation: coverimgtrans 5s;
-        }
     }
     .article-header {
         color: $MAIN_COLOR;
@@ -99,5 +95,19 @@
         margin-right: 5px;
         margin-left: 5px;
         border-right: 1px solid;
+    }
+    .article-content {
+        p {
+            margin-top: 20px;
+            letter-spacing: 0.01rem;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 21px;
+            line-height: 2;
+            letter-spacing: -0.003em;
+        }
+        img {
+            max-width: 100%;
+        }
     }
 }

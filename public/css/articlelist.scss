@@ -83,6 +83,7 @@
 .articles {
     .article {
         list-style: none;
+        min-height: 160px;
     }
     .article-title {
         cursor: pointer;

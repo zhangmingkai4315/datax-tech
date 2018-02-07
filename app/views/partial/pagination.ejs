@@ -1,11 +1,11 @@
 <div class="container">
+    <% if (paginate.hasPreviousPages || paginate.hasNextPages(pageCount)) %>
     <ul class="pagination">
         <% if (paginate.hasPreviousPages) {%>
-        <li ><a href="<% paginate.href(true) %>">«</a></li>
+        <li ><a href="<%= paginate.href(true) %>">«</a></li>
         <% } else {%>
         <li class="disabled"><a href="#">«</a></li>
         <% } %>
-
         <% if (pages) {%>
             <% for (var i =0 ;i<pages.length;i++) {%>
                 <li><a href="<%= pages[i].url %>"><%= pages[i].number %></a></li>
@@ -13,7 +13,7 @@
         <% } %>
 
         <% if (paginate.hasNextPages(pageCount)) {%>
-        <li ><a href="<% paginate.href(true) %>">«</a></li>
+        <li ><a href="<%= paginate.href() %>">»</a></li>
         <% } else {%>
         <li  class="disabled"><a href="#">»</a></li>
         <% } %>

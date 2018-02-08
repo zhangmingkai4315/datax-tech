@@ -81,6 +81,12 @@
         padding: 0.5rem 0.2rem;
         border: 1px solid white;
         border-radius: 2px;
+        &:hover,
+        &:active,
+        &:focus {
+            background-color: #555f7786;
+            color: white;
+        }
     }
     .comment-actions li.complain {
         border-right: 1px solid #e1e5eb;
@@ -97,5 +103,9 @@
         a {
             text-decoration: none;
         }
+    }
+    .will-submit {
+        background-color: $MAIN_COLOR;
+        color: $MAIN_COLOR_FONT;
     }
 }

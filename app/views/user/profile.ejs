@@ -13,9 +13,11 @@
           <% include ../partial/articlelist %>
           <% include ../partial/pagination %>
     </div>
+    <% if(editable) {%>
     <div class="col-md-2 col-sm-12">
       <a class="btn btn-datax full-width" href="/articles/new"><i class="fa fa-keyboard"></i> 创建文章</a>
     </div>
+    <% } %>
     </div>
   </div>
 <% include ../partial/footer %>

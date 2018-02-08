@@ -36,21 +36,47 @@
 		    <% for( var i = 0;i<comments.length;i++) {%>   
 			<div class="comment-wrap">
 					<div class="photo">
-							<div class="avatar" style="background-image: url('<%= comments[i].User.thunbnail_url %>')"></div>
+						<div class="avatar" style="background-image: url('<%= comments[i].User.thunbnail_url %>')">
+						</div>
 					</div>
 					<div class="comment-block">
-							<p class="comment-text"><%= comments[i].content %></p>
-							<div class="bottom-comment">
-									<div class="comment-date">Aug 24, 2014 @ 2:35 PM</div>
-									<ul class="comment-actions">
-											<li class="reply">回复</li>
-									</ul>
+						<p class="comment-text"><%= comments[i].content %>
+						</p>
+						<div class="bottom-comment">
+							<div class="comment-date"><%= moment(comments[i].created_at).fromNow().split(" ").join("") %>
 							</div>
+							<ul class="comment-actions">
+								<li class="comment-reply" data-comment-id="<%= comments[i].id %>">回复
+								</li>
+							</ul>
+						</div>
 					</div>
+					<% if(typeof comments[i].SubComments ==='object' && comments[i].SubComments.length >0 ){ %>
+						<div class="reply-block">
+							<% for(var j=0;j<comments[i].SubComments.length;j++){ %>
+							<div>
+								<span>
+								  <a href="/users/<%= comments[i].SubComments[j].User.username %>"><%= comments[i].SubComments[j].User.username %>
+								  </a>
+								</span>:
+								<span><%= comments[i].SubComments[j].content %>
+								</span>
+								<span><%= moment(comments[i].SubComments[j].created_at).fromNow().split(" ").join("") %>
+								</span>
+							</div>
+							<% } %>
+						</div>
+						<% } %>
+						</div>
+			        <% } %>
+
 			</div>
-			<% } %>
+			
 		<% } %>
 </div>
 
 </div>
+</div>
+<div id="reply-comment-box" class="hidden">
+	<textarea name="reply-comment-textarea" id="reply-comment-content" cols="30" rows="3" placeholder=""></textarea>
 </div>

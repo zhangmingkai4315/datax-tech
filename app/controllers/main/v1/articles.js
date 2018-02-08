@@ -43,60 +43,71 @@ const uploadCoverImg = (req, res, next) => {
   })(req, res, next);
 };
 
-const getArticleById = (req, res) => {
-  const { id } = req.params;
-  if (!id) {
-    res.render("common/500.ejs");
-    return;
-  }
-
-  db.Article.findById(id, {
-    include: [
-      {
-        model: db.User,
-        include: [
-          {
-            model: db.Skill
-          }
-        ]
-      }
-    ]
-  })
-    .then(article => {
-      // console.log(article)
-      if (!article) {
-        throw errors.NotFoundError();
-      }
-      const commentPromise = article.getComments({
-        where: {
-          article_id: article.id
-        },
-        order: "updated_at asc",
-        include: [
-          {
-            model: db.User
-          }
-        ]
-      });
-      return Promise.all([commentPromise, article]);
-    })
-    .then(([comments, article]) => {
-      const contentHTML = markdown.toHTML(article.content);
-      res.render("articles/page.ejs", {
-        moment,
-        user: article.User,
-        current_user: req.user,
-        editable: req.user && req.user.username === article.User.username,
-        contentHTML,
-        article,
-        comments,
-        title: article.name
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      res.render("common/500.ejs", { title: "Error 500" });
+const getArticleById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      res.render("common/404.ejs");
+      return;
+    }
+    const article = await db.Article.findById(id, {
+      include: [
+        {
+          model: db.User,
+          attributes: [
+            "id",
+            "username",
+            "group_name",
+            "job_name",
+            "thunbnail_url"
+          ]
+        }
+      ]
     });
+    if (!article) {
+      res.render("common/404.ejs");
+      return;
+    }
+    const comments = await db.Comment.findAll({
+      where: {
+        article_id: article.id,
+        parent_id: null
+      },
+      order: "updated_at desc",
+      limit: 20,
+      include: [
+        {
+          model: db.User,
+          attributes: ["id", "username", "thunbnail_url"]
+        },
+        {
+          model: db.Comment,
+          as: "SubComments",
+          include: [
+            {
+              model: db.User,
+              attributes: ["id", "username"]
+            }
+          ]
+        }
+      ]
+    });
+    console.log(comments);
+    const contentHTML = markdown.toHTML(article.content);
+    res.render("articles/page.ejs", {
+      moment,
+      user: article.User,
+      current_user: req.user,
+      editable: req.user && req.user.username === article.User.username,
+      contentHTML,
+      article,
+      comments,
+      title: article.name
+    });
+  } catch (err) {
+    console.log(err);
+    res.render("common/500.ejs", { title: "Error 500" });
+  }
 };
 const createArticle = (req, res) => {
   db.Article.create({

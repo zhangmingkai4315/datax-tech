@@ -5,6 +5,7 @@ module.exports = (sequelize, Sequelize) => {
       article_id: { type: Sequelize.INTEGER, allowNull: false },
       content: { type: Sequelize.TEXT, allowNull: false },
       user_id: { type: Sequelize.INTEGER, allowNull: false },
+      parent_id: { type: Sequelize.INTEGER },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -24,6 +25,13 @@ module.exports = (sequelize, Sequelize) => {
           Comment.belongsTo(models.Article, {
             onDelete: "CASCADE",
             onUpdate: "CASCADE"
+          });
+          Comment.hasMany(models.Comment, {
+            as: "SubComments",
+            foreignKey: "parent_id"
+          });
+          Comment.belongsTo(models.Comment, {
+            as: "Parent"
           });
           Comment.belongsTo(models.User, {
             onDelete: "CASCADE",

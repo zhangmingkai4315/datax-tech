@@ -21,6 +21,7 @@ v1.get("/profile", middleware.authenticationMiddle, (req, res) => {
 });
 
 v1.get("/users/:username", users.getUserProfile);
+// v1.get("/users/:username/static", middleware.cache(60), users.getUserStatic);
 v1.get(
   "/users/:username/edit",
   middleware.authenticationMiddle,

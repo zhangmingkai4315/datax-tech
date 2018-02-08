@@ -1,11 +1,14 @@
-// Example model
-const bcrypt = require("bcrypt");
-const Sequelize = require("sequelize");
+"use strict";
 
-module.exports = sequelize => {
-  const User = sequelize.define(
-    "User",
-    {
+module.exports = {
+  up: (queryInterface, Sequelize) => {
+    return queryInterface.createTable("users", {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
       username: {
         type: Sequelize.STRING,
         unique: true,
@@ -54,38 +57,19 @@ module.exports = sequelize => {
       last_login: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
-      }
-    },
-    {
-      underscored: true,
-      tableName: "users",
-      instanceMethods: {
-        generateHash(password) {
-          return bcrypt.hash(password, bcrypt.genSaltSync(8));
-        },
-        validPassword(password) {
-          return bcrypt.compare(password, this.password);
-        }
       },
-      classMethods: {
-        associate: models => {
-          User.hasMany(models.Article);
-          User.hasMany(models.Comment, {
-            onDelete: "CASCADE",
-            onUpdate: "CASCADE"
-          });
-          User.belongsToMany(models.Skill, {
-            through: {
-              model: models.SkillUser,
-              unique: false
-            },
-            foreignKey: "user_id",
-            constraints: false
-          });
-        }
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DATE
       }
-    }
-  );
+    });
+  },
 
-  return User;
+  down: (queryInterface, Sequelize) => {
+    queryInterface.dropTable("users");
+  }
 };

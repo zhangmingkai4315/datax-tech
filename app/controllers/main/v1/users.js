@@ -3,6 +3,14 @@ const moment = require("moment");
 const paginate = require("express-paginate");
 const db = require("../../../models");
 
+const getUserStatic = async (req, res) => {
+  const { username } = req.params;
+  if (!username) {
+    res.render("common/500.ejs");
+    return;
+  }
+};
+
 const getUserProfile = async (req, res) => {
   const { username } = req.params;
   if (!username) {

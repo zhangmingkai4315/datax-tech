@@ -32,15 +32,19 @@
         max-width: 80%;
     }
     .comment-wrap {
-        margin-bottom: 1.25rem;
-        display: table;
+        margin-bottom: 0.25rem;
         width: 100%;
+        margin-top: 4rem;
+        padding-top: 1rem;
         min-height: 5.3125rem;
+        border-top: 1px solid #8080802a;
+        &:first-child {
+            border-top: 0px;
+        }
     }
     .photo {
         padding-top: 0.625rem;
-        display: table-cell;
-        width: 3.5rem;
+        width: auto;
         .avatar {
             height: 4rem;
             width: 4rem;
@@ -49,9 +53,8 @@
         }
     }
     .comment-block {
-        padding: 1rem;
+        padding: 0rem 1rem;
         background-color: #fff;
-        display: table-cell;
         vertical-align: top;
         border-radius: 0.1875rem;
         border: 1px solid #f7f7f7;
@@ -69,6 +72,8 @@
     }
     .comment-date {
         float: left;
+        font-size: 0.7rem;
+        color: #848282;
     }
     .comment-actions {
         float: right;
@@ -107,5 +112,10 @@
     .will-submit {
         background-color: $MAIN_COLOR;
         color: $MAIN_COLOR_FONT;
+    }
+    .reply-block {
+        .reply-item {
+            margin: 0.5rem 0;
+        }
     }
 }

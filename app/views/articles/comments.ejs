@@ -1,11 +1,11 @@
 <div class="col-md-12 comment-container">
 <div class="comments">
-		<div class="comment-wrap">
+		<div class="comment-wrap row">
         <% if(current_user) {%>
-				<div class="photo">
+				<div class="photo col-md-1">
 						<div class="avatar" style="background-image: url('<%= current_user.thunbnail_url %>')"></div>
 				</div>
-				<div class="comment-block">
+				<div class="comment-block col-md-10">
 						<form action="">
 								<textarea name="" id="comment-content" cols="30" rows="3" placeholder="Add comment..."></textarea>
                                 <div class="bottom-comment">
@@ -34,43 +34,44 @@
 		</div>
         <% if(comments && comments.length >0) {%> 
 		    <% for( var i = 0;i<comments.length;i++) {%>   
-			<div class="comment-wrap">
-					<div class="photo">
-						<div class="avatar" style="background-image: url('<%= comments[i].User.thunbnail_url %>')">
-						</div>
+			<div class="comment-wrap row">
+				<div class="photo col-md-1">
+					<div class="avatar" style="background-image: url('<%= comments[i].User.thunbnail_url %>')">
 					</div>
-					<div class="comment-block">
-						<p class="comment-text"><%= comments[i].content %>
-						</p>
-						<div class="bottom-comment">
-							<div class="comment-date"><%= moment(comments[i].created_at).fromNow().split(" ").join("") %>
-							</div>
-							<ul class="comment-actions">
-								<li class="comment-reply" data-comment-id="<%= comments[i].id %>">回复
-								</li>
-							</ul>
+				</div>
+				<div class="comment-block col-md-10">
+					<p class="comment-text"><%= comments[i].content %>
+					</p>
+					<div class="bottom-comment">
+						<div class="comment-date"><%= moment(comments[i].created_at).fromNow().split(" ").join("") %>
 						</div>
+						<ul class="comment-actions">
+							<li class="comment-reply" data-comment-id="<%= comments[i].id %>">回复
+							</li>
+						</ul>
 					</div>
-					<% if(typeof comments[i].SubComments ==='object' && comments[i].SubComments.length >0 ){ %>
-						<div class="reply-block">
-							<% for(var j=0;j<comments[i].SubComments.length;j++){ %>
-							<div>
-								<span>
-								  <a href="/users/<%= comments[i].SubComments[j].User.username %>"><%= comments[i].SubComments[j].User.username %>
-								  </a>
-								</span>:
-								<span><%= comments[i].SubComments[j].content %>
-								</span>
-								<span><%= moment(comments[i].SubComments[j].created_at).fromNow().split(" ").join("") %>
-								</span>
-							</div>
-							<% } %>
-						</div>
-						<% } %>
-						</div>
-			        <% } %>
-
+				</div>
 			</div>
+			<div class="row">
+				<% if(typeof comments[i].SubComments ==='object' && comments[i].SubComments.length >0 ){ %>
+				<div class="reply-block col-md-offset-1 col-md-10">
+					<% for(var j=0;j<comments[i].SubComments.length;j++){ %>
+					<div class="reply-item">
+						<span>
+							<a href="/users/<%= comments[i].SubComments[j].User.username %>"><%= comments[i].SubComments[j].User.username %>
+							</a>
+						</span>:
+						<span><%= comments[i].SubComments[j].content %>
+						</span> &nbsp; 
+						<span style="font-size: .7rem;
+    color: #848282;"><%= moment(comments[i].SubComments[j].created_at).fromNow().split(" ").join("") %>
+						</span>
+					</div>
+					<% } %>
+				</div>
+				<% } %>
+			</div>
+			<% } %>
 			
 		<% } %>
 </div>

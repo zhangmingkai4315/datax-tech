@@ -83,6 +83,8 @@ const getArticleById = async (req, res) => {
         {
           model: db.Comment,
           as: "SubComments",
+          order: "id desc",
+          limit: 10,
           include: [
             {
               model: db.User,

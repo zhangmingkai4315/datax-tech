@@ -2,7 +2,7 @@
 const bcrypt = require("bcrypt");
 const Sequelize = require("sequelize");
 
-module.exports = sequelize => {
+module.exports = (sequelize) => {
   const User = sequelize.define(
     "User",
     {
@@ -68,7 +68,7 @@ module.exports = sequelize => {
         }
       },
       classMethods: {
-        associate: models => {
+        associate: (models) => {
           User.hasMany(models.Article);
           User.hasMany(models.Comment, {
             onDelete: "CASCADE",
@@ -82,10 +82,29 @@ module.exports = sequelize => {
             foreignKey: "user_id",
             constraints: false
           });
+
+          User.belongsToMany(models.Article, {
+            through: {
+              model: models.UserLike,
+              unique: false
+            },
+            as: "Likes",
+            foreignKey: "user_id",
+            constraints: false
+          });
+
+          User.belongsToMany(models.Article, {
+            through: {
+              model: models.UserCollection,
+              unique: false
+            },
+            as: "Collections",
+            foreignKey: "user_id",
+            constraints: false
+          });
         }
       }
     }
   );
-
   return User;
 };

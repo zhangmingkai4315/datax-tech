@@ -22,36 +22,19 @@ v1.get("/profile", middleware.authenticationMiddle, (req, res) => {
 
 v1.get("/users/:username", users.getUserProfile);
 // v1.get("/users/:username/static", middleware.cache(60), users.getUserStatic);
-v1.get(
-  "/users/:username/edit",
-  middleware.authenticationMiddle,
-  users.editUserProfile
-);
+v1.get("/users/:username/edit", middleware.authenticationMiddle, users.editUserProfile);
 
-v1.post(
-  "/user/profile/basic",
-  middleware.authenticationMiddle,
-  users.editUserProfileBasic
-);
+v1.post("/user/profile/basic", middleware.authenticationMiddle, users.editUserProfileBasic);
 v1.get("/user/skills", middleware.authenticationMiddle, users.getUserSkills);
 v1.post("/user/links", middleware.authenticationMiddle, users.createUserLinks);
 v1.post("/user/skill", middleware.authenticationMiddle, users.createUserSkill);
-v1.use(
-  "/user/upload/profileimg",
-  middleware.authenticationMiddle,
-  users.uploadUserProfileImg
-);
+v1.use("/user/upload/profileimg", middleware.authenticationMiddle, users.uploadUserProfileImg);
 
-v1.get(
-  "/articles/new",
-  middleware.authenticationMiddle,
-  articles.createArticleView
-);
-v1.post(
-  "/article/uploadcoverimg",
-  middleware.authenticationMiddle,
-  articles.uploadCoverImg
-);
+v1.post("/article/like", middleware.authenticationMiddle, articles.likeArticle);
+v1.post("/article/collection", middleware.authenticationMiddle, articles.collectionArticle);
+v1.get("/articles/new", middleware.authenticationMiddle, articles.createArticleView);
+
+v1.post("/article/uploadcoverimg", middleware.authenticationMiddle, articles.uploadCoverImg);
 v1.get("/articles/:id", articles.getArticleById);
 v1.get("/articles", articles.getArticles);
 v1.post("/articles", middleware.authenticationMiddle, articles.createArticle);

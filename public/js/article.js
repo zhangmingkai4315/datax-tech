@@ -1,7 +1,7 @@
 $(() => {
   const modal = $("#cover-modal");
   const modalImg = $("#cover-modal-img");
-  $(".article-cover-img").click(function() {
+  $(".article-cover-img").click(function () {
     let bg = $(this).css("background-image");
     bg = bg
       .replace("url(", "")
@@ -11,21 +11,18 @@ $(() => {
     console.log(bg);
     modalImg.attr("src", bg);
   });
-  $("#cover-modal-close").click(function() {
+  $("#cover-modal-close").click(function () {
     modal.addClass("hidden");
   });
-  $("#hover-for-user-info").hover(
-    _.debounce(function(event) {
-      const left = event.pageX;
-      const top = event.pageY;
-      $("#user-profile-abs-hover")
-        .css({ top: top, left: left })
-        .removeClass("hidden");
-    }, 200),
-    () => {
-      $("#user-profile-abs-hover").addClass("hidden");
-    }
-  );
+  $("#hover-for-user-info").hover(_.debounce(function (event) {
+    const left = event.pageX;
+    const top = event.pageY;
+    $("#user-profile-abs-hover")
+      .css({top: top, left: left})
+      .removeClass("hidden");
+  }, 200), () => {
+    $("#user-profile-abs-hover").addClass("hidden");
+  });
 
   $("#comment-submit-btn").click(() => {
     const comment = $.trim($("#comment-content").val());
@@ -41,12 +38,14 @@ $(() => {
     $.ajax({
       type: "POST",
       url: "/comments",
-      data: JSON.stringify({ articleId, comment }),
+      data: JSON.stringify({articleId, comment}),
       contentType: "application/json; charset=utf-8",
       success: () => {
         toastr.success("提交评论成功");
         setTimeout(() => {
-          window.location.reload();
+          window
+            .location
+            .reload();
         }, 1000);
       },
       failure: () => {
@@ -55,7 +54,7 @@ $(() => {
     });
   });
 
-  $(".comment-reply").click(function(e) {
+  $(".comment-reply").click(function (e) {
     const parentId = parseInt($(this).data("comment-id"), 10);
     if (isNaN(parentId) || parentId <= 0) {
       toastr.error("无法获取评论ID,请刷新页面");
@@ -65,6 +64,10 @@ $(() => {
     if ($(this).hasClass("will-submit")) {
       // 执行提交流程
       const articleId = parseInt($("#comment-submit-btn").data("id"), 10);
+      if (isNaN(articleId)) {
+        toastr.error("文章ID不能为空");
+        return;
+      }
       const comment = $.trim($("#reply-comment-content").val());
       if (comment === "") {
         toastr.error("评论内容不能为空");
@@ -73,12 +76,14 @@ $(() => {
       $.ajax({
         type: "POST",
         url: "/comments",
-        data: JSON.stringify({ articleId, comment, parentId }),
+        data: JSON.stringify({articleId, comment, parentId}),
         contentType: "application/json; charset=utf-8",
         success: () => {
           toastr.success("提交评论成功");
           setTimeout(() => {
-            window.location.reload();
+            window
+              .location
+              .reload();
           }, 1000);
         },
         failure: () => {
@@ -101,13 +106,58 @@ $(() => {
         .text("提交");
     }
   });
+  function submitLike(like) {
+    const articleId = parseInt($("#comment-submit-btn").data("id"), 10);
+    if (isNaN(articleId)) {
+      toastr.error("文章ID不能为空");
+      return;
+    }
+    $.ajax({
+      type: "POST",
+      url: "/article/like",
+      data: JSON.stringify({articleId, like}),
+      contentType: "application/json; charset=utf-8",
+      failure: () => {
+        toastr.error("提交操作失败");
+      }
+    });
+  }
+
+  function submitCollection(collected) {
+    const articleId = parseInt($("#comment-submit-btn").data("id"), 10);
+    if (isNaN(articleId)) {
+      toastr.error("文章ID不能为空");
+      return;
+    }
+    $.ajax({
+      type: "POST",
+      url: "/article/collection",
+      data: JSON.stringify({articleId, collected}),
+      contentType: "application/json; charset=utf-8",
+      failure: () => {
+        toastr.error("提交操作失败");
+      }
+    });
+  }
 
   $(".heart i")
-    .on("click", function(){
+    .on("click", function () {
       if ($(this).hasClass("active")) {
         $(this).removeClass("active");
+        submitLike(false);
         return;
       }
+      submitLike(true);
       $(this).addClass("active");
     });
+
+  $(".collection i").on("click", function () {
+    if ($(this).hasClass("active")) {
+      $(this).removeClass("active");
+      submitCollection(false);
+      return;
+    }
+    submitCollection(true);
+    $(this).addClass("active");
+  });
 });

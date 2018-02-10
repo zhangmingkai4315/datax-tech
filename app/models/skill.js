@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 
-module.exports = sequelize => {
+module.exports = (sequelize) => {
   const Skill = sequelize.define(
     "Skill",
     { name: { type: Sequelize.STRING, unique: true, allowNull: false } },
@@ -10,7 +10,7 @@ module.exports = sequelize => {
       freezeTableName: true,
       tableName: "skills",
       classMethods: {
-        associate: models => {
+        associate: (models) => {
           // example on how to add relations Article.hasMany(models.Comments);
           Skill.belongsToMany(models.User, {
             through: {

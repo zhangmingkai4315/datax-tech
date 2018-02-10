@@ -27,6 +27,25 @@ module.exports = (sequelize) => {
           onUpdate: "CASCADE"
         });
         Article.belongsTo(models.User); // add fk_user to article
+
+        Article.belongsToMany(models.User, {
+          through: {
+            model: models.UserLike,
+            unique: false
+          },
+          as: "Likers",
+          foreignKey: "article_id",
+          constraints: false
+        });
+        Article.belongsToMany(models.User, {
+          through: {
+            model: models.UserCollection,
+            unique: false
+          },
+          as: "Collectors",
+          foreignKey: "article_id",
+          constraints: false
+        });
       }
     }
   });

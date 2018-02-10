@@ -1,18 +1,17 @@
 const Uploader = require("jquery-file-upload-middleware");
 const moment = require("moment");
 const paginate = require("express-paginate");
-const { markdown } = require("markdown");
+const {markdown} = require("markdown");
 const db = require("../../../models");
-const errors = require("../../errors");
 
 const createArticleView = (req, res) => {
-  const { user } = req;
+  const {user} = req;
   if (!user) {
-    res.render("common/404", { title: "Error 500" });
+    res.render("common/404", {title: "Error 500"});
   }
   user
     .getSkills()
-    .then(skills => {
+    .then((skills) => {
       user.Skills = skills;
       res.render("user/write.ejs", {
         current_user: user,
@@ -27,12 +26,15 @@ const createArticleView = (req, res) => {
 };
 
 const uploadCoverImg = (req, res, next) => {
-  Uploader.on("begin", fileInfo => {
+  Uploader.on("begin", (fileInfo) => {
     fileInfo.name = new Date().getTime() + fileInfo.originalName;
   });
   Uploader.fileHandler({
-    uploadDir: () =>
-      `${req.app.get("uploadPath")}${req.user.username}/articles`,
+    uploadDir: () => `${req
+      .app
+      .get("uploadPath")}${req
+      .user
+      .username}/articles`,
     uploadUrl: () => `/uploads/${req.user.username}/articles`,
     imageVersions: {
       thumbnail: {
@@ -45,56 +47,52 @@ const uploadCoverImg = (req, res, next) => {
 
 const getArticleById = async (req, res) => {
   try {
-    const { id } = req.params;
+    const {id} = req.params;
     if (!id) {
       res.render("common/404.ejs");
       return;
     }
-    const article = await db.Article.findById(id, {
-      include: [
-        {
-          model: db.User,
-          attributes: [
-            "id",
-            "username",
-            "group_name",
-            "job_name",
-            "thunbnail_url"
-          ]
-        }
-      ]
-    });
+    const article = await db
+      .Article
+      .findById(id, {
+        include: [
+          {
+            model: db.User,
+            attributes: ["id", "username", "group_name", "job_name", "thunbnail_url"]
+          }
+        ]
+      });
     if (!article) {
       res.render("common/404.ejs");
       return;
     }
-    const comments = await db.Comment.findAll({
-      where: {
-        article_id: article.id,
-        parent_id: null
-      },
-      order: "updated_at desc",
-      limit: 20,
-      include: [
-        {
-          model: db.User,
-          attributes: ["id", "username", "thunbnail_url"]
+    const comments = await db
+      .Comment
+      .findAll({
+        where: {
+          article_id: article.id,
+          parent_id: null
         },
-        {
-          model: db.Comment,
-          as: "SubComments",
-          order: "id desc",
-          limit: 10,
-          include: [
-            {
-              model: db.User,
-              attributes: ["id", "username"]
-            }
-          ]
-        }
-      ]
-    });
-    console.log(comments);
+        order: "updated_at desc",
+        limit: 20,
+        include: [
+          {
+            model: db.User,
+            attributes: ["id", "username", "thunbnail_url"]
+          }, {
+            model: db.Comment,
+            as: "SubComments",
+            order: "id desc",
+            limit: 10,
+            include: [
+              {
+                model: db.User,
+                attributes: ["id", "username"]
+              }
+            ]
+          }
+        ]
+      });
     const contentHTML = markdown.toHTML(article.content);
     res.render("articles/page.ejs", {
       moment,
@@ -106,24 +104,30 @@ const getArticleById = async (req, res) => {
       comments,
       title: article.name
     });
+    await article.update({
+      read_counter: (article.read_counter || 0) + 1
+    });
   } catch (err) {
-    console.log(err);
-    res.render("common/500.ejs", { title: "Error 500" });
+    res.render("common/500.ejs", {title: "Error 500"});
   }
 };
 const createArticle = (req, res) => {
-  db.Article.create({
-    title: req.body.title,
-    content: req.body.content,
-    cover_img: req.body.cover_img,
-    cover_img_thumbnail: req.body.cover_img_thumbnail,
-    user_id: req.user.id
-  })
-    .then(article => {
-      res.json({ data: article.id });
+  db
+    .Article
+    .create({
+      title: req.body.title,
+      content: req.body.content,
+      cover_img: req.body.cover_img,
+      cover_img_thumbnail: req.body.cover_img_thumbnail,
+      user_id: req.user.id
     })
-    .catch(err => {
-      res.status(500).json({ error: err });
+    .then((article) => {
+      res.json({data: article.id});
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .json({error: err});
     });
 };
 
@@ -131,24 +135,33 @@ const createArticle = (req, res) => {
 const getArticles = async (req, res, next) => {
   try {
     const skip = ((req.query.page || 1) - 1) * req.query.limit;
-    const [articles, itemCount] = await Promise.all([
-      db.Article.findAll({
-        attributes: ["id", "title", "cover_img_thumbnail", "created_at"],
-        order: [["updated_at", "DESC"]],
-        limit: req.query.limit,
-        offset: skip,
-        include: [
-          {
-            model: db.User,
-            attributes: ["id", "username"]
-          }
-        ]
-      }),
-      db.Article.count()
+    const [articles,
+      itemCount] = await Promise.all([
+      db
+        .Article
+        .findAll({
+          attributes: [
+            "id", "title", "cover_img_thumbnail", "created_at"
+          ],
+          order: [
+            ["updated_at", "DESC"]
+          ],
+          limit: req.query.limit,
+          offset: skip,
+          include: [
+            {
+              model: db.User,
+              attributes: ["id", "username"]
+            }
+          ]
+        }),
+      db
+        .Article
+        .count()
     ]);
     const pageCount = Math.ceil(itemCount / req.query.limit);
     res.render("articles/pages", {
-      articles: articles,
+      articles,
       pageCount,
       itemCount,
       moment,

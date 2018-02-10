@@ -3,8 +3,6 @@
     <ul class="pagination">
         <% if (paginate.hasPreviousPages) {%>
         <li ><a href="<%= paginate.href(true) %>">«</a></li>
-        <% } else {%>
-        <li class="disabled"><a href="#">«</a></li>
         <% } %>
         <% if (pages) {%>
             <% for (var i =0 ;i<pages.length;i++) {%>
@@ -14,8 +12,6 @@
 
         <% if (paginate.hasNextPages(pageCount)) {%>
         <li ><a href="<%= paginate.href() %>">»</a></li>
-        <% } else {%>
-        <li  class="disabled"><a href="#">»</a></li>
-        <% } %>
+        <% }  %>
     </ul>
 </div>

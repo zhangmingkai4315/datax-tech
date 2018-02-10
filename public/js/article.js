@@ -101,4 +101,13 @@ $(() => {
         .text("提交");
     }
   });
+
+  $(".heart i")
+    .on("click", function(){
+      if ($(this).hasClass("active")) {
+        $(this).removeClass("active");
+        return;
+      }
+      $(this).addClass("active");
+    });
 });

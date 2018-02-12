@@ -22,6 +22,7 @@ const customRenderMiddleware = (req, res, next) => {
 };
 
 // 定义处理的缓存时间
+//
 const cache = duration => async (req, res, next) => {
   let key = "__datax__" + req.originalUrl || req.url;
   let cachedBody = await redisClient.getAsync(key);

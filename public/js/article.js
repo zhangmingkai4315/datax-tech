@@ -1,7 +1,56 @@
 $(() => {
+  // 载入统计信息
+
+  (function loadStaticInfo() {
+    if (!$("#web-static-info").length) {
+      return;
+    }
+    $.ajax({
+      type: "GET",
+      url: "/articles/stats",
+      contentType: "application/json; charset=utf-8",
+      success: data => {
+        try {
+          if (typeof data === "string") {
+            data = JSON.parse(data);
+          }
+          const info = data.data[0];
+          if (info["count(*)"] && !isNaN(parseInt(info["count(*)"]))) {
+            $("#articles-number").html(parseInt(info["count(*)"]));
+          }
+          if (
+            info["sum(like_counter)"] &&
+            !isNaN(parseInt(info["sum(like_counter)"]))
+          ) {
+            $("#like_counter").html(parseInt(info["sum(like_counter)"]));
+          }
+          if (
+            info["sum(collected_counter)"] &&
+            !isNaN(parseInt(info["sum(collected_counter)"]))
+          ) {
+            $("#collected_counter").html(
+              parseInt(info["sum(collected_counter)"])
+            );
+          }
+          if (
+            info["sum(read_counter)"] &&
+            !isNaN(parseInt(info["sum(read_counter)"]))
+          ) {
+            $("#read_counter").html(parseInt(info["sum(read_counter)"]));
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      },
+      failure: err => {
+        console.error(err);
+      }
+    });
+  })();
+
   const modal = $("#cover-modal");
   const modalImg = $("#cover-modal-img");
-  $(".article-cover-img").click(function () {
+  $(".article-cover-img").click(function() {
     let bg = $(this).css("background-image");
     bg = bg
       .replace("url(", "")
@@ -11,18 +60,21 @@ $(() => {
     console.log(bg);
     modalImg.attr("src", bg);
   });
-  $("#cover-modal-close").click(function () {
+  $("#cover-modal-close").click(function() {
     modal.addClass("hidden");
   });
-  $("#hover-for-user-info").hover(_.debounce(function (event) {
-    const left = event.pageX;
-    const top = event.pageY;
-    $("#user-profile-abs-hover")
-      .css({top: top, left: left})
-      .removeClass("hidden");
-  }, 200), () => {
-    $("#user-profile-abs-hover").addClass("hidden");
-  });
+  $("#hover-for-user-info").hover(
+    _.debounce(function(event) {
+      const left = event.pageX;
+      const top = event.pageY;
+      $("#user-profile-abs-hover")
+        .css({ top: top, left: left })
+        .removeClass("hidden");
+    }, 200),
+    () => {
+      $("#user-profile-abs-hover").addClass("hidden");
+    }
+  );
 
   $("#comment-submit-btn").click(() => {
     const comment = $.trim($("#comment-content").val());
@@ -38,14 +90,12 @@ $(() => {
     $.ajax({
       type: "POST",
       url: "/comments",
-      data: JSON.stringify({articleId, comment}),
+      data: JSON.stringify({ articleId, comment }),
       contentType: "application/json; charset=utf-8",
       success: () => {
         toastr.success("提交评论成功");
         setTimeout(() => {
-          window
-            .location
-            .reload();
+          window.location.reload();
         }, 1000);
       },
       failure: () => {
@@ -54,7 +104,7 @@ $(() => {
     });
   });
 
-  $(".comment-reply").click(function (e) {
+  $(".comment-reply").click(function(e) {
     const parentId = parseInt($(this).data("comment-id"), 10);
     if (isNaN(parentId) || parentId <= 0) {
       toastr.error("无法获取评论ID,请刷新页面");
@@ -76,14 +126,12 @@ $(() => {
       $.ajax({
         type: "POST",
         url: "/comments",
-        data: JSON.stringify({articleId, comment, parentId}),
+        data: JSON.stringify({ articleId, comment, parentId }),
         contentType: "application/json; charset=utf-8",
         success: () => {
           toastr.success("提交评论成功");
           setTimeout(() => {
-            window
-              .location
-              .reload();
+            window.location.reload();
           }, 1000);
         },
         failure: () => {
@@ -115,10 +163,16 @@ $(() => {
     $.ajax({
       type: "POST",
       url: "/article/like",
-      data: JSON.stringify({articleId, like}),
+      data: JSON.stringify({ articleId, like }),
       contentType: "application/json; charset=utf-8",
       failure: () => {
         toastr.error("提交操作失败");
+      },
+      success: data => {
+        const newValue = data.data;
+        if (!isNaN(newValue)) {
+          $("#like_number").html(data.data);
+        }
       }
     });
   }
@@ -132,26 +186,31 @@ $(() => {
     $.ajax({
       type: "POST",
       url: "/article/collection",
-      data: JSON.stringify({articleId, collected}),
+      data: JSON.stringify({ articleId, collected }),
       contentType: "application/json; charset=utf-8",
       failure: () => {
         toastr.error("提交操作失败");
+      },
+      success: data => {
+        const newValue = data.data;
+        if (!isNaN(newValue)) {
+          $("#collection_number").html(data.data);
+        }
       }
     });
   }
 
-  $(".heart i")
-    .on("click", function () {
-      if ($(this).hasClass("active")) {
-        $(this).removeClass("active");
-        submitLike(false);
-        return;
-      }
-      submitLike(true);
-      $(this).addClass("active");
-    });
+  $(".heart i").on("click", function() {
+    if ($(this).hasClass("active")) {
+      $(this).removeClass("active");
+      submitLike(false);
+      return;
+    }
+    submitLike(true);
+    $(this).addClass("active");
+  });
 
-  $(".collection i").on("click", function () {
+  $(".collection i").on("click", function() {
     if ($(this).hasClass("active")) {
       $(this).removeClass("active");
       submitCollection(false);

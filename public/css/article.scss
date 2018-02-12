@@ -8,18 +8,22 @@
 
 .article-static-bar {
     max-height: 50px;
+    font-family: 300 16px/1.6em Helvetica, Arial, sans-serif;
+    color: #7e7e7e !important;
     div.item {
         display: inline-table !important;
         margin-right: 10px;
-    }
-    span {
-        display: table-cell !important;
-        vertical-align: middle !important;
-        font: 300 14px/1.6em Helvetica, Arial, sans-serif;
+        .item-info {
+            color: #7e7e7e !important;
+            display: table-cell !important;
+            vertical-align: middle !important;
+            font: 300 14px/1.6em Helvetica, Arial, sans-serif;
+        }
     }
     .read,
     .collection,
     .heart {
+        font-family: 300 16px/1.6em Helvetica, Arial, sans-serif;
         height: 40px;
         width: 40px;
         cursor: pointer;
@@ -34,12 +38,17 @@
                 color: #ea0202;
             }
         }
+        p {
+            color: #7e7e7e !important;
+            display: inline-block;
+        }
     }
 }
 
 .user-write-form {
     .article-cover-img {
-        height: 500px;
+        height: 400px;
+        margin-top: 2rem;
         background-color: $MAIN_COLOR;
         background-size: cover;
         background-repeat: no-repeat;
@@ -88,7 +97,8 @@
         }
     }
     .article-cover-img {
-        height: 500px;
+        height: 450px;
+        margin-top: 2rem;
         background-color: $MAIN_COLOR;
         background-size: cover;
         background-repeat: no-repeat;

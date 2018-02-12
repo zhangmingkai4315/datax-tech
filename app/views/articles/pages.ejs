@@ -1,15 +1,15 @@
 <% include ../partial/header %>
 <% include ../partial/nav %>
-  <div class="col-md-12">
-    <div class="article-list">
-    <div class="col-md-8 col-sm-12">
-        <% include ../partial/articlelist %>
-        <% include ../partial/pagination %>
+    <% include ./static_info_bar.ejs %>
+    <div class="col-md-12">
+      <div class="article-list">
+      <div class="col-md-9 col-sm-12">
+          <% include ../partial/articlelist %>
+          <% include ../partial/pagination %>
+      </div>
+      <div class="col-md-3 col-sm-12">
+        <a class="btn btn-datax full-width" href="/articles/new"><i class="fa fa-keyboard"></i> 创建文章</a>
+      </div>
+      </div>
     </div>
-    <div class="col-md-4 col-sm-12">
-      <a class="btn btn-datax full-width" href="/articles/new"><i class="fa fa-keyboard"></i> 创建文章</a>
-    </div>
-
-    </div>
-  </div>
 <% include ../partial/footer %>

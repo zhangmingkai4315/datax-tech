@@ -1,18 +1,21 @@
-   
-<a href="/users/<%= user.username %>"><div class="info-bar">
-  <span class ="info-name">发表文章</span>
-  <span class = "info-detail">10</span>
+<div class="profile-info col-md-12" id="user-static-info" data-id="<%= user.id %>">
+  <a href="/users/<%= user.username %>">
+    <div class="info-bar">
+      <span class ="info-name">发表文章</span>
+      <span class = "info-detail" id="articles-number">0</span>
+    </div>
+  </a>
+  <div class="info-bar">
+    <span class ="info-name">访问量</span>
+    <span class = "info-detail" id="read_counter">0</span>
+  </div>
+  <div class="info-bar">
+    <span class ="info-name">获得喜欢数量</span>
+    <span class = "info-detail" id="like_counter">0</span>
+  </div>
+  <div class="info-bar">
+    <span class ="info-name">文章收藏数</span>
+    <span class = "info-detail" id="collected_counter">0</span>
+  </div>
 </div>
-</a>
-<div class="info-bar">
-  <span class ="info-name">访问量</span>
-  <span class = "info-detail">202</span>
-</div>
-<div class="info-bar">
-  <span class ="info-name">获得喜欢数量</span>
-  <span class = "info-detail">10</span>
-</div>
-<div class="info-bar">
-  <span class ="info-name">文章收藏数</span>
-  <span class = "info-detail">5</span>
-</div>
+

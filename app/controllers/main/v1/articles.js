@@ -3,6 +3,19 @@ const moment = require("moment");
 const paginate = require("express-paginate");
 const { markdown } = require("markdown");
 const db = require("../../../models");
+const utils = require("./utils");
+
+async function getArticlesStats(req, res) {
+  try {
+    const result = await db.sequelize.query(
+      "select count(*),sum(like_counter),sum(collected_counter),sum(read_counter) from articles",
+      { type: db.sequelize.QueryTypes.SELECT }
+    );
+    throw result;
+  } catch (data) {
+    utils.renderJSON(data, res);
+  }
+}
 
 function createArticleView(req, res) {
   const { user } = req;
@@ -237,9 +250,7 @@ async function collectionArticle(req, res) {
     const result = await article.update({
       collected_counter: newCounter
     });
-    res.status(200).json({
-      data: result
-    });
+    res.status(200).json({ data: newCounter });
   } catch (err) {
     res.status(500).json({
       error: err
@@ -294,9 +305,7 @@ async function likeArticle(req, res) {
     const result = await article.update({
       like_counter: newCounter
     });
-    res.status(200).json({
-      data: result
-    });
+    res.status(200).json({ data: newCounter });
   } catch (err) {
     res.status(500).json({
       error: err
@@ -310,6 +319,7 @@ module.exports = {
   uploadCoverImg,
   getArticleById,
   getArticles,
+  getArticlesStats,
   likeArticle,
   collectionArticle
 };

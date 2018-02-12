@@ -16,16 +16,16 @@
 						</form>
 				</div>
          <% } else { %>
-                <div class="photo">
+                <div class="photo col-md-1">
                     <div class="avatar" style="background-image: url('/img/default-user.png')">
                     </div>
                 </div>
-                <div class="comment-block">
+                <div class="comment-block col-md-10">
                     <form>
                             <textarea name="" id="comment-content" cols="30" rows="3" placeholder="Add comment..."></textarea>
                             <div class="bottom-comment">
                                 <ul class="comment-actions">
-                                        <li class="comment-login"><a href="/login">登入系统</a></li>
+                                        <li class="comment-login"><a href="/auth/login">登入系统</a></li>
                                 </ul>
                             </div>
                     </form>

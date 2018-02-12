@@ -23,7 +23,7 @@
                       <h3 class="article-title"><%= article.title%></h3>
                       <h5 class="article-meta">
                           <span class="article-author-thunbnail" id="hover-for-user-info"><img src="<%= user.thunbnail_url%>"/></span><div class="split-line"></div>
-                          <span class="article-author"><a href="/users/<%= user.username %>"><%= user.username %></span><div class="split-line"></a></div>
+                          <span class="article-author"><a href="/users/<%= user.username %>"><span class="like_number"><%= user.username %></span><div class="split-line"></a></div>
                           <span class="article-author"><%= moment(article.created_at).format('MMMM, YYYY'); %></span>
                       </h5>
               </div>
@@ -36,9 +36,9 @@
                   <%- contentHTML %>
               </div>
               <div class="article-static-bar row">
-                <div class="item"><div class="read"><i class="fa fa-eye"></i></div><span>阅读 <%= article.read_counter%></span></div>
-                <div class="item"><div class="heart "><i class="fa fa-heart  <%= liked? 'active': ''%>"></i></div><span>喜欢  <%= article.like_counter%></span></div>
-                <div class="item"><div class="collection "><i class="fa fa-folder-open  <%= collected? 'active': ''%>"></i></div><span>收藏 <%= article.collected_counter%></span></div>
+                <div class="item"><div class="read"><i class="fa fa-eye"></i></div><div class="item-info">阅读 <%= article.read_counter%></div></div>
+                <div class="item"><div class="heart "><i class="fa fa-heart  <%= liked? 'active': ''%>"></i></div><div class="item-info">喜欢  <span id="like_number"><%= article.like_counter%></span></div></div>
+                <div class="item"><div class="collection "><i class="fa fa-folder-open  <%= collected? 'active': ''%>"></i></div><div class="item-info">收藏 <span  id="collection_number"><%= article.collected_counter%></span></div></div>
               </div>
           </div>
           <% include ./comments %>

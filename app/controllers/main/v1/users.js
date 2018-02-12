@@ -1,13 +1,23 @@
 const Uploader = require("jquery-file-upload-middleware");
 const moment = require("moment");
+const sequelize = require("sequelize");
 const paginate = require("express-paginate");
 const db = require("../../../models");
-
-const getUserStatic = async (req, res) => {
-  const { username } = req.params;
-  if (!username) {
-    res.render("common/500.ejs");
-    return;
+const errors = require("../../errors");
+const utils = require("./utils");
+const getUserStats = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      throw errors.BadRequestError();
+    }
+    const result = await db.sequelize.query(
+      "select user_id,count(*),sum(like_counter) , sum(collected_counter),sum(read_counter) from articles where user_id=?",
+      { replacements: [id], type: db.sequelize.QueryTypes.SELECT }
+    );
+    throw result;
+  } catch (data) {
+    utils.renderJSON(data, res);
   }
 };
 
@@ -212,6 +222,7 @@ module.exports = {
   editUserProfile,
   editUserProfileBasic,
   getUserSkills,
+  getUserStats,
   createUserLinks,
   createUserSkill,
   uploadUserProfileImg

@@ -5,33 +5,36 @@
     width: 20rem;
     height: auto;
 }
-.article-static-bar{
-  max-height: 50px;
-  div.item{
-    display: inline-table!important;
-    margin-right: 10px;
-  }
-  span{
-     display:table-cell!important;
-     vertical-align:middle !important;
-     font: 300 14px/1.6em Helvetica, Arial, sans-serif;
-  }
-  .read,.collection,.heart{
-    height: 40px;
-    width: 40px;
-    cursor: pointer;
-    i{
-          position: relative;
-          top: calc(50% - 10px);
-          left: calc(40%);
-        &:hover{
-          color:#ea0202;
-        }
-        &.active{
-          color:#ea0202;
+
+.article-static-bar {
+    max-height: 50px;
+    div.item {
+        display: inline-table !important;
+        margin-right: 10px;
+    }
+    span {
+        display: table-cell !important;
+        vertical-align: middle !important;
+        font: 300 14px/1.6em Helvetica, Arial, sans-serif;
+    }
+    .read,
+    .collection,
+    .heart {
+        height: 40px;
+        width: 40px;
+        cursor: pointer;
+        i {
+            position: relative;
+            top: calc(50% - 10px);
+            left: calc(40%);
+            &:hover {
+                color: #ccc;
+            }
+            &.active {
+                color: #ea0202;
+            }
         }
     }
-  }
 }
 
 .user-write-form {
@@ -92,7 +95,7 @@
         background-position: center;
         position: relative;
         margin-bottom: 50px;
-        margin-top: 50px；
+        margin-top: 50px；;
     }
     .article-header {
         color: $MAIN_COLOR;

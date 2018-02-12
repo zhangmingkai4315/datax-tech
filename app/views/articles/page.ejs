@@ -36,9 +36,9 @@
                   <%- contentHTML %>
               </div>
               <div class="article-static-bar row">
-                <div class="item"><div class="read"><i class="fa fa-eye"></i></div><span>阅读 2002</span></div>
-                <div class="item"><div class="heart"><i class="fa fa-heart"></i></div><span>喜欢 31</span></div>
-                <div class="item"><div class="collection"><i class="fa fa-folder-open"></i></div><span>收藏 2</span></div>
+                <div class="item"><div class="read"><i class="fa fa-eye"></i></div><span>阅读 <%= article.read_counter%></span></div>
+                <div class="item"><div class="heart "><i class="fa fa-heart  <%= liked? 'active': ''%>"></i></div><span>喜欢  <%= article.like_counter%></span></div>
+                <div class="item"><div class="collection "><i class="fa fa-folder-open  <%= collected? 'active': ''%>"></i></div><span>收藏 <%= article.collected_counter%></span></div>
               </div>
           </div>
           <% include ./comments %>

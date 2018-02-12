@@ -219,4 +219,28 @@ $(() => {
     submitCollection(true);
     $(this).addClass("active");
   });
+
+  $("#article-tags-select-input").select2({
+    tags: true,
+    tokenSeparators: [","],
+    ajax: {
+      url: "/tags",
+      delay: 250,
+      dataType: "json",
+      processResults: data => {
+        return { results: data.data };
+      },
+      cache: true
+    },
+    createTag: params => {
+      const term = $.trim(params.term);
+      if (term === "") {
+        return null;
+      }
+      return {
+        id: term,
+        text: term + " (新增)"
+      };
+    }
+  });
 });

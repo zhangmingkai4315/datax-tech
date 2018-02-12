@@ -40,6 +40,13 @@
                 <div class="item"><div class="heart "><i class="fa fa-heart  <%= liked? 'active': ''%>"></i></div><div class="item-info">喜欢  <span id="like_number"><%= article.like_counter%></span></div></div>
                 <div class="item"><div class="collection "><i class="fa fa-folder-open  <%= collected? 'active': ''%>"></i></div><div class="item-info">收藏 <span  id="collection_number"><%= article.collected_counter%></span></div></div>
               </div>
+        
+              <div class="article-tags">
+                <% for(var i=0; i<tags.length;i++ ) { %>
+                    <span class="tag-item"><i class="fa fa-tags"></i> <%= tags[i].name %></span>
+                <% } %>
+              </div>
+
           </div>
           <% include ./comments %>
       </div>

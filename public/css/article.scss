@@ -6,6 +6,22 @@
     height: auto;
 }
 
+div.article-tags {
+    span.tag-item {
+        background: $MAIN_COLOR;
+        padding: 0.2rem 0.5rem;
+        display: q;
+        display: inline-block;
+        color: $MAIN_COLOR_FONT;
+        margin-right: 0.5rem;
+        border-radius: 0.2rem;
+        cursor: pointer;
+        &:hover {
+            background: $BUTTON_HOVER_COLOR;
+        }
+    }
+}
+
 .article-static-bar {
     max-height: 50px;
     font-family: 300 16px/1.6em Helvetica, Arial, sans-serif;

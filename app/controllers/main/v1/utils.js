@@ -5,11 +5,13 @@ function renderJSON(response, res) {
       error: response.name,
       message: response.message
     });
-  } else {
-    res.json({
-      data: response
-    });
+    return;
   }
+  if (response instanceof Error) {
+    res.status(500).json({ error: response });
+    return;
+  }
+  res.json({ data: response });
 }
 
 module.exports = {

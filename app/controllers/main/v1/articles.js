@@ -4,6 +4,7 @@ const paginate = require("express-paginate");
 const { markdown } = require("markdown");
 const db = require("../../../models");
 const utils = require("./utils");
+const errors = require("../../errors");
 
 async function getArticlesStats(req, res) {
   try {
@@ -127,7 +128,8 @@ async function getArticleById(req, res) {
       liked = result[0];
       collected = result[1];
     }
-    console.log(liked, collected);
+    const tags = await article.getTags();
+    console.log(tags);
     const contentHTML = markdown.toHTML(article.content);
     res.render("articles/page.ejs", {
       moment,
@@ -137,6 +139,7 @@ async function getArticleById(req, res) {
       contentHTML,
       article,
       comments,
+      tags,
       liked,
       collected,
       title: article.name
@@ -151,24 +154,42 @@ async function getArticleById(req, res) {
     });
   }
 }
-const createArticle = (req, res) => {
-  db.Article.create({
-    title: req.body.title,
-    content: req.body.content,
-    cover_img: req.body.cover_img,
-    cover_img_thumbnail: req.body.cover_img_thumbnail,
-    user_id: req.user.id
-  })
-    .then(article => {
-      res.json({
-        data: article.id
-      });
-    })
-    .catch(err => {
-      res.status(500).json({
-        error: err
-      });
+const createArticle = async (req, res) => {
+  try {
+    //创建文章内容
+    const { title, content, cover_img, cover_img_thumbnail, tags } = req.body;
+    if (!title || !content) {
+      throw errors.BadRequestError();
+    }
+    const article = await db.Article.create({
+      title: title,
+      content: content,
+      cover_img: cover_img,
+      cover_img_thumbnail: cover_img_thumbnail,
+      user_id: req.user.id
     });
+
+    // 分离出哪些是tags字符内容 哪些是数字
+    const newTags = tags.filter(s => isNaN(parseInt(s, 10)));
+    const oldTags = tags.filter(
+      s => typeof parseInt(s, 10) === "number" && !isNaN(parseInt(s))
+    );
+
+    // 创建新的tags
+    const newSkillObject = newTags.map(n => ({ name: n }));
+    const newTagsInDb = await db.Tag.bulkCreate(newSkillObject, {
+      individualHooks: true
+    });
+
+    const oldTagsInDb = await db.Tag.findAll({
+      where: { id: { $in: oldTags } }
+    });
+    // 保存所有的数据
+    const saveNewTags = await article.setTags([...newTagsInDb, ...oldTagsInDb]);
+    res.json({ data: article.id, result: saveNewTags });
+  } catch (err) {
+    utils.renderJSON(err, res);
+  }
 };
 
 // 使用分页方式对于数据进行分页处理

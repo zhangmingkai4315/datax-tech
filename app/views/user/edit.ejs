@@ -40,10 +40,10 @@
                             <div class="form-group">
                                 <label for="username">技能选择</label>
                                 <select multiple="multiple" class="form-control" id='user-skill-select-input'>
-                                <% for(var i=0; i<user.Skills.length; i++) {%>
-                                    <option selected="selected" value=<%= user.Skills[i].id %>><%= user.Skills[i].name %></span>
-                                <% } %>
-                            </select>
+                                    <% for(var i=0; i<user.Skills.length; i++) {%>
+                                        <option selected="selected" value=<%= user.Skills[i].id %>><%= user.Skills[i].name %></span>
+                                    <% } %>
+                                </select>
                             </div>
                             <div class="form-group ">
                                 <button type="submit" id="user-basic-skill-submit" class="btn btn-datax"> 保存</button>

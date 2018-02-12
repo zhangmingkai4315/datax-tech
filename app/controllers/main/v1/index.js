@@ -4,6 +4,7 @@ const v1 = new express.Router();
 const users = require("./users");
 const articles = require("./articles");
 const skills = require("./skills");
+const tags = require("./tags");
 const comments = require("./comments");
 const middleware = require("../../middleware");
 
@@ -65,6 +66,9 @@ v1.post("/articles", middleware.authenticationMiddle, articles.createArticle);
 
 v1.get("/skills", skills.getSkills);
 v1.post("/skills", skills.createSkills);
+
+v1.get("/tags", tags.getTags);
+v1.post("/tags", tags.createTag);
 
 v1.post("/comments", middleware.authenticationMiddle, comments.createComment);
 v1.delete("/comments", middleware.authenticationMiddle, comments.deleteComment);

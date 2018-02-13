@@ -28,7 +28,7 @@ div.article-tags {
     color: #7e7e7e !important;
     div.item {
         display: inline-table !important;
-        margin-right: 10px;
+        margin: 10px 5px;
         .item-info {
             color: #7e7e7e !important;
             display: table-cell !important;
@@ -38,15 +38,17 @@ div.article-tags {
     }
     .read,
     .collection,
+    .control-btn,
     .heart {
         font-family: 300 16px/1.6em Helvetica, Arial, sans-serif;
-        height: 40px;
-        width: 40px;
+        height: 30px;
+        width: 30px;
+        margin: 5px, 0;
         cursor: pointer;
         i {
             position: relative;
-            top: calc(50% - 10px);
-            left: calc(40%);
+            top: calc(50% - 7px);
+            left: calc(30%);
             &:hover {
                 color: #ccc;
             }

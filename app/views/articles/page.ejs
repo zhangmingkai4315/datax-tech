@@ -18,9 +18,11 @@
 <div class="col-md-12">
     <div class="profile-main">
       <div class="user-projects col-md-10 col-md-offset-1 col-sm-12">
-          <div class="article-page" >
+          <div class="article-page" data-id="<%= article.id %>" >
            <div class="article-header">
-                      <h3 class="article-title"><%= article.title%></h3>
+                      <h3 class="article-title"><%= article.title%>
+                      </h3>
+
                       <h5 class="article-meta">
                           <span class="article-author-thunbnail" id="hover-for-user-info"><img src="<%= user.thunbnail_url%>"/></span><div class="split-line"></div>
                           <span class="article-author"><a href="/users/<%= user.username %>"><span class="like_number"><%= user.username %></span><div class="split-line"></a></div>
@@ -39,7 +41,24 @@
                 <div class="item"><div class="read"><i class="fa fa-eye"></i></div><div class="item-info">阅读 <%= article.read_counter%></div></div>
                 <div class="item"><div class="heart "><i class="fa fa-heart  <%= liked? 'active': ''%>"></i></div><div class="item-info">喜欢  <span id="like_number"><%= article.like_counter%></span></div></div>
                 <div class="item"><div class="collection "><i class="fa fa-folder-open  <%= collected? 'active': ''%>"></i></div><div class="item-info">收藏 <span  id="collection_number"><%= article.collected_counter%></span></div></div>
-              </div>
+                <% if(editable) {%>
+                    <div class="item" id="edit-article-btn">
+                        <div class="control-btn">
+                           <i class="fa fa-edit"></i>
+                        </div>
+                        <div class="item-info"> 编辑
+                        </div>
+                    </div>
+                    <div class="item" data-toggle="modal" data-target="#deleteArticleModal">
+                        <div class="control-btn">
+                          <i class="fa fa-trash"></i>
+                        </div>
+                        <div class="item-info"> 删除
+                        </div>
+                    </div>
+                    </div>
+                <% } %>
+            </div>
         
               <div class="article-tags">
                 <% for(var i=0; i<tags.length;i++ ) { %>
@@ -51,6 +70,23 @@
           <% include ./comments %>
       </div>
     </div>
+</div>
+
+
+
+<div class="modal fade" role="document" id="deleteArticleModal" tabindex="-1" role="dialog" aria-labelledby="deleteArticleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      
+      <div class="modal-body">
+        <p>请确认是否要删除文章: <b><%= article.title %></b>?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="delete-article-btn">删除</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <% include ../partial/footer %>

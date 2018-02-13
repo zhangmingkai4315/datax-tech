@@ -13,7 +13,19 @@ function renderJSON(response, res) {
   }
   res.json({ data: response });
 }
+function renderErrorView(response, res) {
+  if (response instanceof errors.CustomError) {
+    const code = response.code;
+    res.status(code).render(`common/${code}`, { title: `Error ${code}` });
+    return;
+  }
+  if (response instanceof Error) {
+    res.status(500).render(`common/500`, { title: `Error 500` });
+    return;
+  }
+}
 
 module.exports = {
-  renderJSON
+  renderJSON,
+  renderErrorView
 };

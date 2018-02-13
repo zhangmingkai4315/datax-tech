@@ -17,6 +17,96 @@ async function getArticlesStats(req, res) {
     utils.renderJSON(data, res);
   }
 }
+async function deleteArticleById(req, res) {
+  try {
+    const { id } = req.params;
+    const affectedRows = await db.Article.destroy({
+      where: {
+        id,
+        user_id: req.user.id
+      }
+    });
+    if (affectedRows <= 0) {
+      throw errors.NotFoundError();
+    } else {
+      throw req.user.username;
+    }
+  } catch (err) {
+    utils.renderJSON(err, res);
+  }
+}
+
+async function editAticleView(req, res) {
+  try {
+    const { id } = req.params;
+    const user = req.user;
+    if (!id) {
+      throw errors.BadRequestError();
+    }
+    const article = await db.Article.findById(id);
+    article.Tags = await article.getTags();
+    // 用户访问不属于自己的资源时
+    if (article.user_id !== user.id) {
+      throw errors.ForbiddenError();
+    }
+    res.render("articles/edit_page.ejs", {
+      current_user: user,
+      user,
+      article,
+      editable: true
+    });
+  } catch (err) {
+    console.log(err);
+    utils.renderErrorView(err, res);
+  }
+}
+
+async function editAticlePost(req, res) {
+  try {
+    const { id } = req.params;
+    const { content, cover_img, cover_img_thumbnail, tags, title } = req.body;
+    const user = req.user;
+    if (!id) {
+      throw errors.BadRequestError();
+    }
+    const article = await db.Article.findById(id);
+    // 用户访问不属于自己的资源时
+    if (article.user_id !== user.id) {
+      throw errors.ForbiddenError();
+    }
+    // 验证用户输入信息
+
+    // update article
+    await article.update({
+      title,
+      content,
+      cover_img,
+      cover_img_thumbnail
+    });
+
+    // 更新tag信息
+    const newTags = tags.filter(s => isNaN(parseInt(s, 10)));
+    const oldTags = tags.filter(
+      s => typeof parseInt(s, 10) === "number" && !isNaN(parseInt(s))
+    );
+
+    // 创建新的tags
+    const newTagsObject = newTags.map(n => ({ name: n }));
+    const newTagsInDb = await db.Tag.bulkCreate(newTagsObject, {
+      individualHooks: true
+    });
+
+    const oldTagsInDb = await db.Tag.findAll({
+      where: { id: { $in: oldTags } }
+    });
+    // 保存所有的数据
+    const saveNewTags = await article.setTags([...newTagsInDb, ...oldTagsInDb]);
+    throw article.id;
+  } catch (err) {
+    console.log(err);
+    utils.renderJSON(err, res);
+  }
+}
 
 function createArticleView(req, res) {
   const { user } = req;
@@ -176,8 +266,8 @@ const createArticle = async (req, res) => {
     );
 
     // 创建新的tags
-    const newSkillObject = newTags.map(n => ({ name: n }));
-    const newTagsInDb = await db.Tag.bulkCreate(newSkillObject, {
+    const newTagsObject = newTags.map(n => ({ name: n }));
+    const newTagsInDb = await db.Tag.bulkCreate(newTagsObject, {
       individualHooks: true
     });
 
@@ -336,6 +426,9 @@ async function likeArticle(req, res) {
 
 module.exports = {
   createArticle,
+  editAticleView,
+  editAticlePost,
+  deleteArticleById,
   createArticleView,
   uploadCoverImg,
   getArticleById,

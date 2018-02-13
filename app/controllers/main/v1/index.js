@@ -61,6 +61,19 @@ v1.post(
   articles.uploadCoverImg
 );
 v1.get("/articles/:id", articles.getArticleById);
+v1.delete("/articles/:id", articles.deleteArticleById);
+v1.get(
+  "/articles/:id/edit",
+  middleware.authenticationMiddle,
+  articles.editAticleView
+);
+
+v1.post(
+  "/articles/:id/edit",
+  middleware.authenticationMiddle,
+  articles.editAticlePost
+);
+
 v1.get("/articles", articles.getArticles);
 v1.post("/articles", middleware.authenticationMiddle, articles.createArticle);
 

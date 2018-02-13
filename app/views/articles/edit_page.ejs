@@ -1,0 +1,39 @@
+<% include ../partial/header %>
+<% include ../partial/nav %>
+
+<% include ../user/user_static_header.ejs %>
+  <div class="col-md-12">
+    <div class="profile-main">
+    <div id="article-edit-view" data-id="<%= article.id %>"class="user-write-form col-md-10 col-md-offset-1 col-sm-12">
+        <div class="article-cover-img" style='<%= article.cover_img ? "background-image:url("+article.cover_img+")":""%>'>
+            <div class="article-cover-btn fileinput-button">
+                <button class="btn btn-datax" id="article-cover-upload-btn">上传封面</button>
+                <input class="hide" id="article-cover-upload" type="file" name="cover-img">
+            </div>
+        </div>
+        <div class="article-main">
+            <form>
+                <div class="form-group article-title">
+                    <label for="article-title">文章标题</label>
+                    <input type="text" value="<%= article.title %>"class="form-control" id="article-title" placeholder="" required>
+                </div>
+                <div class="form-group article-content">
+                    <label for="article-content">文章正文</label>
+                    <textarea rows="20" cols="" class="form-control" id="article-content" required><%= article.content %></textarea>
+                </div>
+                <div class="form-group article-tags">
+                    <label for="article-title">添加标签</label>
+                    <select multiple="multiple" class="form-control" id='article-tags-select-input'>
+                        <% for(var i=0; i<article.Tags.length; i++) {%>
+                            <option selected="selected" value=<%= article.Tags[i].id %>><%=article.Tags[i].name %></span>
+                        <% } %>
+                    </select>
+                </div>
+                <button type="submit" id="article-edit-submit" class="btn btn-datax">保存</button>
+            </form>
+        </div>
+    </div>
+
+    </div>
+</div>
+<% include ../partial/footer %>

@@ -71,9 +71,9 @@ $(() => {
         .css({ top: top, left: left })
         .removeClass("hidden");
     }, 200),
-    () => {
+    _.debounce(function(event) {
       $("#user-profile-abs-hover").addClass("hidden");
-    }
+    }, 200)
   );
 
   $("#comment-submit-btn").click(() => {

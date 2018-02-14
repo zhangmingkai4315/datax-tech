@@ -1,10 +1,34 @@
+/*!
+ * datax-tech 网站源码
+ * Copyright(c) 2017-2018 zhangmingkai4315(zhangmingkai.1989@gmail.com)
+ * MIT Licensed
+ */
+
+/**
+ * 模块依赖
+ * @private
+ */
 const Uploader = require("jquery-file-upload-middleware");
 const moment = require("moment");
 const sequelize = require("sequelize");
 const paginate = require("express-paginate");
+
+/**
+ * 变量声明
+ * @private
+ */
 const db = require("../../../models");
 const errors = require("../../errors");
-const utils = require("./utils");
+const utils = require("../../utils");
+
+/**
+ * getUserStats 获取当前用户统计信息API
+ *
+ * 使用缓存来降低访问统计API对于数据库的访问
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 const getUserStats = async (req, res) => {
   try {
     const { id } = req.params;
@@ -21,6 +45,13 @@ const getUserStats = async (req, res) => {
   }
 };
 
+/**
+ * getUserProfile 获取当前用户Profile信息API
+ *
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 const getUserProfile = async (req, res) => {
   const { username } = req.params;
   if (!username) {
@@ -79,6 +110,13 @@ const getUserProfile = async (req, res) => {
   }
 };
 
+/**
+ * editUserProfile 编辑用户Profile页面视图API
+ *
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 const editUserProfile = (req, res) => {
   const { username } = req.params;
   if (!username) {
@@ -118,6 +156,15 @@ const editUserProfile = (req, res) => {
     });
 };
 
+/**
+ * editUserProfileBasic POST数据并修改用户Profile中基本的信息API
+ *
+ * POST新的数据
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
+
 const editUserProfileBasic = (req, res) => {
   db.User.update(
     {
@@ -138,13 +185,28 @@ const editUserProfileBasic = (req, res) => {
       res.status(500).json({ error: err });
     });
 };
-// 更新基本信息,仅限于当前登入用户
+
+/**
+ * getUserSkills 获取当前用户的skills的API
+ *
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 const getUserSkills = (req, res) => {
   req.user
     .getSkill()
     .then(s => res.json({ data: s }))
     .catch(err => res.status(500).json({ error: err }));
 };
+
+/**
+ * createUserLinks POST数据并修改用户Profile中社交网络信息API
+ *
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 const createUserLinks = (req, res) => {
   db.User.update(
     {
@@ -167,6 +229,14 @@ const createUserLinks = (req, res) => {
       res.status(500).json({ error: err });
     });
 };
+
+/**
+ * createUserSkill POST数据并修改用户Profile中技能信息API
+ *
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 const createUserSkill = (req, res) => {
   const { skills } = req.body;
   const newSkills = skills.filter(s => isNaN(parseInt(s, 10)));
@@ -197,6 +267,14 @@ const createUserSkill = (req, res) => {
     .then(() => res.json({ data: "success" }))
     .catch(err => res.json({ error: err }));
 };
+
+/**
+ * uploadUserProfileImg POST数据并修改用户Profile中封面信息API
+ *
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 const uploadUserProfileImg = (req, res, next) => {
   Uploader.on("end", (fileinfo, request) => {
     db.User.update(
@@ -217,6 +295,10 @@ const uploadUserProfileImg = (req, res, next) => {
   })(req, res, next);
 };
 
+/**
+ * 模块导出声明
+ * @public
+ */
 module.exports = {
   getUserProfile,
   editUserProfile,

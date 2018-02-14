@@ -1,8 +1,32 @@
+/*!
+ * datax-tech 网站源码
+ * Copyright(c) 2017-2018 zhangmingkai4315(zhangmingkai.1989@gmail.com)
+ * MIT Licensed
+ */
+
+/**
+ * 模块依赖
+ * @private
+ */
 const GithubStrategy = require("passport-github").Strategy;
+
+/**
+ * 变量声明
+ * callbackURL  定义项目使用github认证后回调地址
+ * db           保存实际数据库连接句柄
+ * @private
+ */
 const callbackURL = `${process.env.DOMAIN}/auth/github/callback`;
 const db = require("../../models");
 
-const githubStrategyHandler = () => {
+/**
+ * 定义github的策略处理函数
+ * 根据实际的配置生成自定义的github认证策略对象
+ *
+ * @param  {}       无
+ * @return {object} github策略对象
+ */
+exports.githubStrategyHandler = function() {
   return new GithubStrategy(
     {
       clientID: process.env.GITHUB_ID,
@@ -85,4 +109,3 @@ const githubStrategyHandler = () => {
     }
   );
 };
-module.exports = githubStrategyHandler;

@@ -1,5 +1,19 @@
+/*!
+ * datax-tech 网站源码
+ * Copyright(c) 2017-2018 zhangmingkai4315(zhangmingkai.1989@gmail.com)
+ * MIT Licensed
+ */
+
+/**
+ * 模块依赖
+ * @private
+ */
 const express = require("express");
 
+/**
+ * 变量声明
+ * @private
+ */
 const v1 = new express.Router();
 const users = require("./users");
 const articles = require("./articles");
@@ -9,18 +23,15 @@ const comments = require("./comments");
 const middleware = require("../../middleware");
 
 v1.use(middleware.customRenderMiddleware);
-
 v1.get("/", (req, res) => {
   res.render("index", {
     title: "DataX",
     current_user: req.user
   });
 });
-
 v1.get("/profile", middleware.authenticationMiddle, (req, res) => {
   res.redirect(`/users/${req.user.username}`);
 });
-
 v1.get("/users/:username", users.getUserProfile);
 v1.get("/users/:id/stats", middleware.cache(60), users.getUserStats);
 v1.get(

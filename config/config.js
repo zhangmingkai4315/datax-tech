@@ -1,9 +1,32 @@
-const path = require("path");
+/*!
+ * datax-tech 网站源码
+ * Copyright(c) 2017-2018 zhangmingkai4315(zhangmingkai.1989@gmail.com)
+ * MIT Licensed
+ */
 
-const rootPath = path.normalize(`${__dirname}/..`);
+/**
+ * 模块依赖
+ * @private
+ */
+
+const path = require("path");
 const dotenv = require("dotenv");
+
+/**
+ * 变量
+ * rootPath:变量定义项目根目录
+ * @private
+ */
+const rootPath = path.normalize(`${__dirname}/..`);
+
+// 导入.env文件中的变量到系统环境变量中
 dotenv.load();
-const config = {
+
+/**
+ * 保存所有不同环境下配置参数的实例对象,通过实际环境config[env]访问
+ * @private
+ */
+module.exports = {
   development: {
     root: rootPath,
     http_domain: process.env.DOMAIN,
@@ -59,4 +82,3 @@ const config = {
     redis: process.env.REDIS_DB
   }
 };
-module.exports = config;

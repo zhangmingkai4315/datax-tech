@@ -1,12 +1,32 @@
+/*!
+ * datax-tech 网站源码
+ * Copyright(c) 2017-2018 zhangmingkai4315(zhangmingkai.1989@gmail.com)
+ * MIT Licensed
+ */
+
+/**
+ * 模块依赖
+ * @private
+ */
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GitHubStrategy = require("passport-github").Strategy;
-const db = require("../../models");
-const authenticationMiddleware = require("../middleware");
 const { body, validationResult } = require("express-validator/check");
 const { sanitizeBody } = require("express-validator/filter");
-const githubStrategyHandler = require("./github");
 
+/**
+ * 变量声明
+ * @private
+ */
+const db = require("../../models");
+const authenticationMiddleware = require("../middleware");
+const { githubStrategyHandler } = require("./github");
+
+/**
+ * 用于提供用户注册函数中的客户端传递参数的验证
+ * @param   {}
+ * @return  {}
+ */
 function signUpValidation() {
   // Validate fields.
   body("username")
@@ -29,6 +49,11 @@ function signUpValidation() {
     .escape();
 }
 
+/**
+ * 通过邮件地址来查找用户对象
+ * @param   {string}   email 用户邮箱地址
+ * @param  {function}  callback 回调函数参数
+ */
 function findUserByEmail(email, callback) {
   db.User.findOne({
     where: {
@@ -44,6 +69,11 @@ function findUserByEmail(email, callback) {
     .catch(err => callback(null, err));
 }
 
+/**
+ * 通过用户名来查找用户对象
+ * @param   {string}   email 用户邮箱地址
+ * @param  {function}  callback 回调函数参数
+ */
 function findUserByUsername(username, callback) {
   db.User.findOne({
     where: {
@@ -74,6 +104,10 @@ passport.deserializeUser((id, done) => {
     .catch(() => done(null, false));
 });
 
+/**
+ * initPassport 初始化passport并加载本地注册及登入策略
+ * @param   {}
+ */
 function initPassport() {
   passport.use(githubStrategyHandler());
   passport.use(
@@ -178,4 +212,8 @@ function initPassport() {
   passport.authenticationMiddleware = authenticationMiddleware;
 }
 
+/**
+ * 模块导出声明
+ * @public
+ */
 module.exports = initPassport;

@@ -1,13 +1,37 @@
+/*!
+ * datax-tech 网站源码
+ * Copyright(c) 2017-2018 zhangmingkai4315(zhangmingkai.1989@gmail.com)
+ * MIT Licensed
+ */
+
+/**
+ * 模块依赖
+ * @private
+ */
 const Uploader = require("jquery-file-upload-middleware");
 const moment = require("moment");
 const paginate = require("express-paginate");
 const { markdown } = require("markdown");
+
+/**
+ * 变量声明
+ * @private
+ */
 const db = require("../../../models");
-const utils = require("./utils");
+const utils = require("../../utils");
 const errors = require("../../errors");
 
+/**
+ * getArticlesStats 获取本站所有文章统计信息API
+ *
+ * 设置中间件缓存，用于减轻服务器压力
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 async function getArticlesStats(req, res) {
   try {
+    // 通过直接使用sql来查询统计信息
     const result = await db.sequelize.query(
       "select count(*),sum(like_counter),sum(collected_counter),sum(read_counter) from articles",
       { type: db.sequelize.QueryTypes.SELECT }
@@ -17,6 +41,14 @@ async function getArticlesStats(req, res) {
     utils.renderJSON(data, res);
   }
 }
+
+/**
+ * deleteArticleById 获取指定ID的文章内容API
+ *
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 async function deleteArticleById(req, res) {
   try {
     const { id } = req.params;
@@ -36,6 +68,13 @@ async function deleteArticleById(req, res) {
   }
 }
 
+/**
+ * editAticleView 获取编辑文章内容视图的API
+ *
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 async function editAticleView(req, res) {
   try {
     const { id } = req.params;
@@ -61,6 +100,13 @@ async function editAticleView(req, res) {
   }
 }
 
+/**
+ * editAticlePost 当用户post编辑后的文章内容视图的API
+ *
+ * @param {String} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 async function editAticlePost(req, res) {
   try {
     const { id } = req.params;
@@ -108,6 +154,14 @@ async function editAticlePost(req, res) {
   }
 }
 
+/**
+ * createArticleView 创建新的文章页面视图的API
+ *
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
+
 function createArticleView(req, res) {
   const { user } = req;
   if (!user) {
@@ -131,6 +185,13 @@ function createArticleView(req, res) {
     });
 }
 
+/**
+ * uploadCoverImg 上传封面图片API
+ *
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 async function uploadCoverImg(req, res, next) {
   Uploader.on("begin", fileInfo => {
     fileInfo.name = new Date().getTime() + fileInfo.originalName;
@@ -147,6 +208,14 @@ async function uploadCoverImg(req, res, next) {
     }
   })(req, res, next);
 }
+
+/**
+ * getArticleById 获取文章内容视图API
+ *
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 async function getArticleById(req, res) {
   try {
     const { id } = req.params;
@@ -244,6 +313,14 @@ async function getArticleById(req, res) {
     });
   }
 }
+
+/**
+ * createArticle 当用户POST创建新的文章的API
+ *
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 const createArticle = async (req, res) => {
   try {
     //创建文章内容
@@ -282,7 +359,13 @@ const createArticle = async (req, res) => {
   }
 };
 
-// 使用分页方式对于数据进行分页处理
+/**
+ * getArticles 获取文章列表视图API
+ *
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 async function getArticles(req, res, next) {
   try {
     const skip = ((req.query.page || 1) - 1) * req.query.limit;
@@ -315,6 +398,13 @@ async function getArticles(req, res, next) {
   }
 }
 
+/**
+ * collectionArticle 点击收藏/取消收藏文章的API
+ *
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 async function collectionArticle(req, res) {
   try {
     const { articleId, collected } = req.body;
@@ -369,6 +459,13 @@ async function collectionArticle(req, res) {
   }
 }
 
+/**
+ * likeArticle 点击喜欢/取消喜欢文章的API
+ *
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
 async function likeArticle(req, res) {
   try {
     const { articleId, like } = req.body;
@@ -424,6 +521,10 @@ async function likeArticle(req, res) {
   }
 }
 
+/**
+ * 模块导出声明
+ * @public
+ */
 module.exports = {
   createArticle,
   editAticleView,

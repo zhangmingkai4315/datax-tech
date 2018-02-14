@@ -1,6 +1,20 @@
+/*!
+ * datax-tech 网站源码
+ * Copyright(c) 2017-2018 zhangmingkai4315(zhangmingkai.1989@gmail.com)
+ * MIT Licensed
+ */
+
+/**
+ * 模块依赖
+ * @private
+ */
 const express = require("express");
 const passport = require("passport");
 
+/**
+ * 变量声明
+ * @private
+ */
 const auth = new express.Router();
 
 auth.get("/login", (req, res) => {
@@ -40,6 +54,7 @@ auth.get("/logout", (req, res) => {
 
 // 定义github的路由处理
 auth.get("/github", passport.authenticate("github"));
+// 定义github的路由回调处理
 auth.get(
   "/github/callback",
   passport.authenticate("github", {
@@ -48,4 +63,8 @@ auth.get(
   })
 );
 
+/**
+ * 模块导出声明
+ * @public
+ */
 module.exports = auth;

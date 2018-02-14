@@ -1,35 +1,45 @@
-const Sequelize = require("sequelize");
+/*!
+ * datax-tech 网站源码
+ * Copyright(c) 2017-2018 zhangmingkai4315(zhangmingkai.1989@gmail.com)
+ * MIT Licensed
+ */
 
-module.exports = sequelize => {
+/**
+ * 模块导出声明
+ * 模块提供articles数据库表的模型定义
+ * @public
+ */
+
+module.exports = (sequelize, DataTypes) => {
   const Article = sequelize.define(
     "Article",
     {
       title: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false
       },
       user_id: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false
       },
-      content: Sequelize.TEXT,
-      cover_img: Sequelize.STRING,
-      read_counter: Sequelize.INTEGER,
-      like_counter: Sequelize.INTEGER,
-      collected_counter: Sequelize.INTEGER,
-      cover_img_thumbnail: Sequelize.STRING
+      content: DataTypes.TEXT,
+      cover_img: DataTypes.STRING,
+      read_counter: DataTypes.INTEGER,
+      like_counter: DataTypes.INTEGER,
+      collected_counter: DataTypes.INTEGER,
+      cover_img_thumbnail: DataTypes.STRING
     },
     {
       underscored: true,
       tableName: "articles",
       classMethods: {
         associate: models => {
-          // example on how to add relations Article.hasMany(models.Comments);
           Article.hasMany(models.Comment, {
             onDelete: "CASCADE",
             onUpdate: "CASCADE"
           });
-          Article.belongsTo(models.User); // add fk_user to article
+
+          Article.belongsTo(models.User);
           Article.belongsToMany(models.Tag, {
             through: {
               model: models.ArticleTag,

@@ -1,13 +1,29 @@
-// Example model
-const bcrypt = require("bcrypt");
-const Sequelize = require("sequelize");
+/*!
+ * datax-tech 网站源码
+ * Copyright(c) 2017-2018 zhangmingkai4315(zhangmingkai.1989@gmail.com)
+ * MIT Licensed
+ */
 
-module.exports = (sequelize) => {
+/**
+ * 模块依赖
+ * bcrypt模块用于提供用户加密操作的函数接口
+ * @private
+ */
+
+const bcrypt = require("bcrypt");
+
+/**
+ * 模块导出声明
+ * 模块提供users数据库表的模型定义
+ * @public
+ */
+
+module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     "User",
     {
       username: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         unique: true,
         allowNull: false,
         validate: {
@@ -15,7 +31,7 @@ module.exports = (sequelize) => {
         }
       },
       email: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         unique: true,
         allowNull: false,
         validate: {
@@ -23,37 +39,37 @@ module.exports = (sequelize) => {
         }
       },
       password: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       },
       role: {
-        type: Sequelize.ENUM,
+        type: DataTypes.ENUM,
         values: ["user", "admin", "disabled"],
         defaultValue: "user"
       },
-      image_url: Sequelize.STRING,
-      thunbnail_url: Sequelize.STRING,
-      globe_url: Sequelize.STRING,
+      image_url: DataTypes.STRING,
+      thunbnail_url: DataTypes.STRING,
+      globe_url: DataTypes.STRING,
 
-      github_url: Sequelize.STRING,
-      github_id: Sequelize.INTEGER,
-      github_token: Sequelize.STRING,
+      github_url: DataTypes.STRING,
+      github_id: DataTypes.INTEGER,
+      github_token: DataTypes.STRING,
 
-      weibo_url: Sequelize.STRING,
-      facebook_url: Sequelize.STRING,
-      twitter_url: Sequelize.STRING,
+      weibo_url: DataTypes.STRING,
+      facebook_url: DataTypes.STRING,
+      twitter_url: DataTypes.STRING,
 
       group_name: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         defaultValue: ""
       },
       job_name: {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         defaultValue: ""
       },
-      introduce: Sequelize.STRING,
+      introduce: DataTypes.STRING,
       last_login: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW
       }
     },
     {
@@ -68,12 +84,16 @@ module.exports = (sequelize) => {
         }
       },
       classMethods: {
-        associate: (models) => {
+        associate: models => {
+          // 建立1:N的映射关系
           User.hasMany(models.Article);
+          // users表与comments表建立1:N的映射关系，当用户删除的时候
+          // 同时删除所有相关评论,当用户id发生变换时，子表中同样发生变化
           User.hasMany(models.Comment, {
             onDelete: "CASCADE",
             onUpdate: "CASCADE"
           });
+          // users表与skills表通过skill_users表建立N:M的映射关系
           User.belongsToMany(models.Skill, {
             through: {
               model: models.SkillUser,
@@ -82,25 +102,23 @@ module.exports = (sequelize) => {
             foreignKey: "user_id",
             constraints: false
           });
-
+          // users表与articles表通过user_likes表建立N:M的映射关系
           User.belongsToMany(models.Article, {
             through: {
               model: models.UserLike,
               unique: false
             },
             as: "Likes",
-            foreignKey: "user_id",
-            constraints: false
+            foreignKey: "user_id"
           });
-
+          // users表与articles表通过user_collections表建立N:M的映射关系
           User.belongsToMany(models.Article, {
             through: {
               model: models.UserCollection,
               unique: false
             },
             as: "Collections",
-            foreignKey: "user_id",
-            constraints: false
+            foreignKey: "user_id"
           });
         }
       }

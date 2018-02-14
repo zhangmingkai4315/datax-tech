@@ -1,9 +1,19 @@
-const Sequelize = require("sequelize");
+/*!
+ * datax-tech 网站源码
+ * Copyright(c) 2017-2018 zhangmingkai4315(zhangmingkai.1989@gmail.com)
+ * MIT Licensed
+ */
 
-module.exports = sequelize => {
+/**
+ * 模块导出声明
+ * 模块提供tags数据库表的模型定义
+ * @public
+ */
+
+module.exports = (sequelize, DataTypes) => {
   const Tag = sequelize.define(
     "Tag",
-    { name: { type: Sequelize.STRING, unique: true, allowNull: false } },
+    { name: { type: DataTypes.STRING, unique: true, allowNull: false } },
     {
       underscored: true,
       timestamps: false,

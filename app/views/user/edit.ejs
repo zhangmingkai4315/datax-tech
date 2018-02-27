@@ -8,77 +8,99 @@
             </div>
             <div class="user-edit-form col-md-9 col-sm-12">
                 <div class="basic-info col-md-8">
-                    <div class="info-block">
-                        <h2>基本信息</h2>
-                        <div class="divider red"></div>
-                        <form>
-                            <div class="form-group">
-                                <label for="username">用户名称</label>
-                                <input type="text" class="form-control" id="username" value="<%= user.username%>" readonly>
+                     <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <% if(editable){ %>
+                        <li role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">用户信息</a></li>
+                        <li role="presentation"><a href="#password" aria-controls="password" role="tab" data-toggle="tab">密码修改</a></li>
+                        <% } %>
+                        <li role="presentation"><a href="#collections" aria-controls="collections" role="tab" data-toggle="tab">收藏文章</a></li>
+                        <li role="presentation"><a href="#likes" aria-controls="likes" role="tab" data-toggle="tab">点赞文章</a></li>
+                    </ul>
+                    <div class="tab-content">
+                         <% if(editable){ %>
+                        <div role="tabpanel" class="tab-pane active" id="profile">
+                            <div class="info-block">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="username">用户名称</label>
+                                        <input type="text" class="form-control" id="username" value="<%= user.username%>" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="groupname">组名称</label>
+                                        <input type="text" class="form-control" id="groupname" value="<%= user.group_name ? user.group_name:'' %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="jobname">职位名称</label>
+                                        <input type="text" class="form-control" id="jobname" value="<%= user.job_name ? user.job_name:'' %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="introduce">个人介绍</label>
+                                        <textarea class="form-control" rows="3" id="introduce"><%= user.introduce ? user.introduce:'' %></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" id="user-basic-info-submit" class="btn btn-datax"> 保存</button>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="form-group">
-                                <label for="groupname">组名称</label>
-                                <input type="text" class="form-control" id="groupname" value="<%= user.group_name ? user.group_name:'' %>">
+                            <div class="info-block">
+                                <h2>技能列表</h2>
+                                <div class="divider red"></div>
+                                <form>
+                                    <div class="form-group">
+                                        <label for="username">技能选择</label>
+                                        <select multiple="multiple" class="form-control" id='user-skill-select-input'>
+                                            <% for(var i=0; i<user.Skills.length; i++) {%>
+                                                <option selected="selected" value="<%= user.Skills[i].id %>"><%= user.Skills[i].name %></span>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                    <div class="form-group ">
+                                        <button type="submit" id="user-basic-skill-submit" class="btn btn-datax"> 保存</button>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="form-group">
-                                <label for="jobname">职位名称</label>
-                                <input type="text" class="form-control" id="jobname" value="<%= user.job_name ? user.job_name:'' %>">
+                            <div class="info-block">
+                                <h2>社交网站链接</h2>
+                                <div class="divider red"></div>
+                                <form>
+                                    <div class="form-group">
+                                        <label for="globe_url">个人网站</label>
+                                        <input type="text" class="form-control" id="globe_url" value="<%= user.globe_url ? user.globe_url:'' %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="github_url">Github</label>
+                                        <input type="text" class="form-control" id="github_url" value="<%= user.github_url ? user.github_url:'' %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="weibo_url">微博</label>
+                                        <input type="text" class="form-control" id="weibo_url" value="<%=user.weibo_url ? user.weibo_url:'' %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="facebook_url">Facebook</label>
+                                        <input type="text" class="form-control" id="facebook_url" value="<%=user.facebook_url ? user.facebook_url:'' %>" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="twitter_url">Twitter</label>
+                                        <input type="text" class="form-control" id="twitter_url" value="<%=user.twitter_url ? user.twitter_url:'' %>">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" id="user-profile-link-submit" class="btn btn-datax"> 保存</button>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="form-group">
-                                <label for="introduce">个人介绍</label>
-                                <textarea class="form-control" rows="3" id="introduce"><%= user.introduce ? user.introduce:'' %></textarea>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" id="user-basic-info-submit" class="btn btn-datax"> 保存</button>
-                            </div>
-                        </form>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="password">
+                            <% include ./change_password.ejs %>
+                        </div>
+                        <% } %>
+                        <div role="tabpanel" class="tab-pane" id="collections">
+                        </div>
+                        
+                        <div role="tabpanel" class="tab-pane" id="likes">
+                        </div>
                     </div>
-                    <div class="info-block">
-                        <h2>技能列表</h2>
-                        <div class="divider red"></div>
-                        <form>
-                            <div class="form-group">
-                                <label for="username">技能选择</label>
-                                <select multiple="multiple" class="form-control" id='user-skill-select-input'>
-                                    <% for(var i=0; i<user.Skills.length; i++) {%>
-                                        <option selected="selected" value=<%= user.Skills[i].id %>><%= user.Skills[i].name %></span>
-                                    <% } %>
-                                </select>
-                            </div>
-                            <div class="form-group ">
-                                <button type="submit" id="user-basic-skill-submit" class="btn btn-datax"> 保存</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="info-block">
-                        <h2>社交网站链接</h2>
-                        <div class="divider red"></div>
-                        <form>
-                            <div class="form-group">
-                                <label for="globe_url">个人网站</label>
-                                <input type="text" class="form-control" id="globe_url" value="<%= user.globe_url ? user.globe_url:'' %>">
-                            </div>
-                            <div class="form-group">
-                                <label for="github_url">Github</label>
-                                <input type="text" class="form-control" id="github_url" value="<%= user.github_url ? user.github_url:'' %>">
-                            </div>
-                            <div class="form-group">
-                                <label for="weibo_url">微博</label>
-                                <input type="text" class="form-control" id="weibo_url" value="<%=user.weibo_url ? user.weibo_url:'' %>">
-                            </div>
-                            <div class="form-group">
-                                <label for="facebook_url">Facebook</label>
-                                <input type="text" class="form-control" id="facebook_url" value="<%=user.facebook_url ? user.facebook_url:'' %>" />
-                            </div>
-                            <div class="form-group">
-                                <label for="twitter_url">Twitter</label>
-                                <input type="text" class="form-control" id="twitter_url" value="<%=user.twitter_url ? user.twitter_url:'' %>">
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" id="user-profile-link-submit" class="btn btn-datax"> 保存</button>
-                            </div>
-                        </form>
-                    </div>
+
                 </div>
                 <div class="basic-info col-md-4">
                     <h2>上传头像</h2>
@@ -92,7 +114,7 @@
                     <div id="progress" class="progress hide">
                         <div class="progress-bar progress-bar-striped"></div>
                     </div>
-
+                    </div>
                 </div>
             </div>
         </div>

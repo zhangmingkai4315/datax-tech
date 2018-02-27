@@ -147,3 +147,57 @@ $(() => {
     }
   });
 });
+
+const changePasswordValidation = () => {
+  $("#error_msg").text("");
+  const old_password = $.trim($("#old_password").val());
+  const new_password = $.trim($("#new_password").val());
+  const new_password_confirm = $.trim($("#new_password_confirm").val());
+  if (
+    old_password === "" ||
+    new_password === "" ||
+    new_password_confirm === ""
+  ) {
+    $("#error_msg").text("输入信息不能为空");
+    return false;
+  }
+  if (new_password !== new_password_confirm) {
+    $("#error_msg").text("两次输入密码不一致");
+    return false;
+  }
+  if (old_password === new_password) {
+    $("#error_msg").text("新旧密码不能相同");
+    return false;
+  }
+  if (new_password_confirm.length < 6) {
+    $("#error_msg").text("密码长度不能小于6位");
+    return false;
+  }
+  return true;
+};
+
+$("#change-password-btn").click(function(event) {
+  event.preventDefault();
+  const valid = changePasswordValidation();
+  if (valid !== true) {
+    return;
+  }
+  $.ajax({
+    type: "POST",
+    url: "/user/change_password",
+    data: JSON.stringify({
+      old_password: $.trim($("#old_password").val()),
+      new_password: $.trim($("#new_password").val())
+    }),
+    contentType: "application/json; charset=utf-8",
+    success: () => {
+      toastr.success("修改密码成功");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    },
+    failure: () => {
+      toastr.error("修改密码失败");
+    }
+  });
+});

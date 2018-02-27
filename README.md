@@ -23,5 +23,5 @@ npm run migration
 启动开发环境
 
 ```
-gulp
+npm run gulp
 ```

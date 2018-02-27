@@ -45,6 +45,11 @@ v1.post(
   middleware.authenticationMiddle,
   users.editUserProfileBasic
 );
+v1.post(
+  "/user/change_password",
+  middleware.authenticationMiddle,
+  users.changePassword
+);
 v1.get("/user/skills", middleware.authenticationMiddle, users.getUserSkills);
 v1.post("/user/links", middleware.authenticationMiddle, users.createUserLinks);
 v1.post("/user/skill", middleware.authenticationMiddle, users.createUserSkill);

@@ -116,3 +116,17 @@
         }
     }
 }
+
+.user-edit-form {
+    ul.nav {
+        li {
+            font-size: 1.1em;
+            color: $MAIN_COLOR;
+            font-weight: 600;
+        }
+        a {
+            color: $MAIN_COLOR;
+            border-radius: 0;
+        }
+    }
+}

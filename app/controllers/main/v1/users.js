@@ -296,6 +296,40 @@ const uploadUserProfileImg = (req, res, next) => {
 };
 
 /**
+ * changePassword POST数据并修改用户密码的API接口
+ *
+ * POST新的数据
+ * @param {object} req express.req对象
+ * @param {object} res express.res对象
+ * @returns {}
+ */
+
+const changePassword = async (req, res) => {
+  try {
+    const oldPassword = req.body.old_password;
+    const newPassword = req.body.new_password;
+    const user = req.user;
+    // 验证用户输入
+
+    // 验证用户旧密码是否有效,仅当用户的密码字段存在，不存在一般为oath用户登入
+    if (user.password) {
+      const result = await user.validPassword(oldPassword).then;
+      if (!result) {
+        throw errors.ForbiddenError();
+      }
+    }
+    // 变更密码
+    const newHashPassword = await user.generateHash(newPassword);
+    user.password = newHashPassword;
+    const result = await user.save();
+    throw result;
+  } catch (data) {
+    console.log(data);
+    return utils.renderJSON(data, res);
+  }
+};
+
+/**
  * 模块导出声明
  * @public
  */
@@ -307,5 +341,6 @@ module.exports = {
   getUserStats,
   createUserLinks,
   createUserSkill,
-  uploadUserProfileImg
+  uploadUserProfileImg,
+  changePassword
 };

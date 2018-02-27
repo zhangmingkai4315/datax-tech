@@ -66,14 +66,12 @@ div.article-tags {
 .user-write-form {
     .article-cover-img {
         height: 400px;
-        margin-top: 2rem;
         background-color: $MAIN_COLOR;
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
         position: relative;
         margin-bottom: 20px;
-        margin-top: 20px;
         .fileinput-button {
             position: initial !important;
         }
